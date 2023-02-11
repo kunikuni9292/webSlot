@@ -156,6 +156,7 @@
             if (result2[1] == result2[2] && result2[1] == result2[3]) {
                 // あたりメッセージ表示
                 $("#slotMsg").html("BINGO !!!");
+
             } else {
                 // はずれメッセージ表示
                 $("#slotMsg").html("TRY AGAIN");
@@ -190,6 +191,7 @@
 
 <style>
     * {
+        position: relative;
         box-sizing: border-box;
     }
     
@@ -287,7 +289,6 @@
 </style>
 
 <div id="slotbox">
-
     <div id="slots_a">
         <div class="wrapper"></div>
         <div class="slotglass-top"></div>
@@ -310,6 +311,5 @@
     <br style="clear: both" />
 
     <div id="slotMsg">Let' Start<br/></div>
-    <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" />
-
+    <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" />    
 </div>
