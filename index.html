@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>スロットアプリ</title>
     <style>
-    .iframeWrap {
-        position: relative;
-        padding-bottom: 56.25%;
-        height: 200;
-        overflow: hidden;
-    }
+        .iframeWrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 200;
+            overflow: hidden;
+        }
 
-    .iframeWrap iframe {
-        position: absolute;
-        display: block;
-        /* top: 0;
-        left: 0; */
-        width: 100%;
-        height: 100%;
-    }
-    
+        .iframeWrap iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
-<body>    
-    <div class="iframeWrap">
-        <iframe src="./movie.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <iframe src="./WebSlotAPP.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
 
+<body>
+    <div class="iframeWrap">
+        <iframe src="./WebSlotAPP.html" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        <iframe id="bingo" src="./movie.html" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <input type="button" value="切り替えボタン" onclick="test()">
+    <script type="text/javascript" src="script.js"></script>
+    <script>
+        document.getElementById("bingo").style.display = "none";
+
+        function test() {
+            var change = document.getElementById("bingo");
+
+            if (change.style.display == "block") {
+                change.style.display = "none";
+            } else {
+                change.style.display = "block";
+            }
+        }
+
+    </script>
 </body>
+
 </html>
