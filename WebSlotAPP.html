@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="js/jquery.easing.1.3.js"></script>
+<script type="javascript" src="script.js"></script>
 <script>
     // スロット画像配列
     var slotImg = ['slot1.jpg', 'slot2.jpg', 'slot3.jpg', 'slot4.jpg', 'slot5.jpg', 'slot6.jpg', 'slot7.jpg'];
@@ -29,13 +29,13 @@
     var result1 = new Array();
     var result2 = new Array();
     var result3 = new Array();
-    
+
 
     /*---------------------
      Functions
     -----------------------*/
     /* 初期処理 */
-    $(document).ready(function() {
+    $(document).ready(function () {
         // 当たり判定
         atariHantei();
         // A枠にスロット画像を生成
@@ -142,24 +142,40 @@
         // A枠のスロット画像移動
         slotMove($("#slots_a .wrapper"), 1);
         // 少し遅れてB枠のスロット画像移動
-        setTimeout(function() {
+        setTimeout(function () {
             slotMove($("#slots_b .wrapper"), 2);
-        }, 200);
-        // さらに少し遅れてC枠のスロット画像移動
-        setTimeout(function() {
-            slotMove($("#slots_c .wrapper"), 3);
         }, 400);
+        // さらに少し遅れてC枠のスロット画像移動
+        setTimeout(function () {
+            slotMove($("#slots_c .wrapper"), 3);
+        }, 200);
 
         // スロット停止後の処理（jQueryキューで回転秒数後に実行）
-        $(this).delay(time + 500).queue(function() {
+        // TODO: 回転中に判定可能にする
+        $(this).delay(time + 500).queue(function () {
             // 結果判定
             if (result2[1] == result2[2] && result2[1] == result2[3]) {
                 // あたりメッセージ表示
                 $("#slotMsg").html("BINGO !!!");
 
+                // TODO: スロットを非表示動画を表示
+                $('#slot', parent.document).hide();
+                $('#movie', parent.document).show();
+
             } else {
                 // はずれメッセージ表示
                 $("#slotMsg").html("TRY AGAIN");
+
+                // 親ページの「id=”slot”」の透明度を0にする動作が実行
+                $('#slot', parent.document).stop().animate({ opacity: '0' });
+                // 親ページの「id=”movie”」をゆっくり表示させる
+                $('#movie', parent.document).fadeIn(1000);
+                // 表示非表示
+                // $('#slot', parent.document).hide();
+                // $('#movie', parent.document).show();
+
+                console.log("saga")
+
             }
 
             // スタートボタンの有効化
@@ -194,7 +210,6 @@
         position: relative;
         box-sizing: border-box;
     }
-    
     #slots_a,
     #slots_b,
     #slots_c {
@@ -206,14 +221,14 @@
         border: 2px palegoldenrod outset;
         overflow: hidden;
     }
-    
+
     #slots_a .wrapper,
     #slots_b .wrapper,
     #slots_c .wrapper {
         position: absolute;
         width: 46px;
     }
-    
+
     #slots_a .wrapper .slot,
     #slots_b .wrapper .slot,
     #slots_c .wrapper .slot {
@@ -222,7 +237,7 @@
         text-align: center;
         padding-top: 2px;
     }
-    
+
     .slotglass-top {
         position: absolute;
         z-index: 999;
@@ -233,7 +248,7 @@
         background: -o-linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
         background: linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
     }
-    
+
     .slotglass-bottom {
         position: absolute;
         z-index: 999;
@@ -245,7 +260,7 @@
         background: -o-linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
         background: linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
     }
-    
+
     .slotline {
         position: absolute;
         z-index: 999;
@@ -255,16 +270,17 @@
         opacity: 0.8;
         background-color: red;
     }
-    
+
     #slotbox {
         background-color: #A1272E;
         box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.8);
         border-radius: 5px;
         width: 185px;
         padding: 20px;
+        /* ここでスロットの位置決めている */
         margin-left: 107.5px;
     }
-    
+
     #slotMsg {
         background-color: black;
         color: white;
@@ -276,7 +292,7 @@
         width: 100%;
         margin: 5px 0;
     }
-    
+
     #startBtn {
         border-radius: 10px;
         background-color: gold;
@@ -310,6 +326,6 @@
 
     <br style="clear: both" />
 
-    <div id="slotMsg">Let' Start<br/></div>
-    <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" />    
+    <div id="slotMsg">Let' Start<br /></div>
+    <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" />
 </div>

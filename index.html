@@ -23,27 +23,23 @@
 
 <body>
     <div class="iframeWrap">
-        <iframe src="./WebSlotAPP.html" frameborder="0"
+        
+        <iframe id="movie" src="./movie.html" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-        <iframe id="bingo" src="./movie.html" frameborder="0"
+        <iframe id="slot" src="./WebSlotAPP.html" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
     </div>
-    <input type="button" value="切り替えボタン" onclick="test()">
-    <script type="text/javascript" src="script.js"></script>
+    <input id="contents" type="button" value="ビンゴ揃わないと消える" onclick="test()">
+    <script type="javascript" src="script.js"></script>
     <script>
-        document.getElementById("bingo").style.display = "none";
-
+        // 起動時どうがを非表示にする
+        document.getElementById("movie").style.display = "none";
         function test() {
-            var change = document.getElementById("bingo");
-
-            if (change.style.display == "block") {
-                change.style.display = "none";
-            } else {
-                change.style.display = "block";
-            }
+            var change = document.getElementById("movie");
+            change.style.display = change.style.display == "block" ? "none" : "block";
         }
-
     </script>
 </body>
 
