@@ -75,7 +75,6 @@
         for (var i = 1; i <= slotNum; i++) {
             // 画像ファイルは配列からランダムに取得
             var idx = Math.floor(Math.random() * slotImg.length);
-            // var idx = 1;
 
             // 画像ファイルの調整
             if (i == middleNum - 1) {
@@ -156,15 +155,26 @@
         // スロット停止後の処理（jQueryキューで回転秒数後に実行）
         // TODO: 回転中に判定可能にする
         $(this).delay(time + 500).queue(function () {
+            // リーチ判定
             if (result2[1] == result2[3]) {
-                slotMove($("#slots_b .wrapper"), 2, true);
+                //　リーチの時の真ん中の長尺(秒)
+                reachNum = 3;
+                // スロットの回転秒数の取得
+                reachtime = reachNum * 1000;
 
-                setTimeout(function () {
-                    $('#movie', parent.document).hide();
+                // アニメーションを10回繰り返すように指示する
+                var count = 0;
+                var intervalId = setInterval(function () {
+                    slotMove($("#slots_b .wrapper"), 2, true);
+                    count++;
+                    if (count === reachNum) {
+                        clearInterval(intervalId);
+                    }
                 }, 1000);
-
-                console.log('りーち');
-
+                // 10秒後に自動でアニメーションを停止する
+                setTimeout(function () {
+                    clearInterval(intervalId);
+                }, reachtime);
             }
 
 
@@ -212,7 +222,7 @@
         obj.animate({
             "margin-top": stopPos + "px"
         }, {
-            'duration': reach ? 10000 : time,
+            'duration': reach ? 1000 : time,
             // 'easing': slotEasing[easingIdx]
             'easing': slotEasing[0]
         });
