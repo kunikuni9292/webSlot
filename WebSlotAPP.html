@@ -5,19 +5,19 @@
     // スロット画像配列
     var slotImg = ['slot1.jpg', 'slot2.jpg', 'slot3.jpg', 'slot4.jpg', 'slot5.jpg', 'slot6.jpg', 'slot7.jpg'];
     // 縦に並べるスロット画像の数
-    var slotNum = 50;
+    var slotNum = 500;
     // スロット画像のスタート位置
     var startPos = -30 * (slotNum - 3);
     // スロット画像の停止位置
-    var stopPos = -150;
+    var stopPos = 0;
     // 最後に真ん中（２行目）にくるスロット画像の番号
-    var middleNum = 7;
+    var middleNum = 2;
     // 回転エフェクト配列（jQuery easing）
     var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce'];
     // 回転秒数
     var slotDuration = 5;
     // 当たり目確率（1=100%、0.5=50%）
-    var kakuritu = 0.3;
+    var kakuritu = 1;
 
     /*---------------------
      Definitions
@@ -44,6 +44,9 @@
         slotCreate($("#slots_b .wrapper"), 2);
         // C枠にスロット画像を生成
         slotCreate($("#slots_c .wrapper"), 3);
+
+        // 自動でdram回転する
+        slotStart()
     });
 
     /* 当たり判定 */
@@ -72,6 +75,7 @@
         for (var i = 1; i <= slotNum; i++) {
             // 画像ファイルは配列からランダムに取得
             var idx = Math.floor(Math.random() * slotImg.length);
+            // var idx = 1;
 
             // 画像ファイルの調整
             if (i == middleNum - 1) {
@@ -110,7 +114,8 @@
             obj.append("<div class='slot'>" +
                 "<img border='0'" +
                 " src='img/" + slotImg[idx] + "'" +
-                " width='40' height='26' />" +
+                // 画像の大きさ
+                " width='100' height='60' />" +
                 "</div>");
         }
 
@@ -142,33 +147,47 @@
         // 少し遅れてB枠のスロット画像移動
         setTimeout(function () {
             slotMove($("#slots_b .wrapper"), 2);
-        }, 400);
+        }, 2000);
         // さらに少し遅れてC枠のスロット画像移動
         setTimeout(function () {
             slotMove($("#slots_c .wrapper"), 3);
-        }, 200);
+        }, 1000);
 
         // スロット停止後の処理（jQueryキューで回転秒数後に実行）
         // TODO: 回転中に判定可能にする
         $(this).delay(time + 500).queue(function () {
+            if (result2[1] == result2[3]) {
+                slotMove($("#slots_b .wrapper"), 2, true);
+
+                setTimeout(function () {
+                    $('#movie', parent.document).hide();
+                }, 1000);
+
+                console.log('りーち');
+
+            }
+
+
+
+
             // 結果判定
             if (result2[1] == result2[2] && result2[1] == result2[3]) {
 
                 // TODO: スロットを非表示動画を表示
-                $('#slot', parent.document).hide();
-                $('#movie', parent.document).show();
+                // $('#slot', parent.document).hide();
+                // $('#movie', parent.document).show();
 
             } else {
                 // ビンゴ揃わなかったら真ん中だけ走る
-                slotMove($("#slots_b .wrapper"), 2);
+                // slotMove($("#slots_b .wrapper"), 2);
 
                 // 親ページの「id=”slot”」の透明度を0にする動作が実行
                 // $('#slot', parent.document).stop().animate({ opacity: '0' });
                 // 親ページの「id=”movie”」をゆっくり表示させる
                 // $('#movie', parent.document).fadeIn(1000);
                 // 表示非表示
-                $('#slot', parent.document).hide();
-                $('#movie', parent.document).show();
+                // $('#slot', parent.document).hide();
+                // $('#movie', parent.document).show();
 
                 console.log("saga")
             }
@@ -182,7 +201,7 @@
     }
 
     /* スロット画像移動 */
-    function slotMove(obj, slotno) {
+    function slotMove(obj, slotno, reach) {
 
         if (obj.css("margin-top") != startPos + "px") {
             // スロットが動いた後であれば、スロット画像を再作成
@@ -193,7 +212,7 @@
         obj.animate({
             "margin-top": stopPos + "px"
         }, {
-            'duration': time,
+            'duration': reach ? 10000 : time,
             // 'easing': slotEasing[easingIdx]
             'easing': slotEasing[0]
         });
@@ -205,15 +224,16 @@
         position: relative;
         box-sizing: border-box;
     }
+
     #slots_a,
     #slots_b,
     #slots_c {
         position: relative;
         float: left;
-        width: 60px;
-        height: 94px;
-        background-color: white;
-        border: 2px palegoldenrod outset;
+        width: 110px;
+        height: 200px;
+        /* background-color: white; */
+        /* border: 2px palegoldenrod outset; */
         overflow: hidden;
     }
 
@@ -221,50 +241,50 @@
     #slots_b .wrapper,
     #slots_c .wrapper {
         position: absolute;
-        width: 58px;
+        width: 0px;
     }
 
     #slots_a .wrapper .slot,
     #slots_b .wrapper .slot,
     #slots_c .wrapper .slot {
-        width: 58px;
-        height: 30px;
+        width: 105px;
+        height: 70px;
         text-align: center;
         padding-top: 2px;
     }
 
-    .slotglass-top {
+    /* .slotglass-top {
         position: absolute;
         z-index: 999;
-        width: 46px;
+        width: 100px;
         height: 15px;
         background: -moz-linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
         background: -webkit-gradient(linear, left top, left bottom, from(rgba(20, 20, 20, 0.3)), to(rgba(20, 20, 20, 0)));
         background: -o-linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
         background: linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
-    }
+    } */
 
-    .slotglass-bottom {
+    /* .slotglass-bottom {
         position: absolute;
         z-index: 999;
-        width: 45px;
+        width: 100px;
         height: 15px;
         bottom: 0px;
         background: -moz-linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
         background: -webkit-gradient(linear, left top, left bottom, from(rgba(20, 20, 20, 0)), to(rgba(20, 20, 20, 0.3)));
         background: -o-linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
         background: linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
-    }
+    } */
 
 
     #slotbox {
-    
-        background-color: #5bff15;
+
+        /* background-color: #5bff15; */
         border-radius: 5px;
-        width: 300px;
-        padding: 20px;
+        width: 350px;
+        padding: 10px;
         /* ここでスロットの位置決めている */
-        margin-left: 50px;
+        margin-left: 25px;
     }
 
     #startBtn {
@@ -283,22 +303,19 @@
         <div class="wrapper"></div>
         <div class="slotglass-top"></div>
         <div class="slotglass-bottom"></div>
-        <div class="slotline"></div>
     </div>
     <div id="slots_b">
         <div class="wrapper"></div>
         <div class="slotglass-top"></div>
         <div class="slotglass-bottom"></div>
-        <div class="slotline"></div>
     </div>
     <div id="slots_c">
         <div class="wrapper"></div>
         <div class="slotglass-top"></div>
         <div class="slotglass-bottom"></div>
-        <div class="slotline"></div>
     </div>
 
     <br style="clear: both" />
 
-    <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" />
+    <!-- <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" /> -->
 </div>
