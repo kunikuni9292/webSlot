@@ -165,17 +165,18 @@
             } else {
                 // はずれメッセージ表示
                 $("#slotMsg").html("TRY AGAIN");
+                // ビンゴ揃わなかったら真ん中だけ走る
+                slotMove($("#slots_b .wrapper"), 2);
 
                 // 親ページの「id=”slot”」の透明度を0にする動作が実行
-                $('#slot', parent.document).stop().animate({ opacity: '0' });
+                // $('#slot', parent.document).stop().animate({ opacity: '0' });
                 // 親ページの「id=”movie”」をゆっくり表示させる
-                $('#movie', parent.document).fadeIn(1000);
+                // $('#movie', parent.document).fadeIn(1000);
                 // 表示非表示
-                // $('#slot', parent.document).hide();
-                // $('#movie', parent.document).show();
+                $('#slot', parent.document).hide();
+                $('#movie', parent.document).show();
 
                 console.log("saga")
-
             }
 
             // スタートボタンの有効化
@@ -261,19 +262,8 @@
         background: linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
     }
 
-    .slotline {
-        position: absolute;
-        z-index: 999;
-        width: 45px;
-        height: 2px;
-        top: 44px;
-        opacity: 0.8;
-        background-color: red;
-    }
 
     #slotbox {
-        background-color: #A1272E;
-        box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.8);
         border-radius: 5px;
         width: 185px;
         padding: 20px;
@@ -326,6 +316,5 @@
 
     <br style="clear: both" />
 
-    <div id="slotMsg">Let' Start<br /></div>
     <input id="startBtn" type="button" value="START" onclick="javascript:slotStart();" />
 </div>
