@@ -18,13 +18,15 @@
     var slotDuration = 5;
     // 当たり目確率（1=100%、0.5=50%）
     var kakuritu = 1;
-
+    // リーチの当たり目確率（1=100%、0.5=50%）
+    var reachKakuritu = 1;
     /*---------------------
      Definitions
     -----------------------*/
     var atariIdx;
     var easingIdx;
     var hantei;
+    var reachHantei;
     var time;
     var result1 = new Array();
     var result2 = new Array();
@@ -39,11 +41,11 @@
         // 当たり判定
         atariHantei();
         // A枠にスロット画像を生成
-        slotCreate($("#slots_a .wrapper"), 1);
+        slotCreate($("#slots_a .wrapper"), 1, false);
         // B枠にスロット画像を生成
-        slotCreate($("#slots_b .wrapper"), 2);
+        slotCreate($("#slots_b .wrapper"), 2, true);
         // C枠にスロット画像を生成
-        slotCreate($("#slots_c .wrapper"), 3);
+        slotCreate($("#slots_c .wrapper"), 3, false);
 
         // 自動でdram回転する
         slotStart()
@@ -53,10 +55,11 @@
     function atariHantei() {
         atariIdx = Math.floor(Math.random() * slotImg.length);
         hantei = Math.random() < kakuritu;
+        reachHantei = Math.random() < reachKakuritu;
     };
 
-    /* スロット画像生成 */
-    function slotCreate(obj, slotno) {
+    /* スロット画像生成 isMidslot=真ん中のスロットかどうか */
+    function slotCreate(obj, slotno, isMidslot) {
 
         // アニメーションをストップ（アニメーション処理中の場合の対応）
         obj.stop(true, true);
@@ -81,9 +84,12 @@
                 // 最後に1行目にくる画像
                 result1[slotno] = idx;
             } else if (i == middleNum) {
-                // 最後に2行目にくる画像
-                if (hantei) {
-                    // 当たり判定の場合は当たり目のINDEXを設定
+                // 真ん中のスロットじゃない時かつリーチ判定がtrueの時atariIdxが入る
+                if (!isMidslot && reachHantei) {
+                    // スロット1,3のインデックスを揃える
+                    idx = atariIdx;
+                    // 真ん中のスロットの時かつ当たり判定がtrueの時atariIdxが入る
+                } else if (isMidslot && hantei) {
                     idx = atariIdx;
                 }
                 result2[slotno] = idx;
