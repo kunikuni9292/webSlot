@@ -17,9 +17,9 @@
     // 回転秒数
     var slotDuration = 5;
     // 当たり目確率（1=100%、0.5=50%）
-    var kakuritu = 1;
+    var kakuritu = 0.5;
     // リーチの当たり目確率（1=100%、0.5=50%）
-    var reachKakuritu = 1;
+    var reachKakuritu = 0.5;
     /*---------------------
      Definitions
     -----------------------*/
@@ -144,44 +144,41 @@
 
         // スロットの回転秒数の取得
         time = slotDuration * 1000;
-        // スロットの回転エフェクトをランダムに取得
-        // easingIdx = Math.floor(Math.random() * slotEasing.length);
 
         // A枠のスロット画像移動
         slotMove($("#slots_a .wrapper"), 1);
         // 少し遅れてB枠のスロット画像移動
         setTimeout(function () {
-            slotMove($("#slots_b .wrapper"), 2);
-        }, 2000);
+            slotMove($("#slots_b .wrapper"), 2, reachHantei);
+        }, 1700);
         // さらに少し遅れてC枠のスロット画像移動
         setTimeout(function () {
             slotMove($("#slots_c .wrapper"), 3);
         }, 1000);
 
         // スロット停止後の処理（jQueryキューで回転秒数後に実行）
-        // TODO: 回転中に判定可能にする
         $(this).delay(time + 500).queue(function () {
             // リーチ判定
-            if (result2[1] == result2[3]) {
-                //　リーチの時の真ん中の長尺(秒)
-                reachNum = 3;
-                // スロットの回転秒数の取得
-                reachtime = reachNum * 1000;
+            // if (result2[1] == result2[3]) {
+            //     //　リーチの時の真ん中の長尺(秒)
+            //     reachNum = 3;
+            //     // スロットの回転秒数の取得
+            //     reachtime = reachNum * 1000;
 
-                // アニメーションを10回繰り返すように指示する
-                var count = 0;
-                var intervalId = setInterval(function () {
-                    slotMove($("#slots_b .wrapper"), 2, true);
-                    count++;
-                    if (count === reachNum) {
-                        clearInterval(intervalId);
-                    }
-                }, 1000);
-                // 10秒後に自動でアニメーションを停止する
-                setTimeout(function () {
-                    clearInterval(intervalId);
-                }, reachtime);
-            }
+            //     // アニメーションをreachNum回繰り返すように指示する
+            //     var count = 0;
+            //     var intervalId = setInterval(function () {
+            //         slotMove($("#slots_b .wrapper"), 2, true);
+            //         count++;
+            //         if (count === reachNum) {
+            //             clearInterval(intervalId);
+            //         }
+            //     }, 1000);
+            //     // 10秒後に自動でアニメーションを停止する
+            //     setTimeout(function () {
+            //         clearInterval(intervalId);
+            //     }, reachtime);
+            // }
 
 
 
@@ -216,6 +213,8 @@
         });
     }
 
+
+
     /* スロット画像移動 */
     function slotMove(obj, slotno, reach) {
 
@@ -228,8 +227,7 @@
         obj.animate({
             "margin-top": stopPos + "px"
         }, {
-            'duration': reach ? 1000 : time,
-            // 'easing': slotEasing[easingIdx]
+            'duration': reach ? time * 2 : time,
             'easing': slotEasing[0]
         });
     };
