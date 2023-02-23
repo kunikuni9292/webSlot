@@ -11,11 +11,13 @@ var stopPos = 0;
 // 最後に真ん中（２行目）にくるスロット画像の番号
 var middleNum = 2;
 // 回転エフェクト配列（jQuery easing）
-var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce'];
+// var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce'];
 // 回転秒数
 var slotDuration = 5;
+// リーチ時の回転秒数
+var reachDuration = 20;
 // 当たり目確率（1=100%、0.5=50%）
-var kakuritu = 1;
+var kakuritu = 0.9;
 // リーチの当たり目確率（1=100%、0.5=50%）
 var reachKakuritu = 1;
 /*---------------------
@@ -48,8 +50,11 @@ $(document).ready(function () {
     // C枠にスロット画像を生成
     slotCreate($("#slots_c .wrapper"), 3, false);
 
-    // 自動でdram回転する
-    slotStart()
+    // 1秒後に自動でdram回転する
+    setTimeout(function () {
+        slotStart()
+    }, 1000);
+
 });
 
 /* 当たり判定 */
@@ -145,44 +150,45 @@ function slotStart() {
 
     // スロットの回転秒数の取得
     time = slotDuration * 1000;
+    reachTime = reachDuration * 1000;
     // スロットの回転エフェクトをランダムに取得
     // easingIdx = Math.floor(Math.random() * slotEasing.length);
 
     // A枠のスロット画像移動
     slotMove($("#slots_a .wrapper"), 1);
-    // 少し遅れてB枠のスロット画像移動
-    setTimeout(function () {
-        slotMove($("#slots_b .wrapper"), 2);
-    }, 2000);
-    // さらに少し遅れてC枠のスロット画像移動
+    // 少し遅れてC枠のスロット画像移動
     setTimeout(function () {
         slotMove($("#slots_c .wrapper"), 3);
     }, 1000);
+    // さらに少し遅れてB枠のスロット画像移動
+    setTimeout(function () {
+        slotMove($("#slots_b .wrapper"), 2, reachHantei);
+    }, 2000);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     // TODO: 回転中に判定可能にする
     $(this).delay(time + 500).queue(function () {
-        // リーチ判定
-        if (result2[1] == result2[3]) {
-            //　リーチの時の真ん中の長尺(秒)
-            reachNum = 3;
-            // スロットの回転秒数の取得
-            reachtime = reachNum * 1000;
+        // // リーチ判定
+        // if (result2[1] == result2[3]) {
+        //     //　リーチの時の真ん中の長尺(秒)
+        //     reachNum = 3;
+        //     // スロットの回転秒数の取得
+        //     reachtime = reachNum * 1000;
 
-            // アニメーションを10回繰り返すように指示する
-            var count = 0;
-            var intervalId = setInterval(function () {
-                slotMove($("#slots_b .wrapper"), 2, true);
-                count++;
-                if (count === reachNum) {
-                    clearInterval(intervalId);
-                }
-            }, 1000);
-            // 10秒後に自動でアニメーションを停止する
-            setTimeout(function () {
-                clearInterval(intervalId);
-            }, reachtime);
-        }
+        //     // アニメーションを10回繰り返すように指示する
+        //     var count = 0;
+        //     var intervalId = setInterval(function () {
+        //         slotMove($("#slots_b .wrapper"), 2, true);
+        //         count++;
+        //         if (count === reachNum) {
+        //             clearInterval(intervalId);
+        //         }
+        //     }, 1000);
+        //     // 10秒後に自動でアニメーションを停止する
+        //     setTimeout(function () {
+        //         clearInterval(intervalId);
+        //     }, reachtime);
+        // }
 
 
 
@@ -219,6 +225,7 @@ function slotStart() {
 
 /* スロット画像移動 */
 function slotMove(obj, slotno, reach) {
+    var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce','easeOutCubic','easeOutQuad'];
 
     if (obj.css("margin-top") != startPos + "px") {
         // スロットが動いた後であれば、スロット画像を再作成
@@ -229,8 +236,7 @@ function slotMove(obj, slotno, reach) {
     obj.animate({
         "margin-top": stopPos + "px"
     }, {
-        'duration': reach ? 1000 : time,
-        // 'easing': slotEasing[easingIdx]
-        'easing': slotEasing[0]
+        'duration': reach ? reachTime : time,
+        'easing': slotEasing[5]
     });
 };
