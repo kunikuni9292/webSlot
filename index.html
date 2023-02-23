@@ -2,28 +2,16 @@
 <html lang="ja">
 
 <head>
+    <title>スロットアプリ</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スロットアプリ</title>
-    <style>
-        .iframeWrap {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 200;
-            overflow: hidden;
-        }
-
-        .iframeWrap iframe {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="testScript.js"></script>
 </head>
 
 <body>
     <div class="iframeWrap">
-        
+
         <iframe id="movie" src="./movie.html" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -31,16 +19,8 @@
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     </div>
-    <input id="contents" type="button" value="ビンゴ揃わないと消える" onclick="test()">
-    <script type="javascript" src="script.js"></script>
-    <script>
-        // 起動時どうがを非表示にする
-        document.getElementById("movie").style.display = "none";
-        function test() {
-            var change = document.getElementById("movie");
-            change.style.display = change.style.display == "block" ? "none" : "block";
-        }
-    </script>
+    <!-- Debug確認用に用意 -->
+    <input id="contents" type="button" value="　動画表示確認用" onclick="test()">
 </body>
 
 </html>
