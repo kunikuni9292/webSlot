@@ -16,6 +16,8 @@ var middleNum = 2;
 var slotDuration = 5;
 // リーチ時の回転秒数
 var reachDuration = 20;
+// 動画の再生時間(秒)
+var movieDuration = 10;
 // 当たり目確率（1=100%、0.5=50%）
 var kakuritu = 0.9;
 // リーチの当たり目確率（1=100%、0.5=50%）
@@ -151,9 +153,9 @@ function slotStart() {
     // スロットの回転秒数の取得
     time = slotDuration * 1000;
     reachTime = reachDuration * 1000;
-    // スロットの回転エフェクトをランダムに取得
-    // easingIdx = Math.floor(Math.random() * slotEasing.length);
-
+    // 動画の再生時間
+    movieTime = movieDuration * 1000;
+ 
     // A枠のスロット画像移動
     slotMove($("#slots_a .wrapper"), 1);
     // 少し遅れてC枠のスロット画像移動
@@ -164,6 +166,22 @@ function slotStart() {
     setTimeout(function () {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
+
+    // リーチの時
+    if (reachHantei) {
+        setTimeout(function () {
+            $('#slot', parent.document).hide();
+            $('#movie', parent.document).show();
+        }, time + 1250);
+        // 動画再生後
+        setTimeout(function () {
+            $('#slot', parent.document).show();
+            $('#movie', parent.document).hide();
+        }, time + 1250 + movieTime);
+        // ビンゴの時
+    }else if (reachHantei&&hantei){
+
+    }
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     // TODO: 回転中に判定可能にする
@@ -225,7 +243,7 @@ function slotStart() {
 
 /* スロット画像移動 */
 function slotMove(obj, slotno, reach) {
-    var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce','easeOutCubic','easeOutQuad'];
+    var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce', 'easeOutCubic', 'easeOutQuad'];
 
     if (obj.css("margin-top") != startPos + "px") {
         // スロットが動いた後であれば、スロット画像を再作成
