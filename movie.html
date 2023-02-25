@@ -7,6 +7,34 @@ muted　ミュート
 loop　ループ
 src ソース
 -->
-<div id="movie">
-    <video width="400" height="220" autoplay muted loop src="img/sample.mp4"></video>
-</div>
+<!-- <div id="movie">
+    <video width="400" height="220" autoplay muted loop src="./movieReach/sample2.mp4"></video>
+</div> -->
+<!DOCTYPE html>
+<html lang="ja-JP">
+
+<head>
+    <title>動画ランダムに一個再生</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var videos = ["./movieReach/sample1.mp4", "./movieReach/sample2.mp4", "./movieReach/sample3.mp4", "./movieReach/sample4.mp4"];
+            var randomIndex = Math.floor(Math.random() * videos.length);
+            var randomVideo = videos[randomIndex];
+            $("#my-video").attr("src", randomVideo);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="video-container">
+        <video id="my-video" width="400" height="220" controls autoplay muted>
+            <source src="./movieReach/sample1.mp4">
+            <source src="./movieReach/sample2.mp4">
+            <source src="./movieReach/sample3.mp4">
+            <source src="./movieReach/sample4.mp4">
+        </video>
+    </div>
+</body>
+
+</html>
