@@ -17,9 +17,9 @@ var slotDuration = 5;
 // リーチ時の回転秒数
 var reachDuration = 20;
 // 動画の再生時間(秒)
-var movieDuration = 10;
+var movieDuration = 5;
 // 当たり目確率（1=100%、0.5=50%）
-var kakuritu = 0.9;
+var kakuritu = 1;
 // リーチの当たり目確率（1=100%、0.5=50%）
 var reachKakuritu = 1;
 /*---------------------
@@ -41,7 +41,9 @@ var result3 = new Array();
 /* 初期処理 */
 $(document).ready(function () {
     // 動画初期非表示
-    $('#movie', parent.document).hide();
+    $('#movieReach', parent.document).hide();
+    $('#movieBingo', parent.document).hide();
+
 
     // 当たり判定
     atariHantei();
@@ -155,7 +157,7 @@ function slotStart() {
     reachTime = reachDuration * 1000;
     // 動画の再生時間
     movieTime = movieDuration * 1000;
- 
+
     // A枠のスロット画像移動
     slotMove($("#slots_a .wrapper"), 1);
     // 少し遅れてC枠のスロット画像移動
@@ -167,21 +169,37 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    // リーチの時
-    if (reachHantei) {
-        setTimeout(function () {
-            $('#slot', parent.document).hide();
-            $('#movie', parent.document).show();
-        }, time + 1250);
-        // 動画再生後
-        setTimeout(function () {
-            $('#slot', parent.document).show();
-            $('#movie', parent.document).hide();
-        }, time + 1250 + movieTime);
-        // ビンゴの時
-    }else if (reachHantei&&hantei){
+    // setTimeout(function () {
+    isShowMovie();
+    // }, time + 1000);
 
+    function isShowMovie() {
+        // リーチの時
+        if (reachHantei) {
+            setTimeout(function () {
+                $('#slot', parent.document).hide();
+                $('#movieReach', parent.document).show();
+            }, time + 1250);
+            // 動画再生後
+            setTimeout(function () {
+                $('#slot', parent.document).show();
+                $('#movieReach', parent.document).hide();
+            }, time + 1250 + movieTime);
+        }
+        if (hantei) {
+            // ビンゴの時
+            setTimeout(function () {
+                $('#slot', parent.document).hide();
+                $('#movieBingo', parent.document).show();
+            }, time + reachTime-3000);
+            // 動画再生後
+            setTimeout(function () {
+                $('#slot', parent.document).show();
+                $('#movieBingo', parent.document).hide();
+            }, time + reachTime + movieTime);
+        }
     }
+
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     // TODO: 回転中に判定可能にする

@@ -1,0 +1,40 @@
+<!-- 
+width　横幅
+height　高さ
+controls コントローラー表示するか
+autoplay　自動再生するか
+muted　ミュート
+loop　ループ
+src ソース
+-->
+<!-- <div id="movie">
+    <video width="400" height="220" autoplay muted loop src="./movieBingo/sample2.mp4"></video>
+</div> -->
+<!DOCTYPE html>
+<html lang="ja-JP">
+
+<head>
+    <title>ビンゴの動画をランダムに一個再生</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var videos = ["./movieBingo/sample1.mp4", "./movieBingo/sample2.mp4", "./movieBingo/sample3.mp4", "./movieBingo/sample4.mp4"];
+            var randomIndex = Math.floor(Math.random() * videos.length);
+            var randomVideo = videos[randomIndex];
+            $("#my-video").attr("src", randomVideo);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="video-container">
+        <video id="my-video" width="400" height="220" autoplay muted>
+            <source src="./movieBingo/sample1.mp4">
+            <source src="./movieBingo/sample2.mp4">
+            <source src="./movieBingo/sample3.mp4">
+            <source src="./movieBingo/sample4.mp4">
+        </video>
+    </div>
+</body>
+
+</html>

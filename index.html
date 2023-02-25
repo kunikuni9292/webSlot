@@ -7,12 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="testScript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        // 動画初期非表示
+        $("#movieReach").hide();
+        $("#movieBingo").hide();
+    </script>
+
 </head>
 
 <body>
     <div class="iframeWrap">
 
-        <iframe id="movie" src="./movie.html" frameborder="0"
+        <iframe id="movieReach" src="./movieReach.html" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        <iframe id="movieBingo" src="./movieBingo.html" frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
         <iframe id="slot" src="./WebSlotAPP.html" frameborder="0"
