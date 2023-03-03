@@ -18,7 +18,7 @@ src ソース
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            var videos = ["./movieReach/sample1.mp4", "./movieReach/sample2.mp4", "./movieReach/sample3.mp4", "./movieReach/sample4.mp4"];
+            var videos = ["./movieReach/sample1.mp4", "./movieReach/sample2.mp4", "./movieReach/sample3.mp4", "./movieReach/sample4.mp4", "./movieReach/sample5.mp4"];
             var randomIndex = Math.floor(Math.random() * videos.length);
             var randomVideo = videos[randomIndex];
             $("#my-video").attr("src", randomVideo);
@@ -33,6 +33,7 @@ src ソース
             <source src="./movieReach/sample2.mp4">
             <source src="./movieReach/sample3.mp4">
             <source src="./movieReach/sample4.mp4">
+            <source src="./movieReach/sample5.mp4">
         </video>
     </div>
 </body>
