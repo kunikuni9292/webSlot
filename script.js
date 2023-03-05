@@ -58,7 +58,6 @@ $(document).ready(function () {
     setTimeout(function () {
         slotStart()
     }, 1000);
-
 });
 
 /* 当たり判定 */
@@ -143,10 +142,6 @@ function slotCreate(obj, slotno, isMidslot) {
 /* スロットスタート */
 function slotStart() {
 
-    // スタートボタンの無効化
-    $("#startBtn").prop('disabled', true);
-
-
     if ($("#slots_a .wrapper").css("margin-top") != startPos + "px") {
         // スロットが動いた後であれば、当たり判定を再度行なう
         atariHantei();
@@ -171,93 +166,48 @@ function slotStart() {
 
     // setTimeout(function () {
     isShowMovie();
-    // }, time + 1000);
-
-    function isShowMovie() {
-        // リーチの時
-        if (reachHantei) {
-            setTimeout(function () {
-                $('#slot', parent.document).hide();
-                $('#movieReach', parent.document).show();
-            }, time + 1250);
-            // 動画再生後
-            setTimeout(function () {
-                $('#slot', parent.document).show();
-                $('#movieReach', parent.document).hide();
-            }, time + 1250 + movieTime);
-        }
-        if (hantei) {
-            // ビンゴの時
-            setTimeout(function () {
-                $('#slot', parent.document).hide();
-                $('#movieBingo', parent.document).show();
-            }, time + reachTime-3000);
-            // 動画再生後
-            setTimeout(function () {
-                $('#slot', parent.document).show();
-                $('#movieBingo', parent.document).hide();
-            }, time + reachTime + movieTime);
-        }
-    }
-
+    // },time+ 3000);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
-    // TODO: 回転中に判定可能にする
     $(this).delay(time + 500).queue(function () {
-        // // リーチ判定
-        // if (result2[1] == result2[3]) {
-        //     //　リーチの時の真ん中の長尺(秒)
-        //     reachNum = 3;
-        //     // スロットの回転秒数の取得
-        //     reachtime = reachNum * 1000;
-
-        //     // アニメーションを10回繰り返すように指示する
-        //     var count = 0;
-        //     var intervalId = setInterval(function () {
-        //         slotMove($("#slots_b .wrapper"), 2, true);
-        //         count++;
-        //         if (count === reachNum) {
-        //             clearInterval(intervalId);
-        //         }
-        //     }, 1000);
-        //     // 10秒後に自動でアニメーションを停止する
-        //     setTimeout(function () {
-        //         clearInterval(intervalId);
-        //     }, reachtime);
-        // }
-
-
-
-
         // 結果判定
         if (result2[1] == result2[2] && result2[1] == result2[3]) {
-
-            // TODO: スロットを非表示動画を表示
-            // $('#slot', parent.document).hide();
-            // $('#movie', parent.document).show();
-
-        } else {
-            // ビンゴ揃わなかったら真ん中だけ走る
-            // slotMove($("#slots_b .wrapper"), 2);
-
-            // 親ページの「id=”slot”」の透明度を0にする動作が実行
-            // $('#slot', parent.document).stop().animate({ opacity: '0' });
-            // 親ページの「id=”movie”」をゆっくり表示させる
-            // $('#movie', parent.document).fadeIn(1000);
-            // 表示非表示
-            // $('#slot', parent.document).hide();
-            // $('#movie', parent.document).show();
-
-            console.log("saga")
-        }
-
+        } 
         // スタートボタンの有効化
         $("#startBtn").prop('disabled', false);
-
         // キュー削除
         $(this).dequeue();
     });
 }
+
+// スロット回転中に動画を表示する処理
+function isShowMovie() {
+    // リーチの時
+    if (reachHantei) {
+        setTimeout(function () {
+            $('#slot', parent.document).hide();
+            $('#movieReach', parent.document).show();
+        }, time + 1250);
+        // 動画再生後
+        setTimeout(function () {
+            $('#slot', parent.document).show();
+            $('#movieReach', parent.document).hide();
+        }, time + 1250 + movieTime);
+    }
+    if (hantei) {
+        // ビンゴの時
+        setTimeout(function () {
+            $('#slot', parent.document).hide();
+            $('#movieBingo', parent.document).show();
+        }, time + reachTime - 3000);
+        // 動画再生後
+        setTimeout(function () {
+            $('#slot', parent.document).show();
+            $('#movieBingo', parent.document).hide();
+        }, time + reachTime + movieTime);
+    }
+}
+
 
 /* スロット画像移動 */
 function slotMove(obj, slotno, reach) {
