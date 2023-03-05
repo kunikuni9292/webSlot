@@ -44,9 +44,11 @@ $(document).ready(function () {
     $('#movieReach', parent.document).hide();
     $('#movieBingo', parent.document).hide();
 
-
     // 当たり判定
     atariHantei();
+    // リーチ絵柄に合わせた動画を表示する　リーチ時の絵柄のインデックスを取得する
+    movieReach()
+
     // A枠にスロット画像を生成
     slotCreate($("#slots_a .wrapper"), 1, false);
     // B枠にスロット画像を生成
@@ -225,4 +227,21 @@ function slotMove(obj, slotno, reach) {
         'duration': reach ? reachTime : time,
         'easing': slotEasing[5]
     });
+};
+
+// リーチ絵柄に合わせた動画を表示する
+function movieReach() {
+    // 当たりインデックスを取得する
+    console.log('movieReachIndex', atariIdx);
+    var videos = ["./movieReach/sample1.mp4", "./movieReach/sample2.mp4", "./movieReach/sample3.mp4", "./movieReach/sample4.mp4", "./movieReach/sample5.mp4", "./movieReach/sample6.mp4"];
+    // var randomIndex = Math.floor(Math.random() * videos.length); // ランダムに動画を出すならこっち
+    var movieReachIndex = atariIdx;
+    var randomVideo = videos[movieReachIndex];
+    // iframe要素にアクセス
+    var iframe = $('#movieReach', parent.document);
+    // iframe内のdocumentオブジェクトを取得
+    var iframeDocument = iframe.contents();
+    // iframe内の要素にアクセス
+    var element = iframeDocument.find('#my-video');
+    element.attr("src", randomVideo);
 };
