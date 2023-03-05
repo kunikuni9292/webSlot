@@ -1,29 +1,9 @@
-<!-- 
-width　横幅
-height　高さ
-controls コントローラー表示するか
-autoplay　自動再生するか
-muted　ミュート
-loop　ループ
-src ソース
--->
-<!-- <div id="movie">
-    <video width="400" height="220" autoplay muted loop src="./movieReach/sample2.mp4"></video>
-</div> -->
 <!DOCTYPE html>
 <html lang="ja-JP">
 
 <head>
-    <title>リーチの動画をランダムに一個再生</title>
+    <title>リーチ時の動画を用意</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            var videos = ["./movieReach/sample1.mp4", "./movieReach/sample2.mp4", "./movieReach/sample3.mp4", "./movieReach/sample4.mp4", "./movieReach/sample5.mp4"];
-            var randomIndex = Math.floor(Math.random() * videos.length);
-            var randomVideo = videos[randomIndex];
-            $("#my-video").attr("src", randomVideo);
-        });
-    </script>
 </head>
 
 <body>
@@ -34,6 +14,7 @@ src ソース
             <source src="./movieReach/sample3.mp4">
             <source src="./movieReach/sample4.mp4">
             <source src="./movieReach/sample5.mp4">
+            <source src="./movieReach/sample6.mp4">
         </video>
     </div>
 </body>
