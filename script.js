@@ -245,3 +245,15 @@ function movieReach() {
     var element = iframeDocument.find('#my-video');
     element.attr("src", randomVideo);
 };
+
+
+// 設定画面用
+$(document).ready(function() {
+    // ボタンをクリックした時の処理
+    $("#button").click(function() {
+        // テキストフィールドの値を取得
+        var textValue = $("#text-input").val();
+        // テキストフィールドの値を表示
+        alert(textValue);
+    });
+});

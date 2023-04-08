@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>設定画面</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<label for="text-input">リーチ確率:</label>
+	<input type="text" id="reach_probability">
+	<button id="reachButton">確定</button>
+    <br>
+	<label for="text-input">ビンゴ確率:</label>
+	<input type="text" id="bingo_probability">
+	<button id="BingoButton">確定</button>
+
+	<script>
+		$(document).ready(function() {
+			// ボタンをクリックした時の処理
+			$("#reachButton").click(function() {
+				// テキストフィールドの値を取得
+				var reachProbability = $("#reach_probability").val();
+				// テキストフィールドの値を表示
+				alert(reachProbability);
+			});
+			$("#BingoButton").click(function() {
+				// テキストフィールドの値を取得
+				var bingoProbability = $("#bingo_probability").val();
+				// テキストフィールドの値を表示
+				alert(bingoProbability);
+			});
+		});
+	</script>
+</body>
+
+</html>
