@@ -174,7 +174,7 @@ function slotStart() {
     $(this).delay(time + 500).queue(function () {
         // 結果判定
         if (result2[1] == result2[2] && result2[1] == result2[3]) {
-        } 
+        }
         // スタートボタンの有効化
         $("#startBtn").prop('disabled', false);
         // キュー削除
@@ -248,12 +248,38 @@ function movieReach() {
 
 
 // 設定画面用
-$(document).ready(function() {
+$(document).ready(function () {
     // ボタンをクリックした時の処理
-    $("#button").click(function() {
+    // iframe要素にアクセス
+    var iframe = $('#setting', parent.document);
+    // iframe内のdocumentオブジェクトを取得
+    var iframeDocument = iframe.contents();
+    // iframe内の要素にアクセス
+    var reachButton = iframeDocument.find('#reachButton');
+    var reach_probability= iframeDocument.find('#reach_probability');
+    var BingoButton = iframeDocument.find('#BingoButton');
+    var bingo_probability= iframeDocument.find('#bingo_probability');
+
+    // リーチ確率の確定ボタンをクリックした時の処理
+    $(reachButton).click(function () {
         // テキストフィールドの値を取得
-        var textValue = $("#text-input").val();
+        var reachProbability = $(reach_probability).val();
         // テキストフィールドの値を表示
-        alert(textValue);
+        alert(reachProbability);
     });
+
+    // リーチ確率の確定ボタンをクリックした時の処理
+    $(BingoButton).click(function () {
+        // テキストフィールドの値を取得
+        var bingoProbability = $(bingo_probability).val();
+        // テキストフィールドの値を表示
+        alert(bingoProbability);
+    });
+
+    // $("#button").click(function() {
+    //     // テキストフィールドの値を取得
+    //     var textValue = $("#text-input").val();
+    //     // テキストフィールドの値を表示
+    //     alert(textValue);
+    // });
 });
