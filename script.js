@@ -255,31 +255,25 @@ $(document).ready(function () {
     // iframe内のdocumentオブジェクトを取得
     var iframeDocument = iframe.contents();
     // iframe内の要素にアクセス
+    var total_probability = iframeDocument.find('#total_probability');
     var reachButton = iframeDocument.find('#reachButton');
-    var reach_probability= iframeDocument.find('#reach_probability');
+    var reach_probability = iframeDocument.find('#reach_probability');
     var BingoButton = iframeDocument.find('#BingoButton');
-    var bingo_probability= iframeDocument.find('#bingo_probability');
+    var bingo_probability = iframeDocument.find('#bingo_probability');
 
     // リーチ確率の確定ボタンをクリックした時の処理
     $(reachButton).click(function () {
         // テキストフィールドの値を取得
         var reachProbability = $(reach_probability).val();
-        // テキストフィールドの値を表示
-        alert(reachProbability);
+        total_probability.attr("type", "text").text("リーチ確率:" + reachProbability + "ビンゴ確率:" + bingoProbability);
     });
 
     // リーチ確率の確定ボタンをクリックした時の処理
     $(BingoButton).click(function () {
         // テキストフィールドの値を取得
         var bingoProbability = $(bingo_probability).val();
-        // テキストフィールドの値を表示
-        alert(bingoProbability);
+        total_probability.attr("type", "text").text("リーチ確率:" + reachProbability + "ビンゴ確率:" + bingoProbability);
+
     });
 
-    // $("#button").click(function() {
-    //     // テキストフィールドの値を取得
-    //     var textValue = $("#text-input").val();
-    //     // テキストフィールドの値を表示
-    //     alert(textValue);
-    // });
 });
