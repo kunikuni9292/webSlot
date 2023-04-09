@@ -1,9 +1,29 @@
-#bell {
+.bell {
+    position: absolute; /*下にくる */
     width: 450px;
     height: 200px;
+        margin-top: 0px;
+
+}
+.topPage {
+    position: relative; /*上にくる */
+    margin-left: 150px;
+    margin-top: 0px;
+}
+h1 {
+    margin: 0;
+}
+h3 {
+    margin: 0;
 }
 
-#bell2 {
-    width: 350px;
-    height: 200px;
+.intro-title {
+	font-size: 72px;
+    color: rgb(49, 237, 11);
+	text-shadow: 5px 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Bilbo Swash Caps', cursive;
+	font-weight: normal !important;
+	text-transform: none !important;
+	letter-spacing: 0 !important;
 }
+
