@@ -92,7 +92,17 @@ h3 {
 }
 
 #g-nav li a {
-    color: #333;
+    color: #383838;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+}
+
+#g-nav li a:hover {
+    color: #ff0000;
     text-decoration: none;
     padding: 10px;
     display: block;
