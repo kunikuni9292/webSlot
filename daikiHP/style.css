@@ -151,6 +151,9 @@ h3 {
     top: 31px;
 }
 
+
+/* メニュー×のアクション */
+
 .openbtn1.active span:nth-of-type(1) {
     top: 18px;
     left: 18px;
@@ -168,6 +171,9 @@ h3 {
     transform: translateY(-6px) rotate(45deg);
     width: 30%;
 }
+
+
+/* ×アクションここまで */
 
 
 /*========= レイアウトのためのCSS ===============*/
