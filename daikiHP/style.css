@@ -35,63 +35,63 @@ h3 {
 
 /* ハンバーガーメニュー表示CSS */
 
-#g-nav {
-    /*position:fixed;にし、z-indexの数値を大きくして前面へ*/
+.hum {
     position: fixed;
-    z-index: 999;
-    /*ナビのスタート位置と形状*/
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+.openbtn1 {
+    position: fixed;
+    z-index: 9999;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
+
+#menu {
+    position: fixed;
+    z-index: 1;
     top: 0;
-    left: -120%;
+    left: -100%;
     width: 30%;
     height: 100vh;
-    /*ナビの高さ*/
     background: #999;
-    /*動き*/
     transition: all 0.6s;
 }
 
-
-/*アクティブクラスがついたら位置を0に*/
-
-#g-nav.panelactive {
+#menu.panelactive {
     left: 0;
 }
 
-
-/*ナビゲーションの縦スクロール*/
-
-#g-nav.panelactive #g-nav-list {
-    /*ナビの数が増えた場合縦スクロール*/
+#menu.panelactive #menu-list {
     position: fixed;
-    z-index: 999;
+    z-index: 1;
     width: 30%;
     height: 100vh;
-    /*表示する高さ*/
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-
-/*ナビゲーション*/
-
-#g-nav ul {
-    /*ナビゲーション天地中央揃え*/
+#menu ul {
     position: absolute;
-    z-index: 999;
+    z-index: 1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-
-/*リストのレイアウト設定*/
-
-#g-nav li {
+#menu li {
     list-style: none;
     text-align: center;
 }
 
-#g-nav li a {
+#menu li a {
     color: #383838;
     text-decoration: none;
     padding: 10px;
@@ -101,7 +101,7 @@ h3 {
     font-weight: bold;
 }
 
-#g-nav li a:hover {
+#menu li a:hover {
     color: #ff0000;
     text-decoration: none;
     padding: 10px;
@@ -111,72 +111,16 @@ h3 {
     font-weight: bold;
 }
 
-
-/*========= ボタンのためのCSS ===============*/
-
 .openbtn1 {
+    margin: 0;
     position: fixed;
     z-index: 9999;
-    /*ボタンを最前面に*/
     top: 10px;
     left: 10px;
     cursor: pointer;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
 }
-
-
-/*×に変化*/
-
-.openbtn1 span {
-    display: inline-block;
-    transition: all .4s;
-    position: absolute;
-    left: 14px;
-    height: 3px;
-    border-radius: 2px;
-    background-color: #666;
-    width: 45%;
-}
-
-.openbtn1 span:nth-of-type(1) {
-    top: 15px;
-}
-
-.openbtn1 span:nth-of-type(2) {
-    top: 23px;
-}
-
-.openbtn1 span:nth-of-type(3) {
-    top: 31px;
-}
-
-
-/* メニュー×のアクション */
-
-.openbtn1.active span:nth-of-type(1) {
-    top: 18px;
-    left: 18px;
-    transform: translateY(6px) rotate(-45deg);
-    width: 30%;
-}
-
-.openbtn1.active span:nth-of-type(2) {
-    opacity: 0;
-}
-
-.openbtn1.active span:nth-of-type(3) {
-    top: 30px;
-    left: 18px;
-    transform: translateY(-6px) rotate(45deg);
-    width: 30%;
-}
-
-
-/* ×アクションここまで */
-
-
-/*========= レイアウトのためのCSS ===============*/
 
 h1 {
     font-size: 1.2rem;
