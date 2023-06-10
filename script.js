@@ -1,6 +1,5 @@
 
 // スロット画像配列
-// var slotImg = ['slot1.jpg', 'slot2.jpg', 'slot3.jpg', 'slot4.jpg', 'slot5.jpg', 'slot6.jpg', 'slot7.jpg'];
 var slotImg = ['bell.png', 'cherry.png', 'gorilla.png', 'palm.png', 'seven.png', 'watermelon.png'];
 // 縦に並べるスロット画像の数
 var slotNum = 500;
@@ -19,9 +18,10 @@ var reachDuration = 20;
 // 動画の再生時間(秒)
 var movieDuration = 5;
 // 当たり目確率（1=100%、0.5=50%）
-var kakuritu = 1;
+var bingoKakuritu = parseFloat(localStorage.getItem("bingoProbability")) || 1;
 // リーチの当たり目確率（1=100%、0.5=50%）
-var reachKakuritu = 1;
+var reachKakuritu = parseFloat(localStorage.getItem("reachProbability")) || 1;
+
 /*---------------------
  Definitions
 -----------------------*/
@@ -49,15 +49,20 @@ $(document).ready(function () {
     // リーチ絵柄に合わせた動画を表示する　リーチ時の絵柄のインデックスを取得する
     movieReach()
 
-    // A枠にスロット画像を生成
-    slotCreate($("#slots_a .wrapper"), 1, false);
-    // B枠にスロット画像を生成
-    slotCreate($("#slots_b .wrapper"), 2, true);
-    // C枠にスロット画像を生成
-    slotCreate($("#slots_c .wrapper"), 3, false);
+    // 確率のログ
+    console.log('ready_reachKakuritu', reachKakuritu);
+    console.log('ready_bingoKakuritu', bingoKakuritu);
+
 
     // 1秒後に自動でdram回転する
     setTimeout(function () {
+        // A枠にスロット画像を生成
+        slotCreate($("#slots_a .wrapper"), 1, false);
+        // B枠にスロット画像を生成
+        slotCreate($("#slots_b .wrapper"), 2, true);
+        // C枠にスロット画像を生成
+        slotCreate($("#slots_c .wrapper"), 3, false);
+
         slotStart()
     }, 1000);
 });
@@ -65,7 +70,7 @@ $(document).ready(function () {
 /* 当たり判定 */
 function atariHantei() {
     atariIdx = Math.floor(Math.random() * slotImg.length);
-    hantei = Math.random() < kakuritu;
+    hantei = Math.random() < bingoKakuritu;
     reachHantei = Math.random() < reachKakuritu;
 };
 
@@ -167,7 +172,7 @@ function slotStart() {
     }, 2000);
 
     // setTimeout(function () {
-    isShowMovie();
+    isShowMovie(time, reachTime);
     // },time+ 3000);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
@@ -183,7 +188,7 @@ function slotStart() {
 }
 
 // スロット回転中に動画を表示する処理
-function isShowMovie() {
+function isShowMovie(time, reachTime) {
     // リーチの時
     if (reachHantei) {
         setTimeout(function () {
@@ -248,32 +253,62 @@ function movieReach() {
 
 
 // 設定画面用
-$(document).ready(function () {
-    // ボタンをクリックした時の処理
+$(window).on('load', function () {
+    loadValues();
+
     // iframe要素にアクセス
     var iframe = $('#setting', parent.document);
     // iframe内のdocumentオブジェクトを取得
     var iframeDocument = iframe.contents();
-    // iframe内の要素にアクセス
+    // iframe内の要素にアクセス　
     var total_probability = iframeDocument.find('#total_probability');
     var reachButton = iframeDocument.find('#reachButton');
     var reach_probability = iframeDocument.find('#reach_probability');
-    var BingoButton = iframeDocument.find('#BingoButton');
+    var fixingButton = iframeDocument.find('#fixing_button');
     var bingo_probability = iframeDocument.find('#bingo_probability');
 
-    // リーチ確率の確定ボタンをクリックした時の処理
-    $(reachButton).click(function () {
-        // テキストフィールドの値を取得
+
+    // ビンゴ確率の確定ボタンをクリックした時の処理
+    $(fixingButton).click(function () {
+        // reachProbabilityとbingoProbabilityの値を取得
         var reachProbability = $(reach_probability).val();
-        total_probability.attr("type", "text").text("リーチ確率:" + reachProbability + "ビンゴ確率:" + bingoProbability);
-    });
-
-    // リーチ確率の確定ボタンをクリックした時の処理
-    $(BingoButton).click(function () {
-        // テキストフィールドの値を取得
         var bingoProbability = $(bingo_probability).val();
-        total_probability.attr("type", "text").text("リーチ確率:" + reachProbability + "ビンゴ確率:" + bingoProbability);
+        reachKakuritu = parseFloat(reachProbability) || 0.1; // テキストフィールドの値を数値に変換して100で割り、パーセント表記にする（変換できない場合はデフォルト値として0.1を使用）
+        bingoKakuritu = parseFloat(bingoProbability) || 0.1; // テキストフィールドの値を数値に変換して100で割り、パーセント表記にする（変換できない場合はデフォルト値として0.1を使用）
+        total_probability.text("リーチ確率:" + reachProbability * 100 + "% ビンゴ確率:" + bingoProbability * 100 + "% になっています。");
+        // ローカルストレージに値を保存
+        localStorage.setItem("reachProbability", reachProbability);
+        localStorage.setItem("bingoProbability", bingoProbability);
 
+        loadValues();
     });
-
 });
+
+
+// 設定画面で設定した値を読み込みする
+function loadValues() {
+    // ローカルストレージから値を取得
+    reachKakuritu = localStorage.getItem("reachProbability");
+    bingoKakuritu = localStorage.getItem("bingoProbability");
+
+    // iframe要素にアクセス
+    var iframe = $('#setting', parent.document);
+    // iframe内のdocumentオブジェクトを取得
+    var iframeDocument = iframe.contents();
+    // iframe内の要素にアクセス　
+    var total_probability = iframeDocument.find('#total_probability');
+    var reach_probability = iframeDocument.find('#reach_probability');
+    var bingo_probability = iframeDocument.find('#bingo_probability');
+
+
+    // 値が存在する場合、画面に反映させる
+    if (reachKakuritu && bingoKakuritu) {
+        reach_probability.val(reachKakuritu);
+        bingo_probability.val(bingoKakuritu);
+        total_probability.text("リーチ確率:" + reachKakuritu * 100 + "% ビンゴ確率:" + bingoKakuritu * 100 + "%になっています。");
+        // 確率のログ
+        console.log('loadValues_reachKakuritu', reachKakuritu);
+        console.log('loadValues_bingoKakuritu', bingoKakuritu);
+
+    }
+}
