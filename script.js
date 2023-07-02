@@ -16,7 +16,7 @@ var slotDuration = 5;
 // リーチ時の回転秒数
 var reachDuration = 20;
 // 動画の再生時間(秒)
-var movieDuration = 5;
+var movieDuration = 25;
 // 当たり目確率（1=100%、0.5=50%）
 var bingoKakuritu = parseFloat(localStorage.getItem("bingoProbability")) || 1;
 // リーチの当たり目確率（1=100%、0.5=50%）
@@ -201,18 +201,18 @@ function isShowMovie(time, reachTime) {
             $('#movieReach', parent.document).hide();
         }, time + 1250 + movieTime);
     }
-    if (hantei) {
-        // ビンゴの時
-        setTimeout(function () {
-            $('#slot', parent.document).hide();
-            $('#movieBingo', parent.document).show();
-        }, time + reachTime - 3000);
-        // 動画再生後
-        setTimeout(function () {
-            $('#slot', parent.document).show();
-            $('#movieBingo', parent.document).hide();
-        }, time + reachTime + movieTime);
-    }
+    // if (hantei) {
+    //     // ビンゴの時
+    //     setTimeout(function () {
+    //         $('#slot', parent.document).hide();
+    //         $('#movieBingo', parent.document).show();
+    //     }, time + reachTime - 3000);
+    //     // 動画再生後
+    //     setTimeout(function () {
+    //         $('#slot', parent.document).show();
+    //         $('#movieBingo', parent.document).hide();
+    //     }, time + reachTime + movieTime);
+    // }
 }
 
 
