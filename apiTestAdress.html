@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>住所検索</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>住所検索</h1>
+    <form>
+        <label for="postalCode">郵便番号：</label>
+        <input type="text" id="postalCode" maxlength="7">
+        <button type="button" onclick="searchAddress()">検索</button>
+    </form>
+    <br>
+    <div id="result"></div>
+
+    <script>
+        function searchAddress() {
+            var postalCode = document.getElementById("postalCode").value;
+            if (postalCode.length === 7) {
+                $.ajax({
+                    url: "https://zipcloud.ibsnet.co.jp/api/search",
+                    type: "GET",
+                    data: {
+                        zipcode: postalCode
+                    },
+                    dataType: "jsonp",
+                    success: function (response) {
+                        if (response.status === 200) {
+                            var address = response.results[0].address1 + response.results[0].address2 + response.results[0].address3;
+                            document.getElementById("result").innerHTML = "住所: " + address;
+                        } else {
+                            document.getElementById("result").innerHTML = "該当する住所はありません。";
+                        }
+                    },
+                    error: function () {
+                        document.getElementById("result").innerHTML = "住所の検索中にエラーが発生しました。";
+                    }
+                });
+            } else {
+                document.getElementById("result").innerHTML = "郵便番号は7桁で入力してください。";
+            }
+        }
+    </script>
+</body>
+</html>
