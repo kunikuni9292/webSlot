@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Scratch Ticket Generator</title>
+    <style>
+        .ticket {
+            width: 200px;
+            height: 200px;
+            background-color: #f1f1f1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .ticket .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 8.0s ease;
+        }
+        
+        .ticket.scratched .overlay {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Scratch Ticket Generator</h1>
+
+    <div id="ticketSettings">
+        <label for="numOfTickets">Number of Tickets:</label>
+        <input type="number" id="numOfTickets" min="2" max="20" value="2">
+        <button id="generateTickets">Generate Tickets</button>
+    </div>
+
+    <div id="ticketContainer"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function generateScratchTicket() {
+            var ticket = $('<div class="container"></div>');
+            var head = $('<head></head>');
+            var title = $('<title>Scratch Card</title>');
+            var style = $('<style>.container { position: relative; } .coupon img { width: 480px; height: 320px; } .scratch { position: absolute; top: 0; left: 0; width: 480px; height: 320px; z-index: 0; }</style>');
+            head.append(title);
+            head.append(style);
+            ticket.append(head);
+            var coupon = $('<div class="coupon"></div>');
+            var couponImage = $('<img id="img" src="img/cherry.png" width="480" height="320" />');
+            coupon.append(couponImage);
+            var scratchCanvas = $('<canvas id="cover" width="480" height="320" class="scratch"></canvas>');
+            coupon.append(scratchCanvas);
+            ticket.append(coupon);
+            // 追加したスクリプトの内容
+            var script = document.createElement('script');
+            // 初見者の難読性を上げるために1行にしている
+            script.innerHTML = "window.addEventListener('DOMContentLoaded', (event) => {var canvas_cover = document.getElementById('cover'); var ctx_cover = canvas_cover.getContext('2d'); ctx_cover.fillStyle = '#999'; ctx_cover.fillRect(0, 0, canvas_cover.width, canvas_cover.height); var isDrawing = false; canvas_cover.addEventListener('mousedown', function(e) { e.preventDefault(); isDrawing = true; }); canvas_cover.addEventListener('mousemove', function(e) { e.preventDefault(); if (!isDrawing) return; var x = getPageX(e) - this.offsetLeft; var y = getPageY(e) - this.offsetTop; ctx_cover.clearRect(x, y, 40, 40); }); canvas_cover.addEventListener('mouseup', function(e) { isDrawing = false; }); function getPageX(e) { var pageX = 0; if (e.touches) { pageX = e.touches[0].pageX; } else { pageX = e.pageX; } return pageX; } function getPageY(e) { var pageY = 0; if (e.touches) { pageY = e.touches[0].pageY; } else { pageY = e.pageY; } return pageY; } });" 
+            // script.innerHTML = "window.addEventListener('DOMContentLoaded', (event) => { var canvas_cover = document.getElementById('cover'); var ctx_cover = canvas_cover.getContext('2d'); ctx_cover.fillStyle = '#999'; ctx_cover.fillRect(0, 0, canvas_cover.width, canvas_cover.height); var isDrawing = false; canvas_cover.addEventListener('mousedown', function(e) { e.preventDefault(); isDrawing = true; }); canvas_cover.addEventListener('mousemove', function(e) { e.preventDefault(); if (!isDrawing) return; var x = getPageX(e) - this.offsetLeft; var y = getPageY(e) - this.offsetTop; ctx_cover.clearRect(x, y, 40, 40); }); canvas_cover.addEventListener('mouseup', function(e) { isDrawing = false; }); function getPageX(e) { var pageX = 0; if (e.touches) { pageX = e.touches[0].pageX; } else { pageX = e.pageX; } return pageX; } function getPageY(e) { var pageY = 0; if (e.touches) { pageY = e.touches[0].pageY; } else { pageY = e.pageY; } return pageY; } });";
+            ticket.append(script);
+            return ticket;
+        }
+
+        function generateTickets(num) {
+            var container = $('#ticketContainer');
+            container.empty();
+            var hitIndex = Math.floor(Math.random() * num);
+            var ticketArray = []; // チケットを格納する配列
+            for (var i = 0; i < num; i++) {
+                var ticket = generateScratchTicket();
+                if (i === hitIndex) {
+                    // 当たり判定
+                    // note: ここを変更した これで当たりの時に背景の画像が変わる
+                    ticket.find('.coupon img').attr('src', 'img/bell.png');
+                }
+                container.append(ticket);
+                ticketArray.push(ticket); // チケットを配列に格納
+            }
+            // チケット生成後にリンクの生成とダウンロードを行う
+            for (var j = 0; j < ticketArray.length; j++) {
+                var ticket = ticketArray[j];
+                var ticketLink = $('<a></a>');
+                ticketLink.attr('href', 'data:text/html;charset=UTF-8,' + encodeURIComponent(ticket[0].outerHTML));
+                ticketLink.attr('download', 'Ticket' + (j + 1) + '.html');
+                ticketLink.text('Ticket ' + (j + 1));
+                container.append(ticketLink);
+            }
+        }
+        $(document).ready(function() {
+            $('#generateTickets').on('click', function() {
+                var numOfTickets = parseInt($('#numOfTickets').val());
+                generateTickets(numOfTickets);
+            });
+        });
+    </script>
+</body>
+</html>
