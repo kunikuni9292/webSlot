@@ -172,7 +172,8 @@ function slotStart() {
     }, 2000);
 
     // setTimeout(function () {
-    isShowMovie(time, reachTime);
+    // 動画非表示
+    // isShowMovie(time, reachTime);
     // },time+ 3000);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
