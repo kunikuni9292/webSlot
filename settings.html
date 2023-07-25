@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <title>設定画面</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<title>設定画面</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 
 <body>
 	<label for="text-input">リーチ確率:</label>
 	<input type="text" id="reach_probability" style="width:50px;">
 	<div id="reach_probability_text"></div>
-    
+
 	<label for="text-input">ビンゴ確率:</label>
 	<input type="text" id="bingo_probability" style="width:50px;">
 	<div id="bingo_probability_text"></div>
-	<button id="fixing_button">確定</button>
-<div id="total_probability"></div>
+	<button id="probability_fixing_button">確定</button>
+	<div id="total_probability"></div>
+	<br>
+	<div id="">以下デバッグ用</div>
+	<label for="bingo_image">ビンゴ絵柄:</label>
+	<input type="text" id="design_particular" style="width:50px;">
+	<button id="bingo_image_fixing_button">ビンゴ絵柄指定</button>
+	<div id="">0-5までの範囲で指定した絵柄でビンゴにできます。空欄の場合絵柄はランダムに設定されます。</div>
 </body>
 
 </html>

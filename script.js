@@ -68,8 +68,8 @@ $(document).ready(function () {
 });
 
 /* 当たり判定 */
-function atariHantei() {
-    atariIdx = Math.floor(Math.random() * slotImg.length);
+function atariHantei(setting_index) {
+    atariIdx = setting_index ?? Math.floor(Math.random() * slotImg.length);
     hantei = Math.random() < bingoKakuritu;
     reachHantei = Math.random() < reachKakuritu;
 };
@@ -262,10 +262,13 @@ $(window).on('load', function () {
     var iframeDocument = iframe.contents();
     // iframe内の要素にアクセス　
     var total_probability = iframeDocument.find('#total_probability');
-    var reachButton = iframeDocument.find('#reachButton');
     var reach_probability = iframeDocument.find('#reach_probability');
-    var fixingButton = iframeDocument.find('#fixing_button');
+    var fixingButton = iframeDocument.find('#probability_fixing_button');
     var bingo_probability = iframeDocument.find('#bingo_probability');
+    // ビンゴ絵柄用の変数
+    var bingo_image_fixing_button = iframeDocument.find('#bingo_image_fixing_button');
+    var design_particular = iframeDocument.find('#design_particular');
+
 
 
     // ビンゴ確率の確定ボタンをクリックした時の処理
@@ -281,6 +284,31 @@ $(window).on('load', function () {
         localStorage.setItem("bingoProbability", bingoProbability);
 
         loadValues();
+    });
+
+    $(bingo_image_fixing_button).click(function () {
+        // ビンゴ絵柄のインデックスをテキストフィールドから取得
+        var inputIndex = parseInt($(design_particular).val());
+        // 入力された値が有効な範囲かチェック
+        if (inputIndex >= 0 && inputIndex < slotImg.length) {
+            // 有効な値の場合、ビンゴ絵柄のインデックスを設定
+            settingIndex = inputIndex;
+            console.log("ビンゴの絵柄を指定しました:", settingIndex);
+        } else {
+            settingIndex = null;
+            console.log("ランダムに絵柄が設定されます");
+            console.log("無効な値です。0から" + (slotImg.length - 1) + "の範囲で指定してください。");
+        }
+
+        atariHantei(settingIndex)
+        // A枠にスロット画像を生成
+        slotCreate($("#slots_a .wrapper"), 1, false);
+        // B枠にスロット画像を生成
+        slotCreate($("#slots_b .wrapper"), 2, true);
+        // C枠にスロット画像を生成
+        slotCreate($("#slots_c .wrapper"), 3, false);
+
+        slotStart()
     });
 });
 
