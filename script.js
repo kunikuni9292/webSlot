@@ -290,15 +290,16 @@ $(window).on('load', function () {
     $(bingo_image_fixing_button).click(function () {
         // ビンゴ絵柄のインデックスをテキストフィールドから取得
         var inputIndex = parseInt($(design_particular).val());
+        // プルダウンの選択値に応じて絵柄の名称を取得
+        var selectedImage = slotImg[inputIndex];
         // 入力された値が有効な範囲かチェック
         if (inputIndex >= 0 && inputIndex < slotImg.length) {
             // 有効な値の場合、ビンゴ絵柄のインデックスを設定
             settingIndex = inputIndex;
-            console.log("ビンゴの絵柄を指定しました:", settingIndex);
+            console.log("ビンゴの絵柄を指定しました:", selectedImage);
         } else {
             settingIndex = null;
             console.log("ランダムに絵柄が設定されます");
-            console.log("無効な値です。0から" + (slotImg.length - 1) + "の範囲で指定してください。");
         }
 
         atariHantei(settingIndex)
@@ -308,7 +309,7 @@ $(window).on('load', function () {
         slotCreate($("#slots_b .wrapper"), 2, true);
         // C枠にスロット画像を生成
         slotCreate($("#slots_c .wrapper"), 3, false);
-
+        // スロット開始
         slotStart()
     });
 });
