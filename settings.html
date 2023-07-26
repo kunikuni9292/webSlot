@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <title>設定画面</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<title>設定画面</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 
 <body>
 	<label for="text-input">リーチ確率:</label>
 	<input type="text" id="reach_probability" style="width:50px;">
 	<div id="reach_probability_text"></div>
-    
+
 	<label for="text-input">ビンゴ確率:</label>
 	<input type="text" id="bingo_probability" style="width:50px;">
 	<div id="bingo_probability_text"></div>
-	<button id="fixing_button">確定</button>
-<div id="total_probability"></div>
+	<button id="probability_fixing_button">確定</button>
+	<div id="total_probability"></div>
+	<br>
+
+	<div id="">以下デバッグ用</div>
+	<label for="bingo_image">ビンゴ絵柄:</label>
+    <select id="design_particular">
+        <option value="99">ランダムな絵柄</option>
+        <option value="0">bell.png</option>
+        <option value="1">cherry.png</option>
+        <option value="2">gorilla.png</option>
+        <option value="3">palm.png</option>
+        <option value="4">seven.png</option>
+        <option value="5">watermelon.png</option>
+    </select>
+	<button id="bingo_image_fixing_button">ビンゴ絵柄指定</button>
 </body>
 
 </html>
