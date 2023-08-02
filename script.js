@@ -9,8 +9,6 @@ var startPos = -30 * (slotNum - 3);
 var stopPos = 0;
 // 最後に真ん中（２行目）にくるスロット画像の番号
 var middleNum = 2;
-// 回転エフェクト配列（jQuery easing）
-// var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce'];
 // 回転秒数
 var slotDuration = 5;
 // リーチ時の回転秒数
@@ -171,18 +169,13 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    // setTimeout(function () {
-    // 動画非表示
-    // isShowMovie(time, reachTime);
-    // },time+ 3000);
+    isShowMovie(time, reachTime);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     $(this).delay(time + 500).queue(function () {
         // 結果判定
         if (result2[1] == result2[2] && result2[1] == result2[3]) {
         }
-        // スタートボタンの有効化
-        $("#startBtn").prop('disabled', false);
         // キュー削除
         $(this).dequeue();
     });
@@ -219,8 +212,6 @@ function isShowMovie(time, reachTime) {
 
 /* スロット画像移動 */
 function slotMove(obj, slotno, reach) {
-    var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce', 'easeOutCubic', 'easeOutQuad'];
-
     if (obj.css("margin-top") != startPos + "px") {
         // スロットが動いた後であれば、スロット画像を再作成
         slotCreate(obj, slotno);
@@ -231,7 +222,7 @@ function slotMove(obj, slotno, reach) {
         "margin-top": stopPos + "px"
     }, {
         'duration': reach ? reachTime : time,
-        'easing': slotEasing[5]
+        'easing': 'easeOutQuad'
     });
 };
 
