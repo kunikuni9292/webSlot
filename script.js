@@ -171,18 +171,14 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    // setTimeout(function () {
     // 動画非表示
-    // isShowMovie(time, reachTime);
-    // },time+ 3000);
+    isShowMovie(time, reachTime);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     $(this).delay(time + 500).queue(function () {
         // 結果判定
         if (result2[1] == result2[2] && result2[1] == result2[3]) {
         }
-        // スタートボタンの有効化
-        $("#startBtn").prop('disabled', false);
         // キュー削除
         $(this).dequeue();
     });
