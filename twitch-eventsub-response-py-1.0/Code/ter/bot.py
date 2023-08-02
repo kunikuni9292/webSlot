@@ -120,14 +120,11 @@ class TERBot(commands.Bot):
             response = random.choice(responses)
             await message.channel.send(response)
 
-        # メッセージにコメントが含まれている場合、指定のURLにリダイレクトする
-        if "コメント" in content:  # ここにコメントの条件を指定してください
-            await message.channel.send("http://blurbuckets.s3-website-ap-northeast-1.amazonaws.com/")
 
         # # メッセージにコメントが含まれている場合、指定のURLをブラウザで開く
         if "コメント" in content:  # ここにコメントの条件を指定してください
             url = "http://blurbuckets.s3-website-ap-northeast-1.amazonaws.com/"
-            webbrowser.open(url)
+            webbrowser.open(url,0,True) #引き数調べる
 
         await self.handle_commands(message)
 
