@@ -301,6 +301,9 @@ $(window).on('load', function () {
             settingIndex = null;
             console.log("ランダムに絵柄が設定されます");
         }
+        // ビンゴ絵柄のインデックスをローカルストレージに保存
+        localStorage.setItem("bingoImageIndex", inputIndex);
+        loadValues(); // loadValues() を実行
 
         atariHantei(settingIndex)
         // A枠にスロット画像を生成
@@ -320,6 +323,8 @@ function loadValues() {
     // ローカルストレージから値を取得
     reachKakuritu = localStorage.getItem("reachProbability");
     bingoKakuritu = localStorage.getItem("bingoProbability");
+    // ローカルストレージから絵柄のインデックスを取得
+    var bingoImageIndex = localStorage.getItem("bingoImageIndex");
 
     // iframe要素にアクセス
     var iframe = $('#setting', parent.document);
@@ -329,7 +334,7 @@ function loadValues() {
     var total_probability = iframeDocument.find('#total_probability');
     var reach_probability = iframeDocument.find('#reach_probability');
     var bingo_probability = iframeDocument.find('#bingo_probability');
-
+    var design_particular = iframeDocument.find('#design_particular');
 
     // 値が存在する場合、画面に反映させる
     if (reachKakuritu && bingoKakuritu) {
@@ -339,6 +344,21 @@ function loadValues() {
         // 確率のログ
         console.log('loadValues_reachKakuritu', reachKakuritu);
         console.log('loadValues_bingoKakuritu', bingoKakuritu);
-
+    }
+    // 絵柄のインデックスが存在する場合、画面に反映させる
+    if (bingoImageIndex !== null) {
+        var inputIndex = parseInt(bingoImageIndex);
+        // プルダウンの選択値に応じて絵柄の名称を取得
+        var selectedImage = slotImg[inputIndex];
+        // 入力された値が有効な範囲かチェック
+        if (inputIndex >= 0 && inputIndex < slotImg.length) {
+            // 有効な値の場合、ビンゴ絵柄のインデックスを設定
+            settingIndex = inputIndex;
+            design_particular.val(settingIndex);
+            console.log("ビンゴの絵柄をローカルストレージから指定しました:", selectedImage);
+        } else {
+            settingIndex = null;
+            console.log("ランダムに絵柄がローカルストレージから設定されます");
+        }
     }
 }
