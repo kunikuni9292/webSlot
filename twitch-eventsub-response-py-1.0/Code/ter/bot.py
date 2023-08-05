@@ -119,7 +119,7 @@ class TERBot(commands.Bot):
 
         # # メッセージにコメントが含まれている場合、指定のURLをブラウザで開く
         if "コメント" in content:  # ここにコメントの条件を指定してください
-            url = "http://blurbuckets.s3-website-ap-northeast-1.amazonaws.com/"
+            url = "https://blurbuckets.s3.ap-northeast-1.amazonaws.com/index.html"
             webbrowser.open(url,0) # 同じタブ内で再度読み込みする
 
         await self.handle_commands(message)
