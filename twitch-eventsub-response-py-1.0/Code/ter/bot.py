@@ -109,13 +109,9 @@ class TERBot(commands.Bot):
         content = message.content.lower()
 
         # 特定の文字列に対してコメントを返す
-        if "hello" in content:
+        if "ハロー" in content:
             responses = [
-                "Hello!",
-                "Hi there!",
-                "Hey!",
-                "Greetings!",
-                "Nice to see you!",
+                "ヤッホー!",
             ]
             response = random.choice(responses)
             await message.channel.send(response)
@@ -124,7 +120,7 @@ class TERBot(commands.Bot):
         # # メッセージにコメントが含まれている場合、指定のURLをブラウザで開く
         if "コメント" in content:  # ここにコメントの条件を指定してください
             url = "http://blurbuckets.s3-website-ap-northeast-1.amazonaws.com/"
-            webbrowser.open(url,0,True) #引き数調べる
+            webbrowser.open(url,0) # 同じタブ内で再度読み込みする
 
         await self.handle_commands(message)
 
