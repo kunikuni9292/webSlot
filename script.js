@@ -12,7 +12,7 @@ var middleNum = 2;
 // 回転秒数
 var slotDuration = 5;
 // リーチ時の回転秒数
-var reachDuration = 10;
+var reachDuration = 20;
 // 動画の再生時間(秒)
 var movieDuration = 25;
 // 当たり目確率（1=100%、0.5=50%）
@@ -194,7 +194,7 @@ function showMovie(time) {
         setTimeout(function () {
             $('#slot', parent.document).show();
             $('#movieReach', parent.document).hide();
-        }, time + 1250 + 2000);
+        }, time + 1250 + movieTime);
     }
 }
 
