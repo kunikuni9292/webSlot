@@ -170,7 +170,7 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    isShowMovie(time);
+    showMovie(time);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     $(this).delay(time + 500).queue(function () {
@@ -183,7 +183,7 @@ function slotStart() {
 }
 
 // スロット回転中に動画を表示する処理
-function isShowMovie(time) {
+function showMovie(time) {
     // リーチの時
     if (reachHantei) {
         setTimeout(function () {
