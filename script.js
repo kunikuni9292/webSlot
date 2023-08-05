@@ -40,8 +40,8 @@ var result3 = new Array();
 /* 初期処理 */
 $(document).ready(function () {
     // 動画初期非表示
-    // $('#movieReach', parent.document).hide();
-    // $('#movieBingo', parent.document).hide();
+    $('#movieReach', parent.document).hide();
+    $('#movieBingo', parent.document).hide();
 
     // 当たり判定
     atariHantei(settingIndex);
@@ -170,7 +170,7 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    // showMovie(time);
+    showMovie(time);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     $(this).delay(time + 500).queue(function () {
