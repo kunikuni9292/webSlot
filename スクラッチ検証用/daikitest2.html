@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Scratch Card</title>
+    <style>
+        .container {
+            position: relative;
+        }
+
+        .coupon {
+            background-color: #ABBAEA;
+        }
+        
+        .coupon img {
+            width: 480px;
+            height: 320px;
+        }
+        
+        .scratch {
+            background-color: #FBD603;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 480px;
+            height: 320px;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="container">
+        <div class="coupon">
+            <div width="480" height="320" >Hit</div>
+        </div>
+        <canvas id="cover" width="480" height="320" class="scratch" ></canvas>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            /*隠しレイヤーのcanvas対象を取得*/
+            var container = document.getElementsByClassName('container');
+            var canvas_cover = document.getElementById('cover');
+            var ctx_cover = canvas_cover.getContext('2d');
+
+            canvas_cover.style.position = 'absolute';container.style.position = 'relative';
+
+
+            /*画像を描画*/
+            ctx_cover.fillStyle = "#999";
+            ctx_cover.fillRect(0, 0, canvas_cover.width, canvas_cover.height); /*塗りつぶし*/
+
+            var isDrawing = false;
+
+            canvas_cover.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                isDrawing = true;
+            });
+
+            canvas_cover.addEventListener('mousemove', function(e) {
+                e.preventDefault();
+                if (!isDrawing) return;
+                var x = getPageX(e) - this.offsetLeft;
+                var y = getPageY(e) - this.offsetTop;
+                ctx_cover.clearRect(x, y, 40, 40); /* 切り抜き*/
+            });
+
+            canvas_cover.addEventListener('mouseup', function(e) {
+                isDrawing = false;
+            });
+
+            function getPageX(e) {
+                var pageX = 0;
+                if (e.touches) {
+                    pageX = e.touches[0].pageX;
+                } else {
+                    pageX = e.pageX;
+                }
+                return pageX;
+            }
+
+            function getPageY(e) {
+                var pageY = 0;
+                if (e.touches) {
+                    pageY = e.touches[0].pageY;
+                } else {
+                    pageY = e.pageY;
+                }
+                return pageY;
+            }
+        });
+    </script>
+</body>
+
+</html>

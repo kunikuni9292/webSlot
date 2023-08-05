@@ -9,12 +9,10 @@ var startPos = -30 * (slotNum - 3);
 var stopPos = 0;
 // 最後に真ん中（２行目）にくるスロット画像の番号
 var middleNum = 2;
-// 回転エフェクト配列（jQuery easing）
-// var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce'];
 // 回転秒数
 var slotDuration = 5;
 // リーチ時の回転秒数
-var reachDuration = 20;
+var reachDuration = 10;
 // 動画の再生時間(秒)
 var movieDuration = 25;
 // 当たり目確率（1=100%、0.5=50%）
@@ -26,6 +24,7 @@ var reachKakuritu = parseFloat(localStorage.getItem("reachProbability")) || 1;
  Definitions
 -----------------------*/
 var atariIdx;
+var settingIndex;
 var easingIdx;
 var hantei;
 var reachHantei;
@@ -45,7 +44,7 @@ $(document).ready(function () {
     $('#movieBingo', parent.document).hide();
 
     // 当たり判定
-    atariHantei();
+    atariHantei(settingIndex);
     // リーチ絵柄に合わせた動画を表示する　リーチ時の絵柄のインデックスを取得する
     movieReach()
 
@@ -68,8 +67,8 @@ $(document).ready(function () {
 });
 
 /* 当たり判定 */
-function atariHantei(setting_index) {
-    atariIdx = setting_index ?? Math.floor(Math.random() * slotImg.length);
+function atariHantei(settingIndex) {
+    atariIdx = settingIndex ?? Math.floor(Math.random() * slotImg.length);
     hantei = Math.random() < bingoKakuritu;
     reachHantei = Math.random() < reachKakuritu;
 };
@@ -151,7 +150,7 @@ function slotStart() {
 
     if ($("#slots_a .wrapper").css("margin-top") != startPos + "px") {
         // スロットが動いた後であれば、当たり判定を再度行なう
-        atariHantei();
+        atariHantei(settingIndex);
     }
 
     // スロットの回転秒数の取得
@@ -171,8 +170,7 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    // 動画非表示
-    isShowMovie(time, reachTime);
+    isShowMovie(time);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     $(this).delay(time + 500).queue(function () {
@@ -185,7 +183,7 @@ function slotStart() {
 }
 
 // スロット回転中に動画を表示する処理
-function isShowMovie(time, reachTime) {
+function isShowMovie(time) {
     // リーチの時
     if (reachHantei) {
         setTimeout(function () {
@@ -196,27 +194,13 @@ function isShowMovie(time, reachTime) {
         setTimeout(function () {
             $('#slot', parent.document).show();
             $('#movieReach', parent.document).hide();
-        }, time + 1250 + movieTime);
+        }, time + 1250 + 2000);
     }
-    // if (hantei) {
-    //     // ビンゴの時
-    //     setTimeout(function () {
-    //         $('#slot', parent.document).hide();
-    //         $('#movieBingo', parent.document).show();
-    //     }, time + reachTime - 3000);
-    //     // 動画再生後
-    //     setTimeout(function () {
-    //         $('#slot', parent.document).show();
-    //         $('#movieBingo', parent.document).hide();
-    //     }, time + reachTime + movieTime);
-    // }
 }
 
 
 /* スロット画像移動 */
 function slotMove(obj, slotno, reach) {
-    var slotEasing = ['swing', 'easeOutQuart', 'easeOutBack', 'easeOutBounce', 'easeOutCubic', 'easeOutQuad'];
-
     if (obj.css("margin-top") != startPos + "px") {
         // スロットが動いた後であれば、スロット画像を再作成
         slotCreate(obj, slotno);
@@ -227,7 +211,7 @@ function slotMove(obj, slotno, reach) {
         "margin-top": stopPos + "px"
     }, {
         'duration': reach ? reachTime : time,
-        'easing': slotEasing[5]
+        'easing': 'easeOutQuad'
     });
 };
 
@@ -246,6 +230,10 @@ function movieReach() {
     // iframe内の要素にアクセス
     var element = iframeDocument.find('#my-video');
     element.attr("src", randomVideo);
+
+    // 動画を再生
+    // var videoElement = iframeDocument.find('#my-video')[0]; // ビデオ要素を取得
+    // videoElement.play(); // 動画再生を開始
 };
 
 
@@ -297,8 +285,18 @@ $(window).on('load', function () {
             settingIndex = null;
             console.log("ランダムに絵柄が設定されます");
         }
+        // ビンゴ絵柄のインデックスをローカルストレージに保存
+        localStorage.setItem("bingoImageIndex", inputIndex);
+        loadValues(); // loadValues() を実行
+
+        $('#slot', parent.document).show();
+        // 動画初期非表示
+        $('#movieReach', parent.document).hide();
+        $('#movieBingo', parent.document).hide();
 
         atariHantei(settingIndex)
+        console.log("ビンゴのインデックス指定:", settingIndex);
+        movieReach()
         // A枠にスロット画像を生成
         slotCreate($("#slots_a .wrapper"), 1, false);
         // B枠にスロット画像を生成
@@ -316,6 +314,8 @@ function loadValues() {
     // ローカルストレージから値を取得
     reachKakuritu = localStorage.getItem("reachProbability");
     bingoKakuritu = localStorage.getItem("bingoProbability");
+    // ローカルストレージから絵柄のインデックスを取得
+    var bingoImageIndex = localStorage.getItem("bingoImageIndex");
 
     // iframe要素にアクセス
     var iframe = $('#setting', parent.document);
@@ -325,7 +325,7 @@ function loadValues() {
     var total_probability = iframeDocument.find('#total_probability');
     var reach_probability = iframeDocument.find('#reach_probability');
     var bingo_probability = iframeDocument.find('#bingo_probability');
-
+    var design_particular = iframeDocument.find('#design_particular');
 
     // 値が存在する場合、画面に反映させる
     if (reachKakuritu && bingoKakuritu) {
@@ -335,6 +335,21 @@ function loadValues() {
         // 確率のログ
         console.log('loadValues_reachKakuritu', reachKakuritu);
         console.log('loadValues_bingoKakuritu', bingoKakuritu);
-
+    }
+    // 絵柄のインデックスが存在する場合、画面に反映させる
+    if (bingoImageIndex !== null) {
+        var inputIndex = parseInt(bingoImageIndex);
+        // プルダウンの選択値に応じて絵柄の名称を取得
+        var selectedImage = slotImg[inputIndex];
+        // 入力された値が有効な範囲かチェック
+        if (inputIndex >= 0 && inputIndex < slotImg.length) {
+            // 有効な値の場合、ビンゴ絵柄のインデックスを設定
+            settingIndex = inputIndex;
+            design_particular.val(settingIndex);
+            console.log("ビンゴの絵柄をローカルストレージから指定しました:", selectedImage);
+        } else {
+            settingIndex = null;
+            console.log("ランダムに絵柄がローカルストレージから設定されます");
+        }
     }
 }
