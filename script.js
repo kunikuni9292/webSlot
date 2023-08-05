@@ -24,7 +24,7 @@ var reachKakuritu = parseFloat(localStorage.getItem("reachProbability")) || 1;
  Definitions
 -----------------------*/
 var atariIdx;
-var settingIndex;
+var settingIndex = 4; // NOTE: 必ず７が揃う
 var easingIdx;
 var hantei;
 var reachHantei;
