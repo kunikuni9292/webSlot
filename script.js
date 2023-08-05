@@ -55,16 +55,54 @@ $(document).ready(function () {
 
     // 1秒後に自動でdram回転する
     setTimeout(function () {
-        // A枠にスロット画像を生成
-        slotCreate($("#slots_a .wrapper"), 1, false);
-        // B枠にスロット画像を生成
-        slotCreate($("#slots_b .wrapper"), 2, true);
-        // C枠にスロット画像を生成
-        slotCreate($("#slots_c .wrapper"), 3, false);
-
         slotStart()
     }, 1000);
 });
+
+/* スロットスタート */
+function slotStart() {
+
+    // A枠にスロット画像を生成
+    slotCreate($("#slots_a .wrapper"), 1, false);
+    // B枠にスロット画像を生成
+    slotCreate($("#slots_b .wrapper"), 2, true);
+    // C枠にスロット画像を生成
+    slotCreate($("#slots_c .wrapper"), 3, false);
+
+    if ($("#slots_a .wrapper").css("margin-top") != startPos + "px") {
+        // スロットが動いた後であれば、当たり判定を再度行なう
+        atariHantei(settingIndex);
+    }
+
+    // スロットの回転秒数の取得
+    time = slotDuration * 1000;
+    reachTime = reachDuration * 1000;
+    // 動画の再生時間
+    movieTime = movieDuration * 1000;
+
+    // A枠のスロット画像移動
+    slotMove($("#slots_a .wrapper"), 1);
+    // 少し遅れてC枠のスロット画像移動
+    setTimeout(function () {
+        slotMove($("#slots_c .wrapper"), 3);
+    }, 1500);
+    // さらに少し遅れてB枠のスロット画像移動
+    setTimeout(function () {
+        slotMove($("#slots_b .wrapper"), 2, reachHantei);
+    }, 2500);
+
+    showMovie(time);
+
+    // スロット停止後の処理（jQueryキューで回転秒数後に実行）
+    $(this).delay(time + 500).queue(function () {
+        // 結果判定
+        if (result2[1] == result2[2] && result2[1] == result2[3]) {
+        }
+        // キュー削除
+        $(this).dequeue();
+    });
+}
+
 
 /* 当たり判定 */
 function atariHantei(settingIndex) {
@@ -145,43 +183,6 @@ function slotCreate(obj, slotno, isMidslot) {
     });
 }
 
-/* スロットスタート */
-function slotStart() {
-
-    if ($("#slots_a .wrapper").css("margin-top") != startPos + "px") {
-        // スロットが動いた後であれば、当たり判定を再度行なう
-        atariHantei(settingIndex);
-    }
-
-    // スロットの回転秒数の取得
-    time = slotDuration * 1000;
-    reachTime = reachDuration * 1000;
-    // 動画の再生時間
-    movieTime = movieDuration * 1000;
-
-    // A枠のスロット画像移動
-    slotMove($("#slots_a .wrapper"), 1);
-    // 少し遅れてC枠のスロット画像移動
-    setTimeout(function () {
-        slotMove($("#slots_c .wrapper"), 3);
-    }, 1000);
-    // さらに少し遅れてB枠のスロット画像移動
-    setTimeout(function () {
-        slotMove($("#slots_b .wrapper"), 2, reachHantei);
-    }, 2000);
-
-    showMovie(time);
-
-    // スロット停止後の処理（jQueryキューで回転秒数後に実行）
-    $(this).delay(time + 500).queue(function () {
-        // 結果判定
-        if (result2[1] == result2[2] && result2[1] == result2[3]) {
-        }
-        // キュー削除
-        $(this).dequeue();
-    });
-}
-
 // スロット回転中に動画を表示する処理
 function showMovie(time) {
     // リーチの時
@@ -189,12 +190,12 @@ function showMovie(time) {
         setTimeout(function () {
             $('#slot', parent.document).hide();
             $('#movieReach', parent.document).show();
-        }, time + 1250);
+        }, time + 2000);
         // 動画再生後
         setTimeout(function () {
             $('#slot', parent.document).show();
             $('#movieReach', parent.document).hide();
-        }, time + 1250 + movieTime);
+        }, time + 2000 + movieTime);
     }
 }
 
