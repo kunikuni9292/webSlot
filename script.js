@@ -269,6 +269,14 @@ $(window).on('load', function () {
     // ビンゴ絵柄用の変数
     var bingo_image_fixing_button = iframeDocument.find('#bingo_image_fixing_button');
     var design_particular = iframeDocument.find('#design_particular');
+    var hiddenButton = iframeDocument.find('#hidden_button')
+
+
+    $(hiddenButton).click(function () {
+        iframe.hide();
+        //document.getElementById('fixing_button').style.display = 'none';
+    });
+      
 
 
 
