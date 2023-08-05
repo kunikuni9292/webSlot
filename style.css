@@ -40,30 +40,6 @@
     margin-left: 25px;
 }
 
-/* .slotglass-top {
-    position: absolute;
-    z-index: 999;
-    width: 100px;
-    height: 15px;
-    background: -moz-linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(20, 20, 20, 0.3)), to(rgba(20, 20, 20, 0)));
-    background: -o-linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
-    background: linear-gradient(top, rgba(20, 20, 20, 0.3), rgba(20, 20, 20, 0));
-} */
-
-/* .slotglass-bottom {
-    position: absolute;
-    z-index: 999;
-    width: 100px;
-    height: 15px;
-    bottom: 0px;
-    background: -moz-linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(20, 20, 20, 0)), to(rgba(20, 20, 20, 0.3)));
-    background: -o-linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
-    background: linear-gradient(top, rgba(20, 20, 20, 0), rgba(20, 20, 20, 0.3));
-} */
-
-
 
 #startBtn {
     border-radius: 10px;
