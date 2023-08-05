@@ -259,6 +259,8 @@ $(window).on('load', function () {
 
     // iframe要素にアクセス
     var iframe = $('#setting', parent.document);
+    // 設定画面を非表示するボタンインスタンスを取得
+    var showButton = $('#overlay-button', parent.document);
     // iframe内のdocumentオブジェクトを取得
     var iframeDocument = iframe.contents();
     // iframe内の要素にアクセス　
@@ -269,14 +271,20 @@ $(window).on('load', function () {
     // ビンゴ絵柄用の変数
     var bingo_image_fixing_button = iframeDocument.find('#bingo_image_fixing_button');
     var design_particular = iframeDocument.find('#design_particular');
-    var hiddenButton = iframeDocument.find('#hidden_button')
-
+    var hiddenButton = iframeDocument.find('#hidden_button');
 
     $(hiddenButton).click(function () {
-        iframe.hide();
-        //document.getElementById('fixing_button').style.display = 'none';
+        iframe.hide(); // 設定画面を非表示
     });
-      
+
+
+    // ボタンがクリックされたときの処理
+    $(showButton).click(function () {
+        iframe.show(); // フレームを表示
+
+    });
+
+
 
 
 
