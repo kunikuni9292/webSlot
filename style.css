@@ -8,9 +8,9 @@
 #slots_c {
     position: relative;
     float: left;
-    width: 110px;
+    width: 440px;
     height: auto;
-    height: 208px;
+    height: 832px;
     /* background-color: green; */
     /* border: 2px palegoldenrod outset; */
     overflow: hidden;
@@ -26,18 +26,17 @@
 #slots_a .wrapper .slot,
 #slots_b .wrapper .slot,
 #slots_c .wrapper .slot {
-    width: 105px;
-    height: 70px;
+    width: 420px;
+    height: 280px;
     text-align: center;
-    padding-top: 2px;
 }
 #slotbox {
     /* background-color: #5bff15; */
     border-radius: 5px;
-    width: 350px;
-    padding: 6px;
-    /* ここでスロットの位置決めている */
-    margin-left: 25px;
+    width: 1400px;
+    padding: 24px;
+    padding-left: 32px;
+    padding-top: 25px;
 }
 
 /* 動画用のCSS */
@@ -51,13 +50,11 @@
 }
 
 
-/* 修正：iframeの幅と高さを指定 */
+/* iframeの幅と高さを指定 */
 iframe {
     position: absolute;
-    width: 50vw;
+    width: 100vw;
     height: 100vh;
-    /* スロットの表示領域の高さ */
-    max-height: 300px;
 }
 
 /* 設定画面用のcss */
@@ -73,6 +70,7 @@ iframe {
     height: 250px;
 }
 
+/* 設定画面を表示するボタンのスタイル */
 #overlay-button {
     position: absolute;
     /* 絶対位置 */

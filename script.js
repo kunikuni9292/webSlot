@@ -2,9 +2,9 @@
 // スロット画像配列
 var slotImg = ['bell.png', 'cherry.png', 'gorilla.png', 'palm.png', 'seven.png', 'watermelon.png'];
 // 縦に並べるスロット画像の数
-var slotNum = 500;
+var slotNum = 600;
 // スロット画像のスタート位置
-var startPos = -30 * (slotNum - 3);
+var startPos = -120 * (slotNum - 3);
 // スロット画像の停止位置
 var stopPos = 0;
 // 最後に真ん中（２行目）にくるスロット画像の番号
@@ -40,8 +40,8 @@ var result3 = new Array();
 /* 初期処理 */
 $(document).ready(function () {
     // 動画初期非表示
-    $('#movieReach', parent.document).hide();
-    $('#movieBingo', parent.document).hide();
+    // $('#movieReach', parent.document).hide();
+    // $('#movieBingo', parent.document).hide();
 
     // 当たり判定
     atariHantei(settingIndex);
@@ -135,7 +135,7 @@ function slotCreate(obj, slotno, isMidslot) {
             "<img border='0'" +
             " src='img/" + slotImg[idx] + "'" +
             // 画像の大きさ
-            " width='100' height='60' />" +
+            " width='360' height='216' />" +
             "</div>");
     }
 
@@ -170,7 +170,7 @@ function slotStart() {
         slotMove($("#slots_b .wrapper"), 2, reachHantei);
     }, 2000);
 
-    showMovie(time);
+    // showMovie(time);
 
     // スロット停止後の処理（jQueryキューで回転秒数後に実行）
     $(this).delay(time + 500).queue(function () {
