@@ -243,6 +243,8 @@ $(window).on('load', function () {
 
     // iframe要素にアクセス
     var iframe = $('#setting', parent.document);
+    // 設定画面を非表示するボタンインスタンスを取得
+    var settingShowButton = $('#overlay-button', parent.document);
     // iframe内のdocumentオブジェクトを取得
     var iframeDocument = iframe.contents();
     // iframe内の要素にアクセス　
@@ -253,8 +255,15 @@ $(window).on('load', function () {
     // ビンゴ絵柄用の変数
     var bingo_image_fixing_button = iframeDocument.find('#bingo_image_fixing_button');
     var design_particular = iframeDocument.find('#design_particular');
+    var settingHiddenButton = iframeDocument.find('#hidden_button');
 
+    $(settingHiddenButton).click(function () {
+        iframe.hide(); // 設定画面を非表示
+    });
 
+    $(settingShowButton).click(function () {
+        iframe.show(); // フレームを表示
+    });
 
     // ビンゴ確率の確定ボタンをクリックした時の処理
     $(fixingButton).click(function () {
