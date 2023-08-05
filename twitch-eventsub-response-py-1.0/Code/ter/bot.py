@@ -5,6 +5,7 @@ from typing import Any
 # Import文の下に以下のコードを追加
 import random
 import webbrowser
+import time
 
 #
 from twitchio import Channel, Chatter, PartialUser
@@ -18,6 +19,7 @@ from .cogs import *
 # -----------------------------------------------------------------------------
 # ----------------------------------------------------------------------
 class TERBot(commands.Bot):
+    last_comment_time = 0
 
     def __init__(self, _j: dict[str, Any], ) -> None:
         print(f'  Initializing bot ...')
@@ -99,29 +101,33 @@ class TERBot(commands.Bot):
             f'/me bot for {self.__prefix} has joined and is ready.'
         )
 
-    # TERBotクラスのevent_messageメソッドを以下のように修正
+    # メッセージイベント取得
     async def event_message(self, message):
-        # メッセージがボット自身のものであれば無視する
-        # if message.author and message.author.name.lower() == self.nick.lower():
-        #     return
 
         # メッセージの内容を取得
         content = message.content.lower()
 
         # 特定の文字列に対してコメントを返す
         if "ハロー" in content:
-            responses = [
-                "ヤッホー!",
-            ]
+            responses = ["ヤッホー!"]
             response = random.choice(responses)
             await message.channel.send(response)
 
 
-        # # メッセージにコメントが含まれている場合、指定のURLをブラウザで開く
-        if "コメント" in content:  # ここにコメントの条件を指定してください
-            url = "https://blurbuckets.s3.ap-northeast-1.amazonaws.com/index.html"
-            webbrowser.open(url,0) # 同じタブ内で再度読み込みする
+        # メッセージにコメントが含まれている場合、指定のURLをブラウザで開く
+        if "コメント" in content:    
+            # 現在時刻を取得
+            current_time = time.time()
 
+            # 30秒以内にコメントが送信された場合
+            if current_time - self.last_comment_time <= 30:
+                remaining_time = int(30 - (current_time - self.last_comment_time))
+                await message.channel.send(f"少々お待ちください。残り{remaining_time}秒")
+            else:
+                self.last_comment_time = current_time  # 最後にコメントが送信された時刻を更新
+                url = "https://blurbuckets.s3.ap-northeast-1.amazonaws.com/index.html"
+                webbrowser.open(url, 0)  # 同じタブ内で再度読み込みする
+    
         await self.handle_commands(message)
 
     @commands.command(name='test', )
