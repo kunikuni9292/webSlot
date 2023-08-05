@@ -40,17 +40,6 @@
     margin-left: 25px;
 }
 
-
-#startBtn {
-    border-radius: 10px;
-    background-color: gold;
-    width: 100%;
-    color: white;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px #333;
-    outline: 0;
-}
-
 /* 動画用のCSS */
 .iframeWrap {
     position: relative;
