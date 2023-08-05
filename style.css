@@ -11,7 +11,7 @@
     width: 110px;
     height: auto;
     height: 208px;
-    background-color: green;
+    /* background-color: green; */
     /* border: 2px palegoldenrod outset; */
     overflow: hidden;
 }
@@ -99,6 +99,7 @@ iframe {
 
 /* 設定画面用のcss */
 #setting {
+    display: none; /* 最初は非表示にする */
     background-color: rgb(176, 176, 176);
     position: absolute;
     top: 300px;
@@ -117,9 +118,9 @@ iframe {
     width: 450px;
     /* 画面の幅いっぱいに拡大 */
     height: 250px;
-    /* background-color: transparent; 背景を透明にする */
+    background-color: transparent; /*景を透明にする*/
     /* TODO: 最終的に透明にする */
-    background-color: rgba(0, 128, 0, 0.3); /* 透明度を30%に設定 */
+    /* background-color: rgba(0, 128, 0, 0.3); 透明度を30%に設定 */
     cursor: pointer;
     /* マウスを乗せた際にカーソルをポインターに変更 */
 }
