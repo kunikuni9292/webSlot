@@ -230,6 +230,10 @@ function movieReach() {
     // iframe内の要素にアクセス
     var element = iframeDocument.find('#my-video');
     element.attr("src", randomVideo);
+
+    // 動画を再生
+    // var videoElement = iframeDocument.find('#my-video')[0]; // ビデオ要素を取得
+    // videoElement.play(); // 動画再生を開始
 };
 
 
