@@ -43,30 +43,28 @@
 /* 動画用のCSS */
 .iframeWrap {
     position: relative;
-    padding-bottom: 56.25%;
-    height: 200px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     overflow: hidden;
 }
 
-.iframeWrap {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
 
 /* 修正：iframeの幅と高さを指定 */
 iframe {
-    width: 100%;
-    /* 画面の幅いっぱいに拡大 */
-    height: 500px;
-    /* 適切な高さに設定（必要に応じて調整） */
+    position: absolute;
+    width: 50vw;
+    height: 100vh;
+    /* スロットの表示領域の高さ */
+    max-height: 300px;
 }
 
 /* 設定画面用のcss */
 #setting {
+    position: absolute;
     display: none; /* 最初は非表示にする */
     background-color: rgb(176, 176, 176);
-    position: absolute;
     top: 300px;
     left: 0px;
     right: 0px;
