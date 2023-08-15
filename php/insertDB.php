@@ -84,6 +84,7 @@
                 const updatedImage3 = document.querySelector(`#image3_${teamId}`).value;
                 const updatedKillPoint = document.querySelector(`#kill_point_${teamId}`).value;
                 const updatedTotalPoint = document.querySelector(`#total_point_${teamId}`).value;
+                const updatedmatchCount = document.querySelector(`#match_count_${teamId}`).value;
 
                 const xhr = new XMLHttpRequest();
                 
@@ -95,7 +96,7 @@
                         // サーバーからのレスポンスを使って画面内のデータを更新
                     }
                 };
-                const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}`; // フォームデータ
+                const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}&match_count=${updatedmatchCount}`; // フォームデータ
                 xhr.send(data);
             });
         });
@@ -144,6 +145,7 @@
             </div>
             <div class="kills"><?php echo $results['kill_point'] ?></div>
             <div class="totalNumber"><?php echo $results['total_point'] ?></div>
+            <div class="totalNumber"><?php echo $results['match_count'] ?></div>
         </div>  
 
             <!-- 更新フォームを作成 -->
@@ -158,6 +160,7 @@
                 </div>
                 <div class="kills"><input type="text" name="kill_point" value="<?php echo $results['kill_point']; ?>"></div>
                 <div class="totalNumber"><input type="text" name="total_point" value="<?php echo $results['total_point']; ?>"></div>
+                <div class="totalNumber"><input type="text" name="match_count" value="<?php echo $results['match_count']; ?>"></div>
                 <button type="submit">更新</button>
             </div>  
             </form>
@@ -175,11 +178,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $updatedImage3 = $_POST['image3'];
             $updatedKillPoint = $_POST['kill_point'];
             $updatedTotalPoint = $_POST['total_point'];
+            $updatedmatchCount = $_POST['match_count'];
 
             // DB接続と更新処理を行う
             $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
 
-            $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, kill_point = :kill_point, total_point = :total_point WHERE teamId = :teamId";
+            $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, kill_point = :kill_point, total_point = :total_point, match_count = :match_count WHERE teamId = :teamId";
             $stmt = $pdo->prepare($updateSql);
             $stmt->bindValue(':team_name', $updatedTeamName);
             $stmt->bindValue(':image1', $updatedImage1);
@@ -187,6 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bindValue(':image3', $updatedImage3);
             $stmt->bindValue(':kill_point', $updatedKillPoint);
             $stmt->bindValue(':total_point', $updatedTotalPoint);
+            $stmt->bindValue(':match_count', $updatedmatchCount);
             $stmt->bindValue(':teamId', $teamId);
             $stmt->execute();
 
