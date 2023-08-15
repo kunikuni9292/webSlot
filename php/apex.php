@@ -104,7 +104,7 @@
     <?php
     foreach ($results_array as $results) : ?>
         <div class="team-container">
-            <div class="firstBox"><?php echo $index + 1 ?></div>
+            <div class="firstBox"><?php echo $results['teamId']?></div>
             <div class="verticalBorder"></div>
             <div class="Character3"><?php echo $results['Character3'] ?></div>
             <div class="team-name"><?php echo h($results['team_name']) ?></div>
