@@ -203,75 +203,78 @@
             <button type="submit" name="add_data">データ追加</button>
         </div>
     </form>
-
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        try {
-            // 以前の更新処理コード
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // 更新ボタンが押された場合の処理
-                $teamId = $_POST['teamId'];
-                $updatedTeamName = $_POST['team_name'];
-                $updatedImage1 = $_POST['image1'];
-                $updatedImage2 = $_POST['image2'];
-                $updatedImage3 = $_POST['image3'];
-                $updatedKillPoint = $_POST['kill_point'];
-                $updatedTotalPoint = $_POST['total_point'];
-                $updatedmatchCount = $_POST['match_count'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        // 更新ボタンが押された場合の処理
+        if (isset($_POST['teamId'])) {
+            $teamId = $_POST['teamId'];
+            $updatedTeamName = $_POST['team_name'];
+            $updatedImage1 = $_POST['image1'];
+            $updatedImage2 = $_POST['image2'];
+            $updatedImage3 = $_POST['image3'];
+            $updatedKillPoint = $_POST['kill_point'];
+            $updatedTotalPoint = $_POST['total_point'];
+            $updatedmatchCount = $_POST['match_count'];
 
-                // DB接続と更新処理を行う
-                $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
+            // DB接続と更新処理を行う
+            $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, kill_point = :kill_point, total_point = :total_point, match_count = :match_count WHERE teamId = :teamId";
-                $stmt = $pdo->prepare($updateSql);
-                $stmt->bindValue(':team_name', $updatedTeamName);
-                $stmt->bindValue(':image1', $updatedImage1);
-                $stmt->bindValue(':image2', $updatedImage2);
-                $stmt->bindValue(':image3', $updatedImage3);
-                $stmt->bindValue(':kill_point', $updatedKillPoint);
-                $stmt->bindValue(':total_point', $updatedTotalPoint);
-                $stmt->bindValue(':match_count', $updatedmatchCount);
-                $stmt->bindValue(':teamId', $teamId);
-                $stmt->execute();
+            $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, kill_point = :kill_point, total_point = :total_point, match_count = :match_count WHERE teamId = :teamId";
+            $stmt = $pdo->prepare($updateSql);
+            $stmt->bindValue(':team_name', $updatedTeamName);
+            $stmt->bindValue(':image1', $updatedImage1);
+            $stmt->bindValue(':image2', $updatedImage2);
+            $stmt->bindValue(':image3', $updatedImage3);
+            $stmt->bindValue(':kill_point', $updatedKillPoint);
+            $stmt->bindValue(':total_point', $updatedTotalPoint);
+            $stmt->bindValue(':match_count', $updatedmatchCount);
+            $stmt->bindValue(':teamId', $teamId);
+            $stmt->execute();
 
-
-                // 新しいデータの追加処理
-                if (isset($_POST['add_data'])) {
-                    $newTeamName = $_POST['new_team_name'];
-                    $newImage1 = $_POST['new_image1'];
-                    $newImage2 = $_POST['new_image2'];
-                    $newImage3 = $_POST['new_image3'];
-                    $newKillPoint = $_POST['new_kill_point'];
-                    $newTotalPoint = $_POST['new_total_point'];
-                    $newMatchCount = $_POST['new_match_count'];
-
-                    // データベースへの挿入処理
-                    $insertSql = "INSERT INTO results_table (team_name, image1, image2, image3, kill_point, total_point, match_count) VALUES (:team_name, :image1, :image2, :image3, :kill_point, :total_point, :match_count)";
-                    $insertStmt = $pdo->prepare($insertSql);
-                    $insertStmt->bindValue(':team_name', $newTeamName);
-                    $insertStmt->bindValue(':image1', $newImage1);
-                    $insertStmt->bindValue(':image2', $newImage2);
-                    $insertStmt->bindValue(':image3', $newImage3);
-                    $insertStmt->bindValue(':kill_point', $newKillPoint);
-                    $insertStmt->bindValue(':total_point', $newTotalPoint);
-                    $insertStmt->bindValue(':match_count', $newMatchCount);
-                    $insertStmt->execute();
-
-                    // データベース接続を閉じる
-                    $pdo = null;
-
-                    // ページをリロードして新しいデータが表示されるようにする
-                    header('Location: ' . $_SERVER['PHP_SELF']);
-                    exit();
-                }
-                // データベース接続を閉じる
-                $pdo = null;
-            }
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            // データベース接続を閉じる
+            $pdo = null;
         }
+
+        // 新しいデータの追加処理
+        if (isset($_POST['add_data'])) {
+            $newTeamName = $_POST['new_team_name'];
+            $newImage1 = $_POST[$newTeamName . '_image1'];
+            $newImage2 = $_POST[$newTeamName . '_image2'];
+            $newImage3 = $_POST[$newTeamName . '_image3'];
+            $newKillPoint = $_POST['new_kill_point'];
+            $newTotalPoint = $_POST['new_total_point'];
+            $newMatchCount = $_POST['new_match_count'];
+
+            // DB接続とINSERT処理を行う
+            $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $insertSql = "INSERT INTO results_table (team_name, image1, image2, image3, kill_point, total_point, match_count) VALUES (:team_name, :image1, :image2, :image3, :kill_point, :total_point, :match_count)";
+            $insertStmt = $pdo->prepare($insertSql);
+            $insertStmt->bindValue(':team_name', $newTeamName);
+            $insertStmt->bindValue(':image1', $newImage1);
+            $insertStmt->bindValue(':image2', $newImage2);
+            $insertStmt->bindValue(':image3', $newImage3);
+            $insertStmt->bindValue(':kill_point', $newKillPoint);
+            $insertStmt->bindValue(':total_point', $newTotalPoint);
+            $insertStmt->bindValue(':match_count', $newMatchCount);
+            $insertStmt->execute();
+
+            // データベース接続を閉じる
+            $pdo = null;
+
+            // ページをリロードして新しいデータが表示されるようにする
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            exit();
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
-    ?>
+}
+?>
+
 </body>
 
 </html>
