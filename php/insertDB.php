@@ -100,6 +100,21 @@
                     xhr.send(data);
                 });
             });
+
+            const teamNameSelect = document.querySelector("[name='new_team_name']");
+            const imageContainers = document.querySelectorAll(".image-container");
+
+            teamNameSelect.addEventListener("change", function() {
+                const selectedTeamName = this.value;
+                imageContainers.forEach(container => {
+                    if (container.id === selectedTeamName + "_images") {
+                        container.style.display = "block";
+                    } else {
+                        container.style.display = "none";
+                    }
+                });
+            });
+            teamNameSelect.dispatchEvent(new Event("change"));
         });
     </script>
 </head>
@@ -123,12 +138,6 @@
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
-
-
-    //DBからコメントデータお取得する
-    /* $sql = "SELECT * FROM `results_table` WHERE prefectures = '兵庫県' ORDER BY money DESC ";*/
-    $sql = "SELECT * FROM `results_table` ORDER BY total_point DESC ";
-    $results_array = $pdo->query($sql);
 
     //DBを閉じる
     $pdo = null;
@@ -170,13 +179,24 @@
     <?php endforeach; ?>
     <form method="post">
         <div class="team-container">
-            <!-- 入力フィールド -->
-            <div class="team-name"><input type="text" name="new_team_name" placeholder="新しいチーム名"></div>
+            <!-- チーム名のプルダウン選択肢 -->
+            <select class="team-name" name="new_team_name">
+                <?php foreach ($results_array as $results) : ?>
+                    <option value="<?php echo h($results['team_name']); ?>"><?php echo h($results['team_name']); ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- 関連する画像名の表示 -->
             <div class="team-images">
-                <input type="text" name="new_image1" placeholder="新しい画像1">
-                <input type="text" name="new_image2" placeholder="新しい画像2">
-                <input type="text" name="new_image3" placeholder="新しい画像3">
+                <?php foreach ($results_array as $results) : ?>
+                    <div class="image-container" id="<?php echo h($results['team_name']); ?>_images" style="display: none;">
+                        <input type="text" name="<?php echo h($results['team_name']); ?>_image1" value="<?php echo h($results['image1']); ?>">
+                        <input type="text" name="<?php echo h($results['team_name']); ?>_image2" value="<?php echo h($results['image2']); ?>">
+                        <input type="text" name="<?php echo h($results['team_name']); ?>_image3" value="<?php echo h($results['image3']); ?>">
+                    </div>
+                <?php endforeach; ?>
             </div>
+
             <div class="kills"><input type="text" name="new_kill_point" placeholder="新しいキルポイント"></div>
             <div class="totalNumber"><input type="text" name="new_total_point" placeholder="新しい合計ポイント"></div>
             <div class="totalNumber"><input type="text" name="new_match_count" placeholder="新しいマッチ数"></div>
