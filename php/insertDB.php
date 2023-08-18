@@ -74,6 +74,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const updateButtons = document.querySelectorAll(".update-button");
+            const teamContainers = document.querySelectorAll(".team-container");
+            const teamNameSelect = document.querySelector("[name='new_team_name']");
+            const imageContainers = document.querySelectorAll(".image-container");
+            const matchCountFilter = document.getElementById("matchCountFilter");
 
             updateButtons.forEach(button => {
                 button.addEventListener("click", function() {
@@ -101,6 +105,64 @@
                 });
             });
 
+            teamNameSelect.addEventListener("change", function() {
+                const selectedTeamName = this.value;
+                imageContainers.forEach(container => {
+                    if (container.id === selectedTeamName + "_images") {
+                        container.style.display = "block";
+                    } else {
+                        container.style.display = "none";
+                    }
+                });
+            });
+            teamNameSelect.dispatchEvent(new Event("change"));
+
+            matchCountFilter.addEventListener("change", function() {
+                const selectedMatchCount = this.value;
+
+                
+                teamContainers.forEach(container => {
+                    const matchCountCell = container.querySelector(".totalNumber");
+                    if (selectedMatchCount === "" || matchCountCell.textContent === selectedMatchCount) {
+                        container.style.display = "flex";
+                    } else {
+                        container.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const updateButtons = document.querySelectorAll(".update-button");
+
+            updateButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const teamId = this.getAttribute("data-team-id");
+                    const updatedTeamName = document.querySelector(`#team_name_${teamId}`).value;
+                    const updatedImage1 = document.querySelector(`#image1_${teamId}`).value;
+                    const updatedImage2 = document.querySelector(`#image2_${teamId}`).value;
+                    const updatedImage3 = document.querySelector(`#image3_${teamId}`).value;
+                    const updatedKillPoint = document.querySelector(`#kill_point_${teamId}`).value;
+                    const updatedTotalPoint = document.querySelector(`#total_point_${teamId}`).value;
+                    const updatedmatchCount = document.querySelector(`#match_count_${teamId}`).value;
+
+                    const xhr = new XMLHttpRequest();
+
+                    xhr.open("POST", "./update.php"); // サーバーサイドのPHPファイルへのパス
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            // サーバーからのレスポンスを使って画面内のデータを更新
+                        }
+                    };
+                    const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}&match_count=${updatedmatchCount}`; // フォームデータ
+                    xhr.send(data);
+                });
+            });
+            // チーム名をプルダウンで絞り込む機能
             const teamNameSelect = document.querySelector("[name='new_team_name']");
             const imageContainers = document.querySelectorAll(".image-container");
 
@@ -115,8 +177,25 @@
                 });
             });
             teamNameSelect.dispatchEvent(new Event("change"));
+
+            // 試合数で表示を絞り込む
+            const matchCountFilter = document.getElementById("matchCountFilter");
+            // const teamContainers = document.querySelectorAll(".team-container");
+
+            matchCountFilter.addEventListener("change", function() {
+                const selectedMatchCount = this.value;
+
+                teamContainers.forEach(container => {
+                    const matchCountCell = container.querySelector(".totalNumber");
+                    if (selectedMatchCount === "" || matchCountCell.textContent === selectedMatchCount) {
+                        container.style.display = "flex";
+                    } else {
+                        container.style.display = "none";
+                    }
+                });
+            });
         });
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -142,6 +221,17 @@
     //DBを閉じる
     $pdo = null;
     ?>
+
+    <!-- プルダウン選択肢を設置 -->
+    <select id="matchCountFilter" class="team-name" name="match_count_filter">
+        <option value="">すべての試合数</option>
+        <?php
+        $uniqueMatchCounts = array_unique(array_column($results_array, 'match_count'));
+        foreach ($uniqueMatchCounts as $matchCount) {
+            echo "<option value=\"$matchCount\">$matchCount</option>";
+        }
+        ?>
+    </select>
 
     <?php
     foreach ($results_array as $results) : ?>
