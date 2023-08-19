@@ -8,22 +8,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updatedImage1 = $_POST['image1'];
     $updatedImage2 = $_POST['image2'];
     $updatedImage3 = $_POST['image3'];
+    $updatedRankPosition = $_POST['rank_position'];
     $updatedKillPoint = $_POST['kill_point'];
     $updatedTotalPoint = $_POST['total_point'];
+    $updatedMatchCount = $_POST['match_count'];
 
     // データベースの更新処理を実行
     try {
         $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, kill_point = :kill_point, total_point = :total_point WHERE teamId = :teamId";
+        $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, rank_position = :rank_position, kill_point = :kill_point, total_point = :total_point, match_count = :match_count WHERE teamId = :teamId";
         $stmt = $pdo->prepare($updateSql);
         $stmt->bindValue(':team_name', $updatedTeamName);
         $stmt->bindValue(':image1', $updatedImage1);
         $stmt->bindValue(':image2', $updatedImage2);
         $stmt->bindValue(':image3', $updatedImage3);
+        $stmt->bindValue(':rank_position', $updatedRankPosition);
         $stmt->bindValue(':kill_point', $updatedKillPoint);
         $stmt->bindValue(':total_point', $updatedTotalPoint);
+        $stmt->bindValue(':match_count', $updatedMatchCount);
         $stmt->bindValue(':teamId', $teamId);
         $stmt->execute();
 
