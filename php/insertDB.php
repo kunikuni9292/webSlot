@@ -65,6 +65,14 @@
             width: 30px;
             margin-right: 10px;
         }
+        .rankPosition {
+            width: 30px;
+            margin-right: 10px;
+        }
+        .matchCount {
+            width: 30px;
+            margin-right: 10px;
+        }
 
         .kills {
             width: 30px;
@@ -86,6 +94,7 @@
                     const updatedImage1 = document.querySelector(`#image1_${teamId}`).value;
                     const updatedImage2 = document.querySelector(`#image2_${teamId}`).value;
                     const updatedImage3 = document.querySelector(`#image3_${teamId}`).value;
+                    const updatedRankPosition = document.querySelector(`#rank_position_${teamId}`).value;
                     const updatedKillPoint = document.querySelector(`#kill_point_${teamId}`).value;
                     const updatedTotalPoint = document.querySelector(`#total_point_${teamId}`).value;
                     const updatedmatchCount = document.querySelector(`#match_count_${teamId}`).value;
@@ -100,7 +109,7 @@
                             // サーバーからのレスポンスを使って画面内のデータを更新
                         }
                     };
-                    const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}&match_count=${updatedmatchCount}`; // フォームデータ
+                    const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&rank_position=${updatedRankPosition}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}&match_count=${updatedmatchCount}`; // フォームデータ
                     xhr.send(data);
                 });
             });
@@ -120,9 +129,8 @@
             matchCountFilter.addEventListener("change", function() {
                 const selectedMatchCount = this.value;
 
-                
                 teamContainers.forEach(container => {
-                    const matchCountCell = container.querySelector(".totalNumber");
+                    const matchCountCell = container.querySelector(".matchCount");
                     if (selectedMatchCount === "" || matchCountCell.textContent === selectedMatchCount) {
                         container.style.display = "flex";
                     } else {
@@ -230,6 +238,11 @@
         foreach ($uniqueMatchCounts as $matchCount) {
             echo "<option value=\"$matchCount\">$matchCount</option>";
         }
+        // 新しい試合数がDBに存在しない場合、プルダウンに追加
+        $newMatchCount = max($uniqueMatchCounts) + 1; // 新しい試合数の値
+        if (!in_array($newMatchCount, $uniqueMatchCounts)) {
+            echo "<option value=\"$newMatchCount\">新しい試合</option>";
+        }
         ?>
     </select>
 
@@ -244,9 +257,10 @@
                 <img src="/img/<?php echo $results['image2'] ?>.png" alt="画像2">
                 <img src="/img/<?php echo $results['image3'] ?>.png" alt="画像3">
             </div>
+            <div class="rankPosition"><?php echo $results['rank_position'] ?></div>
             <div class="kills"><?php echo $results['kill_point'] ?></div>
             <div class="totalNumber"><?php echo $results['total_point'] ?></div>
-            <div class="totalNumber"><?php echo $results['match_count'] ?></div>
+            <div class="matchCount"><?php echo $results['match_count'] ?></div>
         </div>
 
         <!-- 更新フォームを作成 -->
@@ -259,9 +273,10 @@
                     <input type="text" name="image2" value="<?php echo $results['image2']; ?>">
                     <input type="text" name="image3" value="<?php echo $results['image3']; ?>">
                 </div>
+                <div class="rankPosition"><input type="text" name="rank_position" value="<?php echo $results['rank_position']; ?>"></div>
                 <div class="kills"><input type="text" name="kill_point" value="<?php echo $results['kill_point']; ?>"></div>
                 <div class="totalNumber"><input type="text" name="total_point" value="<?php echo $results['total_point']; ?>"></div>
-                <div class="totalNumber"><input type="text" name="match_count" value="<?php echo $results['match_count']; ?>"></div>
+                <div class="matchCount"><input type="text" name="match_count" value="<?php echo $results['match_count']; ?>"></div>
                 <button type="submit">更新</button>
             </div>
         </form>
@@ -287,9 +302,10 @@
                 <?php endforeach; ?>
             </div>
 
+            <div class="rankPosition"><input type="text" name="new_rank_position" placeholder="新しいランキング"></div>
             <div class="kills"><input type="text" name="new_kill_point" placeholder="新しいキルポイント"></div>
             <div class="totalNumber"><input type="text" name="new_total_point" placeholder="新しい合計ポイント"></div>
-            <div class="totalNumber"><input type="text" name="new_match_count" placeholder="新しいマッチ数"></div>
+            <div class="matchCount"><input type="text" name="new_match_count" placeholder="新しいマッチ数"></div>
             <button type="submit" name="add_data">データ追加</button>
         </div>
     </form>
@@ -303,6 +319,7 @@
                 $updatedImage1 = $_POST['image1'];
                 $updatedImage2 = $_POST['image2'];
                 $updatedImage3 = $_POST['image3'];
+                $updatedRankPosition = $_POST['rank_position'];
                 $updatedKillPoint = $_POST['kill_point'];
                 $updatedTotalPoint = $_POST['total_point'];
                 $updatedmatchCount = $_POST['match_count'];
@@ -311,12 +328,13 @@
                 $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, kill_point = :kill_point, total_point = :total_point, match_count = :match_count WHERE teamId = :teamId";
+                $updateSql = "UPDATE results_table SET team_name = :team_name, image1 = :image1, image2 = :image2, image3 = :image3, rank_position = :rank_position, kill_point = :kill_point, total_point = :total_point, match_count = :match_count WHERE teamId = :teamId";
                 $stmt = $pdo->prepare($updateSql);
                 $stmt->bindValue(':team_name', $updatedTeamName);
                 $stmt->bindValue(':image1', $updatedImage1);
                 $stmt->bindValue(':image2', $updatedImage2);
                 $stmt->bindValue(':image3', $updatedImage3);
+                $stmt->bindValue(':rank_position', $updatedRankPosition);
                 $stmt->bindValue(':kill_point', $updatedKillPoint);
                 $stmt->bindValue(':total_point', $updatedTotalPoint);
                 $stmt->bindValue(':match_count', $updatedmatchCount);
@@ -333,6 +351,7 @@
                 $newImage1 = $_POST[$newTeamName . '_image1'];
                 $newImage2 = $_POST[$newTeamName . '_image2'];
                 $newImage3 = $_POST[$newTeamName . '_image3'];
+                $newRankPosition = $_POST['new_rank_position'];
                 $newKillPoint = $_POST['new_kill_point'];
                 $newTotalPoint = $_POST['new_total_point'];
                 $newMatchCount = $_POST['new_match_count'];
@@ -341,12 +360,13 @@
                 $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                $insertSql = "INSERT INTO results_table (team_name, image1, image2, image3, kill_point, total_point, match_count) VALUES (:team_name, :image1, :image2, :image3, :kill_point, :total_point, :match_count)";
+                $insertSql = "INSERT INTO results_table (team_name, image1, image2, image3, rank_position, kill_point, total_point, match_count) VALUES (:team_name, :image1, :image2, :image3, :rank_position, :kill_point, :total_point, :match_count)";
                 $insertStmt = $pdo->prepare($insertSql);
                 $insertStmt->bindValue(':team_name', $newTeamName);
                 $insertStmt->bindValue(':image1', $newImage1);
                 $insertStmt->bindValue(':image2', $newImage2);
                 $insertStmt->bindValue(':image3', $newImage3);
+                $insertStmt->bindValue(':rank_position', $newRankPosition);
                 $insertStmt->bindValue(':kill_point', $newKillPoint);
                 $insertStmt->bindValue(':total_point', $newTotalPoint);
                 $insertStmt->bindValue(':match_count', $newMatchCount);
