@@ -65,12 +65,14 @@
             width: 30px;
             margin-right: 10px;
         }
+
         .rankPosition {
-            width: 30px;
+            width: 40px;
             margin-right: 10px;
         }
+
         .matchCount {
-            width: 30px;
+            width: 40px;
             margin-right: 10px;
         }
 
@@ -141,69 +143,6 @@
         });
     </script>
 
-    <!-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const updateButtons = document.querySelectorAll(".update-button");
-
-            updateButtons.forEach(button => {
-                button.addEventListener("click", function() {
-                    const teamId = this.getAttribute("data-team-id");
-                    const updatedTeamName = document.querySelector(`#team_name_${teamId}`).value;
-                    const updatedImage1 = document.querySelector(`#image1_${teamId}`).value;
-                    const updatedImage2 = document.querySelector(`#image2_${teamId}`).value;
-                    const updatedImage3 = document.querySelector(`#image3_${teamId}`).value;
-                    const updatedKillPoint = document.querySelector(`#kill_point_${teamId}`).value;
-                    const updatedTotalPoint = document.querySelector(`#total_point_${teamId}`).value;
-                    const updatedmatchCount = document.querySelector(`#match_count_${teamId}`).value;
-
-                    const xhr = new XMLHttpRequest();
-
-                    xhr.open("POST", "./update.php"); // サーバーサイドのPHPファイルへのパス
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xhr.onload = function() {
-                        if (xhr.status === 200) {
-                            const response = JSON.parse(xhr.responseText);
-                            // サーバーからのレスポンスを使って画面内のデータを更新
-                        }
-                    };
-                    const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}&match_count=${updatedmatchCount}`; // フォームデータ
-                    xhr.send(data);
-                });
-            });
-            // チーム名をプルダウンで絞り込む機能
-            const teamNameSelect = document.querySelector("[name='new_team_name']");
-            const imageContainers = document.querySelectorAll(".image-container");
-
-            teamNameSelect.addEventListener("change", function() {
-                const selectedTeamName = this.value;
-                imageContainers.forEach(container => {
-                    if (container.id === selectedTeamName + "_images") {
-                        container.style.display = "block";
-                    } else {
-                        container.style.display = "none";
-                    }
-                });
-            });
-            teamNameSelect.dispatchEvent(new Event("change"));
-
-            // 試合数で表示を絞り込む
-            const matchCountFilter = document.getElementById("matchCountFilter");
-            // const teamContainers = document.querySelectorAll(".team-container");
-
-            matchCountFilter.addEventListener("change", function() {
-                const selectedMatchCount = this.value;
-
-                teamContainers.forEach(container => {
-                    const matchCountCell = container.querySelector(".totalNumber");
-                    if (selectedMatchCount === "" || matchCountCell.textContent === selectedMatchCount) {
-                        container.style.display = "flex";
-                    } else {
-                        container.style.display = "none";
-                    }
-                });
-            });
-        });
-    </script> -->
 </head>
 
 <body>
@@ -248,35 +187,24 @@
 
     <?php
     foreach ($results_array as $results) : ?>
-        <div class="team-container">
-            <div class="firstBox"><?php echo $results['teamId'] ?></div>
-            <div class="verticalBorder"></div>
-            <div class="team-name"><?php echo h($results['team_name']) ?></div>
-            <div class="team-images">
-                <img src="/img/<?php echo $results['image1'] ?>.png" alt="画像1">
-                <img src="/img/<?php echo $results['image2'] ?>.png" alt="画像2">
-                <img src="/img/<?php echo $results['image3'] ?>.png" alt="画像3">
-            </div>
-            <div class="rankPosition"><?php echo $results['rank_position'] ?></div>
-            <div class="kills"><?php echo $results['kill_point'] ?></div>
-            <div class="totalNumber"><?php echo $results['total_point'] ?></div>
-            <div class="matchCount"><?php echo $results['match_count'] ?></div>
-        </div>
-
         <!-- 更新フォームを作成 -->
         <form method="post">
             <div class="team-container">
                 <input type="hidden" name="teamId" value="<?php echo $results['teamId']; ?>">
                 <div class="team-name"><input type="text" name="team_name" value="<?php echo $results['team_name']; ?>"></div>
                 <div class="team-images">
+
                     <input type="text" name="image1" value="<?php echo $results['image1']; ?>">
+                    <img src="/img/<?php echo $results['image1'] ?>.png" alt="画像1">
                     <input type="text" name="image2" value="<?php echo $results['image2']; ?>">
+                    <img src="/img/<?php echo $results['image2'] ?>.png" alt="画像2">
                     <input type="text" name="image3" value="<?php echo $results['image3']; ?>">
+                    <img src="/img/<?php echo $results['image3'] ?>.png" alt="画像3">
                 </div>
-                <div class="rankPosition"><input type="text" name="rank_position" value="<?php echo $results['rank_position']; ?>"></div>
-                <div class="kills"><input type="text" name="kill_point" value="<?php echo $results['kill_point']; ?>"></div>
-                <div class="totalNumber"><input type="text" name="total_point" value="<?php echo $results['total_point']; ?>"></div>
-                <div class="matchCount"><input type="text" name="match_count" value="<?php echo $results['match_count']; ?>"></div>
+                <div class="rankPosition"><input type="text" name="rank_position" value="<?php echo $results['rank_position']; ?>">位</div>
+                <div class="kills"><input type="text" name="kill_point" value="<?php echo $results['kill_point']; ?>">kill</div>
+                <div class="totalNumber"><input type="text" name="total_point" value="<?php echo $results['total_point']; ?>">point</div>
+                <div class="matchCount"><input type="text" name="match_count" value="<?php echo $results['match_count']; ?>">Battle</div>
                 <button type="submit">更新</button>
             </div>
         </form>
