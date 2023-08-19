@@ -85,12 +85,13 @@
         document.addEventListener("DOMContentLoaded", function() {
             const updateButtons = document.querySelectorAll(".update-button");
             const teamContainers = document.querySelectorAll(".team-container");
-            const teamNameSelect = document.querySelector("[name='new_team_name']");
-            const imageContainers = document.querySelectorAll(".image-container");
             const matchCountFilter = document.getElementById("matchCountFilter");
+            console.log("matchCountFilter", matchCountFilter ?? "aaa");
 
             updateButtons.forEach(button => {
                 button.addEventListener("click", function() {
+                    const updateButton = this; // ボタン要素を変数に格納
+                    updateButton.disabled = true; // ボタンを非活性化 
                     const teamId = this.getAttribute("data-team-id");
                     const updatedTeamName = document.querySelector(`#team_name_${teamId}`).value;
                     const updatedImage1 = document.querySelector(`#image1_${teamId}`).value;
@@ -108,25 +109,25 @@
                     xhr.onload = function() {
                         if (xhr.status === 200) {
                             const response = JSON.parse(xhr.responseText);
-                            // サーバーからのレスポンスを使って画面内のデータを更新
+                            if (response.success) {
+                                const message = document.createElement('div');
+                                message.textContent = 'DB更新が完了しました。';
+                                document.body.appendChild(message);
+                                // 2秒後にメッセージが非表示になる
+                                setTimeout(() => {
+                                    document.body.removeChild(message);
+                                }, 2000); // 2秒後にメッセージを非表示にする
+                            } else {
+                                // エラー処理をここに追加
+                                console.log("更新に失敗しました。。。", xhr.status);
+                            }
+                            updateButton.disabled = false;
                         }
                     };
                     const data = `teamId=${teamId}&team_name=${updatedTeamName}&image1=${updatedImage1}&image2=${updatedImage2}&image3=${updatedImage3}&rank_position=${updatedRankPosition}&kill_point=${updatedKillPoint}&total_point=${updatedTotalPoint}&match_count=${updatedmatchCount}`; // フォームデータ
                     xhr.send(data);
                 });
             });
-
-            teamNameSelect.addEventListener("change", function() {
-                const selectedTeamName = this.value;
-                imageContainers.forEach(container => {
-                    if (container.id === selectedTeamName + "_images") {
-                        container.style.display = "block";
-                    } else {
-                        container.style.display = "none";
-                    }
-                });
-            });
-            teamNameSelect.dispatchEvent(new Event("change"));
 
             matchCountFilter.addEventListener("change", function() {
                 const selectedMatchCount = this.value;
@@ -191,52 +192,26 @@
         <form method="post">
             <div class="team-container">
                 <input type="hidden" name="teamId" value="<?php echo $results['teamId']; ?>">
-                <div class="team-name"><input type="text" name="team_name" value="<?php echo $results['team_name']; ?>"></div>
+                <div class="team-name"><input type="text" id="team_name_<?php echo $results['teamId']; ?>" name="team_name" value="<?php echo $results['team_name']; ?>"></div>
                 <div class="team-images">
-
-                    <input type="text" name="image1" value="<?php echo $results['image1']; ?>">
+                    <input type="text" id="image1_<?php echo $results['teamId']; ?>" name="image1" value="<?php echo $results['image1']; ?>">
                     <img src="/img/<?php echo $results['image1'] ?>.png" alt="画像1">
-                    <input type="text" name="image2" value="<?php echo $results['image2']; ?>">
+                    <input type="text" id="image2_<?php echo $results['teamId']; ?>" name="image2" value="<?php echo $results['image2']; ?>">
                     <img src="/img/<?php echo $results['image2'] ?>.png" alt="画像2">
-                    <input type="text" name="image3" value="<?php echo $results['image3']; ?>">
+                    <input type="text" id="image3_<?php echo $results['teamId']; ?>" name="image3" value="<?php echo $results['image3']; ?>">
                     <img src="/img/<?php echo $results['image3'] ?>.png" alt="画像3">
                 </div>
-                <div class="rankPosition"><input type="text" name="rank_position" value="<?php echo $results['rank_position']; ?>">位</div>
-                <div class="kills"><input type="text" name="kill_point" value="<?php echo $results['kill_point']; ?>">kill</div>
-                <div class="totalNumber"><input type="text" name="total_point" value="<?php echo $results['total_point']; ?>">point</div>
-                <div class="matchCount"><input type="text" name="match_count" value="<?php echo $results['match_count']; ?>">Battle</div>
-                <button type="submit">更新</button>
+                <div class="rankPosition"><input type="text" id="rank_position_<?php echo $results['teamId']; ?>" name="rank_position" value="<?php echo $results['rank_position']; ?>">位</div>
+                <div class="kills"><input type="text" id="kill_point_<?php echo $results['teamId']; ?>" name="kill_point" value="<?php echo $results['kill_point']; ?>">kill</div>
+                <div class="totalNumber"><input type="text" id="total_point_<?php echo $results['teamId']; ?>" name="total_point" value="<?php echo $results['total_point']; ?>">point</div>
+                <div class="matchCount"><input type="text" id="match_count_<?php echo $results['teamId']; ?>" name="match_count" value="<?php echo $results['match_count']; ?>">Battle</div>
+                <button type="submit" class="update-button" data-team-id="<?php echo $results['teamId']; ?>">更新</button>
             </div>
         </form>
 
+
     <?php endforeach; ?>
-    <form method="post">
-        <div class="team-container">
-            <!-- チーム名のプルダウン選択肢 -->
-            <select class="team-name" name="new_team_name">
-                <?php foreach ($results_array as $results) : ?>
-                    <option value="<?php echo h($results['team_name']); ?>"><?php echo h($results['team_name']); ?></option>
-                <?php endforeach; ?>
-            </select>
 
-            <!-- 関連する画像名の表示 -->
-            <div class="team-images">
-                <?php foreach ($results_array as $results) : ?>
-                    <div class="image-container" id="<?php echo h($results['team_name']); ?>_images" style="display: none;">
-                        <input type="text" name="<?php echo h($results['team_name']); ?>_image1" value="<?php echo h($results['image1']); ?>">
-                        <input type="text" name="<?php echo h($results['team_name']); ?>_image2" value="<?php echo h($results['image2']); ?>">
-                        <input type="text" name="<?php echo h($results['team_name']); ?>_image3" value="<?php echo h($results['image3']); ?>">
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-            <div class="rankPosition"><input type="text" name="new_rank_position" placeholder="新しいランキング"></div>
-            <div class="kills"><input type="text" name="new_kill_point" placeholder="新しいキルポイント"></div>
-            <div class="totalNumber"><input type="text" name="new_total_point" placeholder="新しい合計ポイント"></div>
-            <div class="matchCount"><input type="text" name="new_match_count" placeholder="新しいマッチ数"></div>
-            <button type="submit" name="add_data">データ追加</button>
-        </div>
-    </form>
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
@@ -272,47 +247,11 @@
                 // データベース接続を閉じる
                 $pdo = null;
             }
-
-            // 新しいデータの追加処理
-            if (isset($_POST['add_data'])) {
-                $newTeamName = $_POST['new_team_name'];
-                $newImage1 = $_POST[$newTeamName . '_image1'];
-                $newImage2 = $_POST[$newTeamName . '_image2'];
-                $newImage3 = $_POST[$newTeamName . '_image3'];
-                $newRankPosition = $_POST['new_rank_position'];
-                $newKillPoint = $_POST['new_kill_point'];
-                $newTotalPoint = $_POST['new_total_point'];
-                $newMatchCount = $_POST['new_match_count'];
-
-                // DB接続とINSERT処理を行う
-                $pdo = new PDO('mysql:host=localhost;dbname=apex', "root", "root");
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                $insertSql = "INSERT INTO results_table (team_name, image1, image2, image3, rank_position, kill_point, total_point, match_count) VALUES (:team_name, :image1, :image2, :image3, :rank_position, :kill_point, :total_point, :match_count)";
-                $insertStmt = $pdo->prepare($insertSql);
-                $insertStmt->bindValue(':team_name', $newTeamName);
-                $insertStmt->bindValue(':image1', $newImage1);
-                $insertStmt->bindValue(':image2', $newImage2);
-                $insertStmt->bindValue(':image3', $newImage3);
-                $insertStmt->bindValue(':rank_position', $newRankPosition);
-                $insertStmt->bindValue(':kill_point', $newKillPoint);
-                $insertStmt->bindValue(':total_point', $newTotalPoint);
-                $insertStmt->bindValue(':match_count', $newMatchCount);
-                $insertStmt->execute();
-
-                // データベース接続を閉じる
-                $pdo = null;
-
-                // ページをリロードして新しいデータが表示されるようにする
-                header('Location: ' . $_SERVER['PHP_SELF']);
-                exit();
-            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
     }
     ?>
-
 </body>
 
 </html>
