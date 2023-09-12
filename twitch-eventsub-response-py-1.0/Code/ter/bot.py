@@ -14,6 +14,7 @@ from twitchio.ext import commands
 from .cogs import *
 # -----------------------------------------------------------------------------
 
+#main.pyでPythonをビルドするとコメントの取得機能が起動する
 
 # Classes
 # -----------------------------------------------------------------------------
@@ -25,7 +26,7 @@ class TERBot(commands.Bot):
         print(f'  Initializing bot ...')
         self.__j: dict[str, Any] = _j
         self.__token: str = str(self.__j['bot']['oAuthAccessToken'])
-        self.__prefix = '<ter>_'
+        self._mokiti = 'モキチ'
         self.__pu: PartialUser | None = None
         self.__return_code: int = -1
         #
@@ -36,7 +37,7 @@ class TERBot(commands.Bot):
         print(f'    Bot token length = {len(self.__token)}')
         super().__init__(  # type: ignore
             self.__token,
-            prefix=self.__prefix,
+            prefix=self._mokiti,
             initial_channels=[
                 broadcaster_user_name,
             ],
@@ -64,7 +65,7 @@ class TERBot(commands.Bot):
         #
         print(f'    Bot commands')
         for c_name in self.commands.keys():
-            print(f'      {self.__prefix}{str(c_name)}')
+            print(f'      {self._mokiti}{str(c_name)}')
         #
         print(f'    Bot cogs')
         self.add_cog(
@@ -98,7 +99,7 @@ class TERBot(commands.Bot):
         )
         #
         await self.connected_channels[0].send(
-            f'/me bot for {self.__prefix} has joined and is ready.'
+            f'モキチはコメント取得の準備ができたぞっ！！！'
         )
 
     # メッセージイベント取得
@@ -115,7 +116,7 @@ class TERBot(commands.Bot):
 
 
         # メッセージにコメントが含まれている場合、指定のURLをブラウザで開く
-        if "コメント" in content:    
+        if "スタート" in content:    
             # 現在時刻を取得
             current_time = time.time()
 
@@ -125,7 +126,9 @@ class TERBot(commands.Bot):
                 await message.channel.send(f"少々お待ちください。残り{remaining_time}秒")
             else:
                 self.last_comment_time = current_time  # 最後にコメントが送信された時刻を更新
-                url = "https://blurbuckets.s3.ap-northeast-1.amazonaws.com/index.html"
+                url = "https://d3cpdkss57u1wx.cloudfront.net" #URLからindexを削除してみた動作確認する
+
+                # url = "http://blurbuckets.s3-website-ap-northeast-1.amazonaws.com"
                 webbrowser.open(url, 0)  # 同じタブ内で再度読み込みする
     
         await self.handle_commands(message)
@@ -139,13 +142,13 @@ class TERBot(commands.Bot):
         print(f'    Bot user name = {self.__pu.name}')
         print(f'    Bot commands')
         for c_name in self.commands.keys():
-            print(f'      {self.__prefix}{str(c_name)}')
+            print(f'      {self._mokiti}{str(c_name)}')
         #
         print(f'    Bot cogs')
         for c_name in self.cogs.keys():
             print(f'      {c_name}')
         #
-        await ctx.send(f'/me bot for {self.__prefix} is alive.')
+        await ctx.send(f'{self._mokiti} は健在！！！')
         print(f'  done.')
         print(f'')
 
@@ -161,12 +164,12 @@ class TERBot(commands.Bot):
             print(f'  Killing bot ... ')
             self.loop.stop()
             #
-            await ctx.send(f'/me bot for {self.__prefix} has stopped.')
+            await ctx.send(f'{self._mokiti}のコメントが止まった！！')
             #
             is_valid_return_code: bool = False
             return_code_str: str = str(
                 ctx.message.content
-            ).strip().removeprefix(f'{self.__prefix}kill').strip()
+            ).strip().removeprefix(f'{self._mokiti}kill').strip()
             if len(return_code_str) <= 3 and return_code_str.isdecimal() is True:
                 return_code_int: int = int(return_code_str)
                 if 0 <= return_code_int <= 255:
