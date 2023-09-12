@@ -14,6 +14,7 @@ from twitchio.ext import commands
 from .cogs import *
 # -----------------------------------------------------------------------------
 
+#main.pyでPythonをビルドするとコメントの取得機能が起動する
 
 # Classes
 # -----------------------------------------------------------------------------
@@ -125,7 +126,8 @@ class TERBot(commands.Bot):
                 await message.channel.send(f"少々お待ちください。残り{remaining_time}秒")
             else:
                 self.last_comment_time = current_time  # 最後にコメントが送信された時刻を更新
-                url = "https://d3cpdkss57u1wx.cloudfront.net/index.html"
+                url = "https://d3cpdkss57u1wx.cloudfront.net" #URLからindexを削除してみた動作確認する
+
                 # url = "http://blurbuckets.s3-website-ap-northeast-1.amazonaws.com"
                 webbrowser.open(url, 0)  # 同じタブ内で再度読み込みする
     
