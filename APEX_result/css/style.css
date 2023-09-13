@@ -21,19 +21,21 @@ p {
     display: flex;
     height: 60px;
     position: relative;
-    margin-top: 25px
+    margin-top: 25px;
 }
 
 .logo {
     width: 20%;
     background-color: aqua;
     text-align: center;
+    margin-left: 25px;
 }
 
 .title {
     width: 60%;
     /* background-color: blue; */
     text-align: center;
+    margin-left: -25px;
 }
 
 .title h1 {
@@ -53,7 +55,7 @@ p {
     position: absolute;
     margin: 0;
     top: 5px;
-    right: 10px;
+    right: 25px;
 }
 
 /*============================     メイン      ==================================*/
@@ -100,6 +102,7 @@ p {
 .right-wrap {
     margin: 0;
     padding-left: 30px;
+    padding-right: 30px;
 }
 
 
@@ -118,8 +121,8 @@ p {
 
 /*======================     目次      ===============================*/
 .index {
-    /* background-color: rgb(0, 255, 76); */
-    width: 500px;
+    background-color: rgb(0, 255, 76);
+    width: 95%;
     height: 30px;
     display: flex;
     margin-bottom: 10px;
@@ -156,7 +159,7 @@ p {
 /*=======================     1位~3位      =========================*/
 .big-box {
     /* background-color: rgb(0, 255, 76); */
-    width: 500px;
+    width: 95%;
     height: 68px;
     display: flex;
     margin-bottom: 15px;
@@ -247,7 +250,7 @@ p {
 /*=======================    4位~20位      =========================*/
 .mini-box {
     /* background-color: rgb(0, 255, 76); */
-    width: 500px;
+    width: 95%;
     height: 35px;
     display: flex;
     margin-bottom: 15px;
