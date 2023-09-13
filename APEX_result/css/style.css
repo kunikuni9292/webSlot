@@ -33,10 +33,32 @@ p {
 
 .logo {
     width: 20%;
-    background-color: aqua;
-    text-align: center;
+    /* background-color: aqua; */
+    text-align: left;
     margin-left: 25px;
 }
+
+.icon {
+    width: 100%;
+    margin-left: 0;
+}
+
+
+/* .logo h1 {
+    color: #FFF;
+    font-family: helvetica;
+    font-size: 20px;
+    margin-left: 10px;
+    line-height: 24px;
+}
+
+.logo p {
+    color: #FFF;
+    text-align: left;
+    font-family: helvetica;
+    font-size: 6px;
+    display: block;
+} */
 
 .title {
     width: 60%;
@@ -130,11 +152,11 @@ p {
 /*======================     目次      ===============================*/
 
 .index {
-    background-color: rgb(0, 255, 76);
+    /* background-color: rgb(0, 255, 76); */
     width: 95%;
     height: 30px;
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 2vh;
 }
 
 .index p {
