@@ -235,13 +235,13 @@ p {
 
 .team-area {
     /* background-color: rgba(255, 0, 255, 0.628); */
-    width: 35%;
+    width: 30%;
     color: #FFF;
 }
 
 .team-area p {
     color: #FFF;
-    padding-left: 25px;
+    padding-left: 20px;
     height: 68px;
     line-height: 68px;
 }
@@ -250,7 +250,7 @@ p {
     display: flex;
     align-items: center;
     /* background-color: rgb(187, 0, 255); */
-    width: 35%;
+    width: 38%;
 }
 
 .img-box {
@@ -270,7 +270,7 @@ p {
 
 .kill-area {
     /* background-color: rgb(255, 247, 0); */
-    width: 10%;
+    width: 11%;
 }
 
 .kill-area p {
@@ -283,7 +283,7 @@ p {
 
 .total-area {
     /* background-color: rgb(0, 115, 255); */
-    width: 10%;
+    width: 11%;
 }
 
 .total-area p {
@@ -350,13 +350,13 @@ p {
 
 .mini-team-area {
     /* background-color: rgba(255, 0, 255, 0.628); */
-    width: 35%;
+    width: 30%;
     color: #FFF;
 }
 
 .mini-team-area p {
     color: #FFF;
-    padding-left: 25px;
+    padding-left: 20px;
     height: 38px;
     line-height: 38px;
 }
@@ -365,7 +365,7 @@ p {
     display: flex;
     align-items: center;
     /* background-color: rgb(187, 0, 255); */
-    width: 35%;
+    width: 38%;
 }
 
 .mini-img-box {
@@ -383,10 +383,9 @@ p {
     object-fit: contain;
 }
 
-
 .mini-kill-area {
     /* background-color: rgb(255, 247, 0); */
-    width: 10%;
+    width: 11%;
 }
 
 .mini-kill-area p {
@@ -399,7 +398,7 @@ p {
 
 .mini-total-area {
     /* background-color: rgb(0, 115, 255); */
-    width: 10%;
+    width: 11%;
 }
 
 .mini-total-area p {
