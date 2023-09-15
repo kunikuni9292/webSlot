@@ -197,9 +197,9 @@ p {
     display: flex;
     margin-bottom: 3.2vh;
     /* 初期状態では非表示 */
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .big-box .rank-area::after {
@@ -304,9 +304,9 @@ p {
     display: flex;
     margin-bottom: 2.6vh;
     /* 初期状態では非表示 */
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 
