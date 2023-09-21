@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/top.css?ver=1.001">
+
+</head>
+
+<body>
+
+    <div class="main">
+        <header>
+            <h1>管理画面</h1>
+        </header>
+        <div class="flex-block">
+            <div class="left-box">
+                <h3>ポイント入力画面</h3><br>
+                <button class="button-036" onclick="location.href='./up-1/up1-1.php'">1試合目</button>
+                <button class="button-036" onclick="location.href='./up-1/up2-1.php'">2試合目</button>
+                <button class="button-036" onclick="location.href='./up-1/up3-1.php'">3試合目</button>
+                <button class="button-036" onclick="location.href='./up-1/up4-1.php'">4試合目</button>
+                <button class="button-036" onclick="location.href='./up-1/up5-1.php'">5試合目</button>
+            </div>
+            <div class="left-box">
+                <h3>リザルト表示画面</h3>
+                <p style="text-align: center;">(n試合目までの総合結果)</p>
+                <button class="button-036" onclick="location.href='./main/main1.php'">1試合目</button>
+                <button class="button-036" onclick="location.href='./main/main2.php'">2試合目</button>
+                <button class="button-036" onclick="location.href='./main/main3.php'">3試合目</button>
+                <button class="button-036" onclick="location.href='./main/main4.php'">4試合目</button>
+                <button class="button-036" onclick="location.href='./main/main5.php'">5試合目(最終結果)</button>
+            </div>
+            <div class="right-box">
+                <h3>ポイントリセット</h3>
+                <h5>＊【注意】押すとその試合のポイントが0になります。</h5>
+                <button class="button-036" id="btn1">1試合目</button>
+                <button class="button-036" id="btn2">2試合目</button>
+                <button class="button-036" id="btn3">3試合目</button>
+                <button class="button-036" id="btn4">4試合目</button>
+                <button class="button-036" id="btn5">5試合目</button>
+            </div>
+        </div>
+    </div>
+    <script src="check.js?ver=1.001"></script>
+</body>
+
+</html>

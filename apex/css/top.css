@@ -1,0 +1,107 @@
+/* ==================   メイン  ===================== */
+.logo img {
+    width: 200px;
+    height: 100px;
+}
+
+.body {
+    position: relative;
+}
+
+.main {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    height: 550px;
+    /* background: #99f; */
+}
+
+img {
+    width: 250px;
+    height: 80px;
+}
+
+h1 {
+    color: #2589d0;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 1rem;
+}
+
+.flex-block {
+    display: flex;
+}
+
+.left-box {
+    width: 50%;
+}
+
+.right-box {
+    width: 50%;
+}
+
+h3 {
+    text-align: center;
+}
+
+h5 {
+    text-align: center;
+    color: red;
+}
+
+.flex-block .right-box {
+    flex-grow: 1;
+    /*--幅を指定--*/
+    position: relative;
+    /*--positionを追加--*/
+    /* background-color: #aeb2ba; */
+}
+
+.flex-block .left-box {
+    flex-grow: 1;
+    /*--幅を指定--*/
+    position: relative;
+    /*--positionを追加--*/
+    margin-right: 2em;
+    /* background-color: #aeb2b */
+}
+
+.flex-block .left-box::after {
+    position: absolute;
+    /*--positionを追加--*/
+    top: 0;
+    left: 100%;
+    margin: 0 1rem;
+    content: "";
+    width: 2px;
+    /*--縦線の太さ(幅)--*/
+    height: 100%;
+    background-color: #333;
+    /*--縦線の色--*/
+}
+
+/* ==================   ボタン  ===================== */
+.button-036 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    margin: 20px auto;
+    padding: .9em 2em;
+    border: 1px solid #2589d0;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2589d0;
+    font-size: 1em;
+}
+
+.button-036:hover {
+    border: none;
+    background-color: #2589d0;
+    color: #fff;
+    font-weight: 600;
+}
