@@ -18,10 +18,14 @@ function animateTeams() {
             team.classList.add("animate");
             // 最終試合は1000ミリ秒にする
             if (i === 0) {
-                // mini-boxのアニメーションがすべて完了したら、big-boxのアニメーションをトリガー
-                setTimeout(() => {
-                    animateBigBox();
-                }, 100);
+                var btn2 = document.getElementById('exe_botan');
+
+                window.document.onkeydown = function (event) {
+                    if (event.key === 'Enter') {
+                        animateBigBox();
+                    }
+                };
+
             }
         }, (miniBox.length - i) * 400); // アニメーションの遅延時間を調整
     }
@@ -32,10 +36,23 @@ function animateBigBox() {
     const bigBox = document.querySelectorAll(".big-box");
 
     // チームを逆順で処理
-    for (let i = bigBox.length - 1; i >= 0; i--) {
+    for (let i = bigBox.length - 1; i >= 2; i--) {
         const team = bigBox[i];
         setTimeout(() => {
             team.classList.add("animate");
-        }, (bigBox.length - i) * 1000); // アニメーションの遅延時間を調整
+        }, (bigBox.length - i) * 0); // アニメーションの遅延時間を調整
+        break;
     }
+    var btn3 = document.getElementById('exe_botan');
+    // Enterキー押下時、送信処理が実行する
+    window.document.onkeydown = function (event) {
+        if (event.key === 'Enter') {
+            for (let j = bigBox.length - 1; j >= 0; j--) {
+                const team = bigBox[j];
+                setTimeout(() => {
+                    team.classList.add("animate");
+                }, (bigBox.length - j) * 0); // アニメーションの遅延時間を調整
+            }
+        }
+    };
 }

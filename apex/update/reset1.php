@@ -12,13 +12,14 @@ $j = 1;
 // SQL文をセット
 for ($num = 1; $num <= 14; $num++) {
 
-    $stmt = $pdo2->prepare('UPDATE results_table SET 1st_rank = :1st_rank , 1st_kill = :1st_kill  WHERE id = :id');
+    $stmt = $pdo2->prepare('UPDATE results_table SET 1st_rank = :1st_rank , 1st_kill = :1st_kill , 1st_total = :1st_total WHERE id = :id');
 
     $reset = 0;
 
     $stmt->bindValue(':id', $j);
     $stmt->bindValue(':1st_rank', $reset);
     $stmt->bindValue(':1st_kill', $reset);
+    $stmt->bindValue(':1st_total', $reset);
 
     // SQL実行
     $stmt->execute();
@@ -45,7 +46,7 @@ require_once __DIR__ . '../../db.php';
     <div class="wrap">
         <?php
         $page = 3;
-        $game = 2;
+        $game = 1;
         $theme = 3;
         require_once __DIR__ . '../../header.php';
         ?>
@@ -176,7 +177,7 @@ require_once __DIR__ . '../../db.php';
                             </div>
                         </div>
                         <?php
-                        if ($k <= 15) {
+                        if ($k <= 14) {
                         ?>
                             <hr>
                     <?php

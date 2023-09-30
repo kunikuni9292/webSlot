@@ -79,24 +79,5 @@ for ($num = 1; $num <= 14; $num++) {
     // SQL実行
     $stmt->execute();
 
-    //最高順位
-    $sql_total = "SELECT * FROM `results_table` WHERE id = $team_rank ";
-    $total_array = $pdo_total->query($sql_total);
-
-    foreach ($total_array as $total) {
-
-        $best_rank = $total['best_rank'];
-        $rank_2nd = $total['2nd_rank'];
-
-        if ($rank_2nd < $best_rank) {
-            $stmt_total = $pdo_total->prepare('UPDATE results_table SET best_rank = :best_rank WHERE id = :id');
-
-            $stmt_total->bindValue(':id', $team_rank);
-            $stmt_total->bindValue(':best_rank', $rank_2nd);
-            // SQL実行
-            $stmt_total->execute();
-        }
-    }
-
     $j++;
 }

@@ -12,13 +12,15 @@ $j = 1;
 // SQL文をセット
 for ($num = 1; $num <= 14; $num++) {
 
-    $stmt = $pdo2->prepare('UPDATE results_table SET 3rd_rank = :3rd_rank , 3rd_kill = :3rd_kill  WHERE id = :id');
+    $stmt = $pdo2->prepare('UPDATE results_table SET 3rd_rank = :3rd_rank , 3rd_kill = :3rd_kill , 3rd_total = :3rd_total WHERE id = :id');
 
     $reset = 0;
 
     $stmt->bindValue(':id', $j);
     $stmt->bindValue(':3rd_rank', $reset);
     $stmt->bindValue(':3rd_kill', $reset);
+    $stmt->bindValue(':3rd_total', $reset);
+    
 
     // SQL実行
     $stmt->execute();

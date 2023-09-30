@@ -1,11 +1,7 @@
-var btn = document.getElementById('exe_botan');
-
-// Enterキー押下時、送信処理が実行する
-window.document.onkeydown = function (event) {
-    if (event.key === 'Enter') {
-        animateTeams();
-    }
-};
+document.addEventListener("DOMContentLoaded", function() {
+    // ページが読み込まれたらアニメーションを開始
+    animateTeams();
+});
 
 function animateTeams() {
     // チームの要素を取得

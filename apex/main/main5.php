@@ -7,6 +7,8 @@ $i = 1;
 $j = 4;
 $k = 10;
 $l = 16;
+$past = 5;
+require_once __DIR__ . '../../main/b.php';
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -15,8 +17,13 @@ $l = 16;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5試合目総合結果</title>
-    <link rel="stylesheet" href="../css/style.css?ver=1.01">
+    <<!-- link rel="stylesheet" href="../css/style.css?ver=1.01"> -->
+    <link rel="stylesheet" href="../css/style.css?ver=1.10">
     <script src="../js/main.js"></script>
+    <!-- パターン3 -->
+    <script src="../js/last2.js?ver=1.01"></script>
+    <!-- パターン2 -->
+    <!-- <script src="../js/last.js?ver=1.01"></script> -->
 </head>
 
 <body>
@@ -52,7 +59,7 @@ $l = 16;
                     </div>
                 </div>
                 <?php
-                $sql_result = "SELECT * FROM `results_table` ORDER BY 1st_total + 2nd_total + 3rd_total + 4th_total + 5th_total DESC , best_rank ASC , 1st_kill + 2nd_kill + 3rd_kill + 4th_kill + 5th_kill  DESC LIMIT 0,3";
+                $sql_result = "SELECT * FROM `results_table` ORDER BY 1st_total + 2nd_total + 3rd_total + 4th_total + 5th_total DESC ,best_rank ASC , 1st_kill + 2nd_kill + 3rd_kill + 4th_kill + 5th_kill DESC , 5th_total DESC LIMIT 0,3";
                 $result_array = $pdo_result->query($sql_result);
 
                 foreach ($result_array as $results) :
@@ -64,7 +71,7 @@ $l = 16;
                             </div>
                         </div>
                         <div class="team-area">
-                            <p><?php echo 'チーム' . $results['id'] ?></p>
+                            <p><?php echo  $results['team_name'] ?></p>
                         </div>
                         <div class="img-area">
                             <!-- <p>アイコン画像×３</p> -->
@@ -91,7 +98,7 @@ $l = 16;
                 ?>
 
                 <?php
-                $sql_result = "SELECT * FROM `results_table` ORDER BY 1st_total + 2nd_total + 3rd_total + 4th_total + 5th_total DESC , best_rank ASC , 1st_kill + 2nd_kill + 3rd_kill + 4th_kill + 5th_kill  DESC LIMIT 3,3";
+                $sql_result = "SELECT * FROM `results_table` ORDER BY 1st_total + 2nd_total + 3rd_total + 4th_total + 5th_total DESC ,best_rank ASC , 1st_kill + 2nd_kill + 3rd_kill + 4th_kill + 5th_kill DESC , 5th_total DESC LIMIT 3,3";
                 $result_array = $pdo_result->query($sql_result); //total_point DESC
 
                 foreach ($result_array as $results) :
@@ -104,7 +111,7 @@ $l = 16;
                             </div>
                         </div>
                         <div class="mini-team-area">
-                            <p><?php echo 'チーム' . $results['id'] ?></p>
+                            <p><?php echo  $results['team_name'] ?></p>
                         </div>
                         <div class="mini-img-area">
                             <div class="mini-img-box"><img src="../img/icon/<?php echo $results['img1'] ?>" class="big-img"></div>
@@ -151,7 +158,7 @@ $l = 16;
                 </div>
 
                 <?php
-                $sql_result = "SELECT * FROM `results_table` ORDER BY 1st_total + 2nd_total + 3rd_total + 4th_total + 5th_total DESC , best_rank ASC , 1st_kill + 2nd_kill + 3rd_kill + 4th_kill + 5th_kill  DESC LIMIT 6,8";
+                $sql_result = "SELECT * FROM `results_table` ORDER BY 1st_total + 2nd_total + 3rd_total + 4th_total + 5th_total DESC ,best_rank ASC , 1st_kill + 2nd_kill + 3rd_kill + 4th_kill + 5th_kill DESC , 5th_total DESC LIMIT 6,8";
                 $result_array = $pdo_result->query($sql_result);
 
                 foreach ($result_array as $results) :
@@ -164,7 +171,7 @@ $l = 16;
                             </div>
                         </div>
                         <div class="mini-team-area">
-                            <p><?php echo 'チーム' . $results['id'] ?></p>
+                            <p><?php echo  $results['team_name'] ?></p>
                         </div>
                         <div class="mini-img-area">
                             <div class="mini-img-box"><img src="../img/icon/<?php echo $results['img1'] ?>" class="big-img"></div>
