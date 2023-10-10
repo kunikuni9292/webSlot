@@ -13,26 +13,90 @@ const db = firebaseApp.firestore();
 const auth = firebaseApp.auth();
 let selectedDataId = null; // 現在選択中のデータのID
 
+// ユーザーが登録されるたびにサブコレクションを作成
+const createSubCollection = (user) => {
+  const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
 
+  // サブコレクションにデフォルトデータを追加
+  userSubCollection.add({
+    date: new Date(), // 日付
+    height: 0, // 身長
+    weight: 0, // 体重
+    bodyFatPercentage: 0, // 体脂肪率
+    bodyFatMass: 0, // 体脂肪量
+    bmi: 0, // BMI
+    basalMetabolism: 0, // 基礎代謝
+    temperature: 0, // 体温
+    hydration: 0, // 水分量
+    sleepHours: 0, // 睡眠時間
+    mealPhoto1: "", // 食事の写真１（初期値は空文字列）
+    mealPhoto2: "", // 食事の写真２
+    mealPhoto3: "", // 食事の写真３
+    mealPhoto4: "", // 食事の写真４
+  }).then(() => {
+    console.log("Default data added to user's subcollection");
+  }).catch((error) => {
+    console.error("Error adding data to subcollection:", error);
+  });
+};
+
+// ユーザー登録
 const register = () => {
-  // input要素のtype属性を取得
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  console.log(email, password);
+  const name = document.getElementById("personalName").value;
+  const sex = document.getElementById("personalSex").value;
+  const phoneNumber = document.getElementById("phoneNumber").value;
+  const dateBirth = document.getElementById("dateBirth").value;
+  const height = document.getElementById("height").value;
+  const bodyWeight = document.getElementById("bodyWeight").value;
 
-  // Promiseで、メールとパスワードを渡す必要がある👇
-  auth
-    .createUserWithEmailAndPassword(email, password)
-    .then((res) => {
-      console.log(res.user);
+  auth.createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log("Registered user:", user.email);
+
+      // ユーザーのUIDを使用してサブコレクションを作成
+      const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
+
+      // サブコレクションにデフォルトデータを追加
+      userSubCollection.add({
+        name: name,
+        sex: sex,
+        phoneNumber: phoneNumber,
+        dateBirth: dateBirth,
+        height: height,
+        bodyWeight: bodyWeight
+        // 他のデータも追加できる
+      }).then(() => {
+        console.log("Default data added to user's subcollection");
+      }).catch((error) => {
+        console.error("Error adding data to subcollection:", error);
+      });
     })
-    .catch((err) => {
-      // ダイアログが表示されるようにする
-      alert(err.message);
-      console.log(err.code);
-      console.log(err.user);
+    .catch((error) => {
+      console.error("Registration error:", error);
     });
 };
+
+// データをFirestoreのサブコレクションに追加
+const addData = (data) => {
+  const user = auth.currentUser;
+  if (user) {
+    const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
+
+    userSubCollection.add(data)
+      .then(() => {
+        console.log("Data added to user's subcollection");
+      })
+      .catch((error) => {
+        console.error("Error adding data to subcollection:", error);
+      });
+  }
+};
+
+
+
 // ログインするメソッド
 const login = () => {
   const email = document.getElementById("email").value;
@@ -50,6 +114,7 @@ const login = () => {
       console.log(err.user);
     });
 };
+
 // データをFireStoreに保存するメソッド
 const saveData = () => {
   email = document.getElementById("email").value;
@@ -69,61 +134,33 @@ const saveData = () => {
     });
 };
 
-// データをFireStoreに保存するメソッド
-// note: 以下の書き方だとdbの更新みたいになる
-// const saveData = () => {
-//   const email = document.getElementById("email").value;
-//   const password = document.getElementById("password").value;
-//   console.log(email, password);
 
-//   // ユーザーの認証状態を確認
-//   auth.onAuthStateChanged((user) => {
-//     if (user) {
-//       // ユーザーがログインしている場合
-//       const userId = user.uid; // ユーザーのUIDを取得
-
-//       db.collection("users")
-//         .doc(userId) // ユーザーのUIDをドキュメントIDとして使用
-//         .set({
-//           email: email,
-//           password: password,
-//         })
-//         .then(() => {
-//           console.log("Document written for user with ID: ", userId);
-//           readData(); // データを再読み込み
-//         })
-//         .catch((error) => {
-//           console.error("Error adding document: ", error);
-//         });
-//     } else {
-//       // ユーザーがログインしていない場合、ログインを促すメッセージを表示
-//       alert("ログインしてください。");
-//     }
-//   });
-// };
-
-
-// Firestoreのデータを読み込むメソッド
+// データをFirestoreのサブコレクションから取得して表示
 const readData = () => {
-  const dataList = document.getElementById("data-list");
+  const user = auth.currentUser;
+  if (user) {
+    const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
 
-  db.collection("users")
-    .get()
-    .then((querySnapshot) => {
-      dataList.innerHTML = "";
+    userSubCollection.get()
+      .then((querySnapshot) => {
+        const dataList = document.getElementById("data-list");
+        dataList.innerHTML = ""; // 既存のデータをクリア
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const dataId = doc.id;
-        const dataElement = document.createElement("div");
-        dataElement.innerHTML = `<strong>Email:</strong> ${data.email}, <strong>Password:</strong> ${data.password} <button onclick="editData('${dataId}', '${data.email}', '${data.password}')">Edit</button> <button onclick="deleteData('${dataId}')">Delete</button>`;
-        dataList.appendChild(dataElement);
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const dataId = doc.id;
+          const dataElement = document.createElement("div");
+          dataElement.innerHTML = `<strong>Email:</strong> ${user.email}, <strong>Password:</strong> ${data.password} <button onclick="editData('${dataId}', '${user.email}', '${data.password}')">Edit</button> <button onclick="deleteData('${dataId}')">Delete</button>`;
+          dataList.appendChild(dataElement);
+        });
+      })
+      .catch((error) => {
+        console.error("Error getting data from subcollection:", error);
       });
-    })
-    .catch((error) => {
-      console.error("Error getting documents: ", error);
-    });
+  }
 };
+
+
 
 // 更新ボタン押下時のメソッド
 const editData = (id, email, password) => {
@@ -157,27 +194,35 @@ const saveEditedData = () => {
   }
 };
 
-// FireStoreのデータを更新するメソッド
-const updateData = () => {
-  db.collection('users').doc('IgJ0kFoXCGH7RMUeeFRl')
-    .update({
-      email: 'JboySan@gamil.com',
-      password: '123456789'
-    })
-    .then(() => {
-      alert('Data Updated')
-    })
-}
-// FireStoreのデータを削除するメソッド
-const deleteData = (id) => {
-  db.collection("users")
-    .doc(id)
-    .delete()
-    .then(() => {
-      console.log("Document successfully deleted!");
-      readData(); // データを再読み込み
-    })
-    .catch((error) => {
-      console.error("Error deleting document: ", error);
-    });
+// データをFirestoreのサブコレクションで更新
+const updateData = (dataId, newData) => {
+  const user = auth.currentUser;
+  if (user) {
+    const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
+
+    userSubCollection.doc(dataId).update(newData)
+      .then(() => {
+        console.log("Data updated in user's subcollection");
+      })
+      .catch((error) => {
+        console.error("Error updating data in subcollection:", error);
+      });
+  }
+};
+
+
+// データをFirestoreのサブコレクションから削除
+const deleteData = (dataId) => {
+  const user = auth.currentUser;
+  if (user) {
+    const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
+
+    userSubCollection.doc(dataId).delete()
+      .then(() => {
+        console.log("Data deleted from user's subcollection");
+      })
+      .catch((error) => {
+        console.error("Error deleting data from subcollection:", error);
+      });
+  }
 };
