@@ -48,26 +48,21 @@ const register = () => {
   const sex = document.getElementById("personalSex").value;
   const phoneNumber = document.getElementById("phoneNumber").value;
   const dateBirth = document.getElementById("dateBirth").value;
-  const height = document.getElementById("height").value;
-  const bodyWeight = document.getElementById("bodyWeight").value;
-
+  
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Registered user:", user.email);
-
+  
       // ユーザーのUIDを使用してサブコレクションを作成
       const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
-
+  
       // サブコレクションにデフォルトデータを追加
       userSubCollection.add({
         name: name,
         sex: sex,
         phoneNumber: phoneNumber,
-        dateBirth: dateBirth,
-        height: height,
-        bodyWeight: bodyWeight
-        // 他のデータも追加できる
+        dateBirth: dateBirth
       }).then(() => {
         console.log("Default data added to user's subcollection");
       }).catch((error) => {
