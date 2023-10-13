@@ -9,33 +9,70 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+
+  <title>お客様記録入力</title>
+  <link rel="stylesheet" href="./css/customer_record_input.css">
+</head>
+<body>
+  <div class="input-form">
+    <label for="date">日付</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="breakfast">朝食</label>
+    <input type="text" id="breakfast" name="breakfast">
+
+    <label for="lunch">昼食</label>
+    <input type="text" id="lunch" name="lunch">
+
+    <label for="dinner">夕食</label>
+    <input type="text" id="dinner" name="dinner">
+
+    <label for="snack">間食</label>
+    <input type="text" id="snack" name="snack">
+
+    <label for="weightAfterWakeUp">起床後の体重</label>
+    <input type="number" step="0.01" id="weightAfterWakeUp" name="weightAfterWakeUp">
+
+    <label for="weightBeforeSleeping">就寝前の体重</label>
+    <input type="number" step="0.01" id="weightBeforeSleeping" name="weightBeforeSleeping">
+
+    <label for="wakeUpTime">起床時間</label>
+    <input type="time" id="wakeUpTime" name="wakeUpTime">
+
+    <label for="bedtime">就寝時間</label>
+    <input type="time" id="bedtime" name="bedtime">
+
+    <label for="evacuationTimes">排便回数</label>
+    <input type="number" id="evacuationTimes" name="evacuationTimes">
+
+    <label for="urineTimes">お小水回数</label>
+    <input type="number" id="urineTimes" name="urineTimes">
+
+    <label for="ingestionMoistureQuantity">摂取水分量</label>
+    <input type="number" step="0.01" id="ingestionMoistureQuantity" name="ingestionMoistureQuantity">
+
+    <label for="bodyFatPercentage">体脂肪率</label>
+    <input type="number" step="0.01" id="bodyFatPercentage" name="bodyFatPercentage">
+
+    <label for="bodyFatQuantity">体脂肪量</label>
+    <input type="number" step="0.01" id="bodyFatQuantity" name="bodyFatQuantity">
+
+    <label for="bmi">BMI</label>
+    <input type="number" step="0.01" id="bmi" name="bmi">
+
+    <label for="basalMetabolism">基礎代謝</label>
+    <input type="number" step="0.01" id="basalMetabolism" name="basalMetabolism">
+
+    <label for="bodyTemperature">体温</label>
+    <input type="number" step="0.01" id="bodyTemperature" name="bodyTemperature">
+
+
+    <button id="confirm-button" onclick="saveDataToFirestore()">確認</button>
+    <!-- <button id="confirm-button" onclick="location.href='./customer_record_input_check.html'">確認</button> -->
+  </div>
   <script src="./js/diet_record.js"></script>
 
-  <title>Firebase JS</title>
-  <link rel="stylesheet" href="./css/diet_record.css">
-</head>
-
-<body>
-
 </body>
-<div class="main">
-  <div>
-    <label for="email">Email</label>
-    <input type="email" name="email" placeholder="Email" id="email" />
-  </div>
-  <div>
-    <label for="password">password</label>
-    <input type="password" name="password" placeholder="password" id="password" />
-  </div>
-  <div id="data-list"></div>
 
-  <button class="login-btn" onclick="login()">ログイン</button>
-  <button class="submit-btn" onclick="location.href='../sign_up.html'">新規登録</button>
-
-  <!-- <button onclick="saveData()">Save Data</button>
-  <button onclick="readData()">Read Data</button>
-  <button onclick="updateData()">Update one Field</button>
-  <button onclick="deleteData()">Delete one Field</button> -->
-</div>
 
 </html>

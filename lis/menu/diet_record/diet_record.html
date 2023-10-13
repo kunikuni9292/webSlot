@@ -16,26 +16,11 @@
 </head>
 
 <body>
-
+    <div class="record-container">
+        <!-- 記録するボタンをボタン要素に変更 -->
+        <button class="record-button" onclick="location.href='./customer_record_input.html'">記録する</button>
+        <!-- 記録一覧ボタンをボタン要素に変更 -->
+        <button class="record-button list-button" onclick="location.href='./customer_record_list.html'">記録一覧</button>
+    </div>
 </body>
-<div class="main">
-  <div>
-    <label for="email">Email</label>
-    <input type="email" name="email" placeholder="Email" id="email" />
-  </div>
-  <div>
-    <label for="password">password</label>
-    <input type="password" name="password" placeholder="password" id="password" />
-  </div>
-  <div id="data-list"></div>
-
-  <button class="login-btn" onclick="login()">ログイン</button>
-  <button class="submit-btn" onclick="location.href='../sign_up.html'">新規登録</button>
-
-  <!-- <button onclick="saveData()">Save Data</button>
-  <button onclick="readData()">Read Data</button>
-  <button onclick="updateData()">Update one Field</button>
-  <button onclick="deleteData()">Delete one Field</button> -->
-</div>
-
 </html>

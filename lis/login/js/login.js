@@ -65,6 +65,7 @@ const register = () => {
         dateBirth: dateBirth
       }).then(() => {
         console.log("Default data added to user's subcollection");
+        window.location.href = "../login/login.html";
       }).catch((error) => {
         console.error("Error adding data to subcollection:", error);
       });
@@ -101,6 +102,7 @@ const login = () => {
     .signInWithEmailAndPassword(email, password)
     .then((res) => {
       console.log(res.user);
+      window.location.href = "../menu/menu_top/menu.html";
     })
     .catch((err) => {
       // ダイアログが表示されるようにする

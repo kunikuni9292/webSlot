@@ -1,21 +1,35 @@
+/* スタイルを適用するためのCSS */
 body {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .submit-btn {
-    position: absolute;
-    left: 40%;
-    top: 50%;
-    margin-top: 50px;
-  }
-  
-  .login-btn {
-    position: absolute;
-    left: 60%;
-    top: 50%;
-    margin-top: 50px;
-  }
+    font-family: Arial, sans-serif;
+}
+
+.record-container {
+    text-align: center;
+    margin: 100px auto;
+    width: 300px;
+}
+
+.record-button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none; /* ボタンにボーダーを追加 */
+    border-radius: 5px;
+    cursor: pointer; /* カーソルをポインターに変更 */
+    transition: background-color 0.3s;
+}
+
+.record-button:hover {
+    background-color: #2980b9;
+}
+
+/* 記録一覧ボタンのスタイル */
+.list-button {
+    background-color: #27ae60;
+}
+
+.list-button:hover {
+    background-color: #219a52;
+}

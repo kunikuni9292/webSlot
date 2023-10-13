@@ -48,15 +48,15 @@ const register = () => {
   const sex = document.getElementById("personalSex").value;
   const phoneNumber = document.getElementById("phoneNumber").value;
   const dateBirth = document.getElementById("dateBirth").value;
-  
+
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log("Registered user:", user.email);
-  
+
       // ユーザーのUIDを使用してサブコレクションを作成
       const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
-  
+
       // サブコレクションにデフォルトデータを追加
       userSubCollection.add({
         name: name,
@@ -219,5 +219,63 @@ const deleteData = (dataId) => {
       .catch((error) => {
         console.error("Error deleting data from subcollection:", error);
       });
+  }
+};
+
+
+// データをFirestoreのサブコレクションに追加
+const saveDataToFirestore = () => {
+  const user = auth.currentUser;
+  if (user) {
+    const userSubCollection = db.collection("users").doc(user.uid).collection("user_data");
+
+    const dateInput = document.getElementById("date");
+    const breakfastInput = document.getElementById("breakfast");
+    const lunchInput = document.getElementById("lunch");
+    const dinnerInput = document.getElementById("dinner");
+    const snackInput = document.getElementById("snack");
+    const weightAfterWakeUpInput = document.getElementById("weightAfterWakeUp");
+    const weightBeforeSleepingInput = document.getElementById("weightBeforeSleeping");
+    const wakeUpTimeInput = document.getElementById("wakeUpTime");
+    const bedtimeInput = document.getElementById("bedtime");
+    const evacuationTimesInput = document.getElementById("evacuationTimes");
+    const urineTimesInput = document.getElementById("urineTimes");
+    const ingestionMoistureQuantityInput = document.getElementById("ingestionMoistureQuantity");
+    const bodyFatPercentageInput = document.getElementById("bodyFatPercentage");
+    const bodyFatQuantityInput = document.getElementById("bodyFatQuantity");
+    const bmiInput = document.getElementById("bmi");
+    const basalMetabolismInput = document.getElementById("basalMetabolism");
+    const bodyTemperatureInput = document.getElementById("bodyTemperature");
+
+    const data = {
+      date: dateInput.value,
+      breakfast: breakfastInput.value,
+      lunch: lunchInput.value,
+      dinner: dinnerInput.value,
+      snack: snackInput.value,
+      weightAfterWakeUp: parseFloat(weightAfterWakeUpInput.value),
+      weightBeforeSleeping: parseFloat(weightBeforeSleepingInput.value),
+      wakeUpTime: wakeUpTimeInput.value,
+      bedtime: bedtimeInput.value,
+      evacuationTimes: parseInt(evacuationTimesInput.value),
+      urineTimes: parseInt(urineTimesInput.value),
+      ingestionMoistureQuantity: parseFloat(ingestionMoistureQuantityInput.value),
+      bodyFatPercentage: parseFloat(bodyFatPercentageInput.value),
+      bodyFatQuantity: parseFloat(bodyFatQuantityInput.value),
+      bmi: parseFloat(bmiInput.value),
+      basalMetabolism: parseFloat(basalMetabolismInput.value),
+      bodyTemperature: parseFloat(bodyTemperatureInput.value),
+    };
+
+    userSubCollection.add(data)
+      .then(() => {
+        console.log("Data added to user's subcollection");
+      })
+      .catch((error) => {
+        console.error("Error adding data to subcollection:", error);
+      });
+  } else {
+    console.log("ユーザーがログインしていません。データは保存されません。");
+    // ユーザーがログインしていない場合、エラーメッセージを表示するか、適切な処理を行ってください。
   }
 };
