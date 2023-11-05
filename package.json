@@ -1,0 +1,20 @@
+{
+  "name": "webslot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "jquery.easing.1.3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/kunikuni9292/webSlot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunikuni9292/webSlot/issues"
+  },
+  "homepage": "https://github.com/kunikuni9292/webSlot#readme"
+}
