@@ -8,27 +8,19 @@ const firebaseApp = firebase.initializeApp({
   appId: "1:969669079165:web:84c42c31eba902de074114",
   measurementId: "G-D9B3HTKLC6"
 });
-
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// Googleログインメソッド
-const loginWithGoogle = () => {
-  window.location.href = "../menu/menu_top/menu.html";
-
-  auth.signInWithPopup(provider)
-    .then((result) => {
-      // Googleログイン成功
-      const user = result.user;
-      console.log(user);
-      window.location.href = "../menu/menu_top/menu.html";
-    })
-    .catch((error) => {
-      // エラー処理
-      alert(error.message);
-      console.error(error.code);
-      console.error(error.message);
-    });
+// Googleからサインアウトするメソッドを追加
+const signOut = () => {
+  auth.signOut().then(() => {
+    // サインアウト成功
+    console.log("サインアウトしました");
+    // ここで適切なリダイレクションまたは処理を行うことができます
+  }).catch((error) => {
+    // エラー処理
+    console.error(error);
+  });
 };
 
 // 一つ前のページに戻る

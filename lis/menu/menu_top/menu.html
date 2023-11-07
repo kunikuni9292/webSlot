@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メニュー</title>
     <link rel="stylesheet" href="./css/menu.css">
+    <link rel="stylesheet" href="../../comon_parts/comon_css/comon.css">
+
 </head>
+
 <body>
+    <!-- ナビゲーションバー -->
+    <div class="navigation-bar">
+        <iframe src="../../comon_parts/navbar/navbar.html" frameborder="0" scrolling="no"
+            style="width: 100%; height: 60px;"></iframe>
+    </div>
+
     <div class="menu">
         <button class="menu-button">予約ボタン</button>
         <button class="menu-button" onclick="location.href='../diet_record/diet_record.html'">ダイエット記録ボタン</button>
@@ -16,4 +26,5 @@
         <button class="menu-button admin-button">管理画面ボタン</button>
     </div>
 </body>
+
 </html>
