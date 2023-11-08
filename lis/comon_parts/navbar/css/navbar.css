@@ -1,8 +1,11 @@
     /* ナビゲーションバーのスタイル */
     .navbar {
-      background-color: #ff9797e3; /* バーの背景色 */
-      color: #fff; /* バーのテキストカラー */
-      padding: 10px; /* パディング */
+      background-color: #ff9797e3;
+      /* バーの背景色 */
+      color: #fff;
+      /* バーのテキストカラー */
+      padding: 10px;
+      /* パディング */
       position: fixed;
       top: 0;
       left: 0;
@@ -36,3 +39,4 @@
       border-radius: 5px;
       cursor: pointer;
     }
+

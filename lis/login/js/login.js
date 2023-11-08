@@ -9,12 +9,12 @@ const firebaseApp = firebase.initializeApp({
   measurementId: "G-D9B3HTKLC6"
 });
 
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth(firebaseApp);
+const provider = new firebase.auth.GoogleAuthProvider(firebaseApp);
 
 // Googleログインメソッド
 const loginWithGoogle = () => {
-  window.location.href = "../menu/menu_top/menu.html";
+  // window.location.href = "../menu/menu_top/menu.html";
 
   auth.signInWithPopup(provider)
     .then((result) => {

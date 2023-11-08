@@ -11,6 +11,32 @@ const firebaseApp = firebase.initializeApp({
 const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 
+// ログイン時にユーザー情報を取得
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // ログイン済みの場合、ユーザー情報を取得
+    const userDisplayName = user.displayName;
+    const userProfilePicture = user.photoURL;
+
+    // プロフィール画像を表示
+    if (userProfilePicture) {
+      const profilePictureElement = document.getElementById("profilePicture");
+      profilePictureElement.src = userProfilePicture;
+    } else {
+      // デフォルトのプロフィール画像を表示
+      const defaultProfilePictureElement = document.getElementById("defaultProfilePicture");
+      defaultProfilePictureElement.style.display = "block";
+    }
+
+    // ユーザー名を表示
+    if (userDisplayName) {
+      const userNameElement = document.getElementById("userName");
+      userNameElement.textContent = userDisplayName;
+    }
+  }
+});
+
+
 // Googleからサインアウトするメソッドを追加
 const signOut = () => {
   auth.signOut().then(() => {

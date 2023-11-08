@@ -9,8 +9,8 @@ const firebaseApp = firebase.initializeApp({
   measurementId: "G-D9B3HTKLC6"
 });
 
-const db = firebaseApp.firestore();
-const auth = firebaseApp.auth();
+const db = firebase.firestore(firebaseApp);
+const auth = firebase.auth(firebaseApp);
 let selectedDataId = null; // 現在選択中のデータのID
 
 // ユーザーが登録されるたびにサブコレクションを作成
