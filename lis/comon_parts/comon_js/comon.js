@@ -1,40 +1,55 @@
-  // Firebaseを初期化
-  const firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyArCsB4IjxAyz50mPUU302pI3GRyfQerMY",
-    authDomain: "lis-web-app-116aa.firebaseapp.com",
-    projectId: "lis-web-app-116aa",
-    storageBucket: "lis-web-app-116aa.appspot.com",
-    messagingSenderId: "969669079165",
-    appId: "1:969669079165:web:84c42c31eba902de074114",
-    measurementId: "G-D9B3HTKLC6"
-  });
-  const auth = firebase.auth();
-  const provider = new firebase.auth.GoogleAuthProvider();
+// Firebaseを初期化
+const firebaseApp = firebase.initializeApp({
+  apiKey: "AIzaSyArCsB4IjxAyz50mPUU302pI3GRyfQerMY",
+  authDomain: "lis-web-app-116aa.firebaseapp.com",
+  projectId: "lis-web-app-116aa",
+  storageBucket: "lis-web-app-116aa.appspot.com",
+  messagingSenderId: "969669079165",
+  appId: "1:969669079165:web:84c42c31eba902de074114",
+  measurementId: "G-D9B3HTKLC6"
+});
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
-  // ログイン時にユーザー情報を取得
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      // ログイン済みの場合、ユーザー情報を取得
-      const userDisplayName = user.displayName;
-      const userProfilePicture = user.photoURL;
+// ログイン時にユーザー情報を取得
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // ログイン済みの場合、ユーザー情報を取得
+    const userDisplayName = user.displayName;
+    const userProfilePicture = user.photoURL;
+    const userEmail = user.email; // ユーザーの電子メールアドレス
+    const userPhoneNumber = user.phoneNumber; // ユーザーの電話番号
 
-      // プロフィール画像を表示
-      if (userProfilePicture) {
-        const navProfilePictureElement = document.getElementById("nav-profilePicture");
-        const profilePictureElement = document.getElementById("profilePicture");
-        navProfilePictureElement.src = userProfilePicture;
-        profilePictureElement.src = userProfilePicture;
-      }
-
-      // ユーザー名を表示
-      if (userDisplayName) {
-        const userNameElement = document.getElementById("userName");
-        userNameElement.textContent = userDisplayName;
-      }
+    // プロフィール画像を表示
+    if (userProfilePicture) {
+      const navProfilePictureElement = document.getElementById("nav-profilePicture");
+      const profilePictureElement = document.getElementById("profilePicture");
+      navProfilePictureElement.src = userProfilePicture;
+      profilePictureElement.src = userProfilePicture;
     }
-  });
 
-  function toggleProfilePanel() {
+    // ユーザー名を表示
+    if (userDisplayName) {
+      const userNameElement = document.getElementById("userName");
+      userNameElement.textContent = userDisplayName;
+    }
+
+    // ユーザーの電子メールアドレスを表示
+    if (userEmail) {
+      const emailElement = document.getElementById("Email");
+      emailElement.textContent = `Email: ${userEmail}`;
+    }
+
+    // ユーザーの電話番号を表示
+    if (userPhoneNumber) {
+      const phoneNumberElement = document.getElementById("phoneNumber");
+      phoneNumberElement.textContent = `電話番号: ${userPhoneNumber}`;
+    }
+  }
+});
+
+
+function toggleProfilePanel() {
   const profilePanelElement = document.getElementById("profilePanel");
   console.log("プロフィール画像クリックされた！！");
   console.log("profilePanelElement", profilePanelElement);
@@ -50,22 +65,26 @@
   }
 }
 
-  // Googleからサインアウトするメソッドを追加
-  function signOut() {
-    auth.signOut().then(() => {
-      // サインアウト成功
-      console.log("サインアウトしました");
-      window.location.href = "../../login/login.html";
+function account_setting() {
+  window.location.href = "../../setting/account_setting/account_setting.html";
+}
 
-      // ここで適切なリダイレクションまたは処理を行うことができます
-    }).catch((error) => {
-      // エラー処理
-      console.error(error);
-    });
-  };
+// Googleからサインアウトするメソッドを追加
+function signOut() {
+  auth.signOut().then(() => {
+    // サインアウト成功
+    console.log("サインアウトしました");
+    window.location.href = "../../login/login.html";
 
-  // 一つ前のページに戻る
-  function goBack() {
-    window.history.back();
-  }
+    // ここで適切なリダイレクションまたは処理を行うことができます
+  }).catch((error) => {
+    // エラー処理
+    console.error(error);
+  });
+};
+
+// 一つ前のページに戻る
+function goBack() {
+  window.history.back();
+}
 
