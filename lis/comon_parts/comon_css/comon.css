@@ -1,0 +1,20 @@
+
+.navigation-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+}
+
+.profile-panel-container {
+  position: fixed;
+  top: 60px; 
+  /* 画面上部に60pxのマージンを開ける */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99; /* ナビゲーションバーの下に表示するために適切なz-indexを設定 */
+  /* overflow-y: auto; コンテンツが画面外にはみ出した場合にスクロールバーを表示 */
+}

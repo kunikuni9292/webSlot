@@ -68,10 +68,30 @@
     <span id="bodyTemperature">[ここに体温が表示されます]</span>
 
     <button id="edit-button" onclick="saveFormData()">編集</button>
+    <p><strong>日付:</strong> <span id="date">[ここに日付がaaaaa表示されます]</span></p>
+    <p><strong>朝食:</strong> <span id="breakfast">[ここに朝食が表示されます]</span></p>
+    <p><strong>昼食:</strong> <span id="lunch">[ここに昼食が表示されます]</span></p>
+    <p><strong>夕食:</strong> <span id="dinner">[ここに夕食が表示されます]</span></p>
+    <p><strong>間食:</strong> <span id="snack">[ここに間食が表示されます]</span></p>
+    <p><strong>起床後の体重:</strong> <span id="weightAfterWakeUp">[ここに起床後の体重が表示されます]</span></p>
+    <p><strong>就寝前の体重:</strong> <span id="weightBeforeSleeping">[ここに就寝前の体重が表示されます]</span></p>
+    <p><strong>起床時間:</strong> <span id="wakeUpTime">[ここに起床時間が表示されます]</span></p>
+    <p><strong>就寝時間:</strong> <span id="bedtime">[ここに就寝時間が表示されます]</span></p>
+    <p><strong>排便回数:</strong> <span id="evacuationTimes">[ここに排便回数が表示されます]</span></p>
+    <p><strong>お小水回数:</strong> <span id="urineTimes">[ここにお小水回数が表示されます]</span></p>
+    <p><strong>摂取水分量:</strong> <span id="ingestionMoistureQuantity">[ここに摂取水分量が表示されます]</span></p>
+    <p><strong>体脂肪率:</strong> <span id="bodyFatPercentage">[ここに体脂肪率が表示されます]</span></p>
+    <p><strong>体脂肪量:</strong> <span id="bodyFatQuantity">[ここに体脂肪量が表示されます]</span></p>
+    <p><strong>BMI:</strong> <span id="bmi">[ここにBMIが表示されます]</span></p>
+    <p><strong>基礎代謝:</strong> <span id="basalMetabolism">[ここに基礎代謝が表示されます]</span></p>
+    <p><strong>体温:</strong> <span id="bodyTemperature">[ここに体温が表示されます]</span></p>
+
+    <button id="edit-button" onclick="goBack()">編集</button>
+    <button id="send-button" onclick="saveDataToFirestore()">送信</button>
+
 
   </div>
   <script src="./js/diet_record.js"></script>
-  <script src="./js/customer_record_input.js"></script>
 </body>
 
 </html>

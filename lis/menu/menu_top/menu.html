@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メニュー</title>
-    <link rel="stylesheet" href="./css/menu.css">
+    <!-- Firebase SDKを読み込む -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- <script src="../menu_top/js/menu.js"></script> -->
+    <link rel="stylesheet" href="../menu_top/css/menu.css">
+
+    <!-- 共通部品読み込み -->
+    <script src="../../comon_parts/comon_js/comon.js"></script>
+    <link rel="stylesheet" href="../../comon_parts/profile_panel/css/profile_panel.css">
+    <link rel="stylesheet" href="../../comon_parts/navbar/css/navbar.css">
+
+    <!-- 共通部品を読み込むjquery -->
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+        //共通パーツ読み込み
+        $(function () {
+            $("#header").load("../../comon_parts/navbar/navbar.html");
+            $("#profilePanel").load("../../comon_parts/profile_panel/profile_panel.html");
+        });
+    </script>
 </head>
+
 <body>
+    <!-- ナビゲーションバー-->
+    <div class="navigation-bar" id="header"></div>
+    <!-- プロフィールパネル-->
+    <div class="profile-panel-container" id="profilePanel" style="display: none;"></div>
+
     <div class="menu">
         <button class="menu-button">予約ボタン</button>
         <button class="menu-button" onclick="location.href='../diet_record/diet_record.html'">ダイエット記録ボタン</button>
@@ -16,4 +43,5 @@
         <button class="menu-button admin-button">管理画面ボタン</button>
     </div>
 </body>
+
 </html>

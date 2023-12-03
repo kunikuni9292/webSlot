@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- バージョン9のSDKを追加 -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <!-- <script src="../login/js/login.js"></script> -->
+
+  <title>Firebase JS</title>
+  <link rel="stylesheet" href="../account_setting/css/account_setting.css">
+  <script src="../account_setting/js/account_setting.js"></script>
+
+
+    <!-- 共通部品読み込み -->
+    <script src="../../comon_parts/comon_js/comon.js"></script>
+    <link rel="stylesheet" href="../../comon_parts/profile_panel/css/profile_panel.css">
+    <link rel="stylesheet" href="../../comon_parts/navbar/css/navbar.css">
+
+    <!-- 共通部品を読み込むjquery -->
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+        //共通パーツ読み込み
+        $(function () {
+            $("#header").load("../../comon_parts/navbar/navbar.html");
+            $("#profilePanel").load("../../comon_parts/profile_panel/profile_panel.html");
+        });
+    </script>
+</head>
+
+<body>
+    <!-- ナビゲーションバー-->
+    <div class="navigation-bar" id="header"></div>
+    <!-- プロフィールパネル-->
+    <div class="profile-panel-container" id="profilePanel" style="display: none;"></div>
+
+  <div class="main">
+    <div>
+      <label for="email">性別</label>
+      <input type="text" name="sex" placeholder="性別" id="personalSex" />
+    </div>
+    <div>
+      <label for="email">生年月日</label>
+      <input type="text" name="dateBirth" placeholder="生年月日" id="dateBirth" />
+    </div>
+    <div>
+      <label for="email">身長</label>
+      <input type="text" name="height" placeholder="身長" id="height" />
+    </div>
+    <div>
+      <label for="email">体重</label>
+      <input type="text" name="bodyWeight" placeholder="体重" id="bodyWeight" />
+    </div>
+    <div id="data-list"></div>
+
+    <button class="" onclick="register()">登録</button>
+    <button onclick="goBack()">編集</button>
+
+  </div>
+</body>
+
+</html>
