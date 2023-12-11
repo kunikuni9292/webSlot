@@ -40,14 +40,14 @@ const createSubCollection = (user) => {
   });
 };
 
-// ユーザー登録
+// アカウント情報を登録
 const register = () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const name = document.getElementById("personalName").value;
+  const email = 'googleアカウントから取得';
+  const name = 'googleアカウントから取得';
   const sex = document.getElementById("personalSex").value;
-  const phoneNumber = document.getElementById("phoneNumber").value;
   const dateBirth = document.getElementById("dateBirth").value;
+  const height = document.getElementById("height").value;
+  const weight = document.getElementById("weight").value;
   
   auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -60,9 +60,11 @@ const register = () => {
       // サブコレクションにデフォルトデータを追加
       userSubCollection.add({
         name: name,
+        email:email,
         sex: sex,
-        phoneNumber: phoneNumber,
-        dateBirth: dateBirth
+        dateBirth: dateBirth,
+        height:height,
+        weight:weight
       }).then(() => {
         console.log("Default data added to user's subcollection");
       }).catch((error) => {

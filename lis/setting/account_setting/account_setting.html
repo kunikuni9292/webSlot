@@ -14,27 +14,27 @@
   <title>Firebase JS</title>
   <link rel="stylesheet" href="../account_setting/css/account_setting.css">
 
-    <!-- 共通部品読み込み -->
-    <script src="../../comon_parts/comon_js/comon.js"></script>
-    <link rel="stylesheet" href="../../comon_parts/profile_panel/css/profile_panel.css">
-    <link rel="stylesheet" href="../../comon_parts/navbar/css/navbar.css">
+  <!-- 共通部品読み込み -->
+  <script src="../../comon_parts/comon_js/comon.js"></script>
+  <link rel="stylesheet" href="../../comon_parts/profile_panel/css/profile_panel.css">
+  <link rel="stylesheet" href="../../comon_parts/navbar/css/navbar.css">
 
-    <!-- 共通部品を読み込むjquery -->
-    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script>
-        //共通パーツ読み込み
-        $(function () {
-            $("#header").load("../../comon_parts/navbar/navbar.html");
-            $("#profilePanel").load("../../comon_parts/profile_panel/profile_panel.html");
-        });
-    </script>
+  <!-- 共通部品を読み込むjquery -->
+  <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script>
+    //共通パーツ読み込み
+    $(function () {
+      $("#header").load("../../comon_parts/navbar/navbar.html");
+      $("#profilePanel").load("../../comon_parts/profile_panel/profile_panel.html");
+    });
+  </script>
 </head>
 
 <body>
-    <!-- ナビゲーションバー-->
-    <div class="navigation-bar" id="header"></div>
-    <!-- プロフィールパネル-->
-    <div class="profile-panel-container" id="profilePanel" style="display: none;"></div>
+  <!-- ナビゲーションバー-->
+  <div class="navigation-bar" id="header"></div>
+  <!-- プロフィールパネル-->
+  <div class="profile-panel-container" id="profilePanel" style="display: none;"></div>
 
   <div class="main">
     <div>
@@ -55,8 +55,8 @@
     </div>
     <div id="data-list"></div>
 
-    <button class="" onclick="register()">登録</button>
-    <button onclick="goBack()">編集</button>
+    <button class="" onclick="register()">更新</button>
+    <button onclick="goBack()">前に戻る</button>
 
   </div>
 </body>
