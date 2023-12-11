@@ -8,8 +8,16 @@ const firebaseApp = firebase.initializeApp({
   appId: "1:969669079165:web:84c42c31eba902de074114",
   measurementId: "G-D9B3HTKLC6"
 });
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+
+const auth = firebase.auth(firebaseApp);
+const provider = new firebase.auth.GoogleAuthProvider(firebaseApp);
+const db = firebase.firestore(firebaseApp);
+
+// グローバル変数として定義（他のファイルからアクセス可能）
+window.firebaseApp = firebaseApp;
+window.auth = auth;
+window.provider = provider;
+window.db = db;
 
 // ログイン時にユーザー情報を取得
 auth.onAuthStateChanged((user) => {
@@ -51,8 +59,6 @@ auth.onAuthStateChanged((user) => {
 
 function toggleProfilePanel() {
   const profilePanelElement = document.getElementById("profilePanel");
-  console.log("プロフィール画像クリックされた！！");
-  console.log("profilePanelElement", profilePanelElement);
 
   if (profilePanelElement) {
     if (profilePanelElement.style.display === "none") {
