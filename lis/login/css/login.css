@@ -1,21 +1,31 @@
 body {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .submit-btn {
-    position: absolute;
-    left: 40%;
-    top: 50%;
-    margin-top: 50px;
-  }
-  
-  .login-btn {
-    position: absolute;
-    left: 60%;
-    top: 50%;
-    margin-top: 50px;
-  }
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ff9797e3;
+}
+
+.login-btn {
+  position: absolute;
+  left: 60%;
+  top: 50%;
+  margin-top: 50px;
+}
+
+.login-logo {
+  width: 300px;
+  height: 300px;
+}
+
+.login-text {
+  /* フォントの設定 */
+  font-family: 'cursive', sans-serif;
+  font-size: 70px;
+  color: #ffffff;
+  /* テキストの色を白に設定 */
+  margin-top: 10px;
+  /* ロゴとボタンの間隔を設定 */
+  text-align: center;
+}
