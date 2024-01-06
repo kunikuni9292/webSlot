@@ -1,33 +1,35 @@
-// Firebaseを初期化
-const firebaseApp = firebase.initializeApp({
-  apiKey: "AIzaSyArCsB4IjxAyz50mPUU302pI3GRyfQerMY",
-  authDomain: "lis-web-app-116aa.firebaseapp.com",
-  projectId: "lis-web-app-116aa",
-  storageBucket: "lis-web-app-116aa.appspot.com",
-  messagingSenderId: "969669079165",
-  appId: "1:969669079165:web:84c42c31eba902de074114",
-  measurementId: "G-D9B3HTKLC6"
-});
-
-const auth = firebase.auth(firebaseApp);
-const provider = new firebase.auth.GoogleAuthProvider(firebaseApp);
-
 // Googleログインメソッド
 const loginWithGoogle = () => {
-  // window.location.href = "../menu/menu_top/menu.html";
+  fetch('https://us-central1-lis-web-app-116aa.cloudfunctions.net/getFirebaseConfig')
+    .then(response => response.json())
+    .then(data => {
+      // NOTE:　エンドポイントの中身見るために用意
+      console.log("data=", data);
 
-  auth.signInWithPopup(provider)
-    .then((result) => {
-      // Googleログイン成功
-      const user = result.user;
-      console.log(user);
-      window.location.href = "../menu/menu_top/menu.html";
+      // dataにFirebaseの設定情報が含まれる
+      const firebaseApp = firebase.initializeApp(data);
+      // authとproviderを使用して認証システムを使用する
+      const auth = firebase.auth();
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      // Googleログイン処理
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          // Googleログイン成功
+          const user = result.user;
+          console.log(user);
+          window.location.href = "../menu/menu_top/menu.html";
+        })
+        .catch((error) => {
+          // エラー処理
+          alert(error.message);
+          console.error(error.code);
+          console.error(error.message);
+        });
     })
-    .catch((error) => {
+    .catch(error => {
       // エラー処理
-      alert(error.message);
-      console.error(error.code);
-      console.error(error.message);
+      console.error('Error fetching Firebase config:', error);
     });
 };
 
