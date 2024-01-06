@@ -1,35 +1,44 @@
-// Googleログインメソッド
+// Firebaseの設定情報を取得し、Firebase Authenticationを使ってGoogleログインするメソッド
 const loginWithGoogle = () => {
-  fetch('https://us-central1-lis-web-app-116aa.cloudfunctions.net/getFirebaseConfig')
-    .then(response => response.json())
+  fetchFirebaseConfig()
     .then(data => {
-      // NOTE:　エンドポイントの中身見るために用意
-      console.log("data=", data);
-
-      // dataにFirebaseの設定情報が含まれる
       const firebaseApp = firebase.initializeApp(data);
-      // authとproviderを使用して認証システムを使用する
-      const auth = firebase.auth();
-      const provider = new firebase.auth.GoogleAuthProvider();
-
-      // Googleログイン処理
-      auth.signInWithPopup(provider)
-        .then((result) => {
-          // Googleログイン成功
-          const user = result.user;
-          console.log(user);
-          window.location.href = "../menu/menu_top/menu.html";
-        })
-        .catch((error) => {
-          // エラー処理
-          alert(error.message);
-          console.error(error.code);
-          console.error(error.message);
-        });
+      performGoogleLogin(firebaseApp);
     })
     .catch(error => {
-      // エラー処理
       console.error('Error fetching Firebase config:', error);
+    });
+};
+
+// Firebaseの設定情報を取得する関数
+const fetchFirebaseConfig = () => {
+  return fetch('https://us-central1-lis-web-app-116aa.cloudfunctions.net/getFirebaseConfig')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch Firebase config');
+      }
+      return response.json();
+    });
+};
+
+
+// Googleログインを行う関数
+const performGoogleLogin = (firebaseApp) => {
+  const auth = firebase.auth(firebaseApp);
+  const provider = new firebase.auth.GoogleAuthProvider(firebaseApp);
+
+  auth.signInWithPopup(provider)
+    .then((result) => {
+      // Googleログイン成功
+      const user = result.user;
+      console.log(user);
+      window.location.href = "../menu/menu_top/menu.html";
+    })
+    .catch((error) => {
+      // エラー処理
+      alert(error.message);
+      console.error(error.code);
+      console.error(error.message);
     });
 };
 
