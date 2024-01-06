@@ -1,8 +1,47 @@
+// 画面読み込み時に実行
+window.onload = () => {
+  checkUserData(); // ユーザーデータの取得
+};
+
+// 画面読み込み時にfirebaseのインスタンスを渡すメソッド
+const checkUserData = () => {
+  fetchFirebaseConfig()
+    .then(data => {
+      const firebaseApp = firebase.initializeApp(data);
+      authStateChanged(firebaseApp);
+    })
+    .catch(error => {
+      console.error('Error fetching Firebase config:', error);
+    });
+};
+
+// 更新ボタン押下時にfirebaseのインスタンスを渡すメソッド
+const onTapRegister = () => {
+  fetchFirebaseConfig()
+    .then(data => {
+      const firebaseApp = firebase.initializeApp(data);
+      register(firebaseApp);
+    })
+    .catch(error => {
+      console.error('Error fetching Firebase config:', error);
+    });
+};
+
+// Firebaseの設定情報を取得する関数
+const fetchFirebaseConfig = () => {
+  return fetch('https://us-central1-lis-web-app-116aa.cloudfunctions.net/getFirebaseConfig')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch Firebase config');
+      }
+      return response.json();
+    });
+};
 
 // ユーザー情報を取得し、存在する場合はデータを取得する処理
-const checkUserData = () => {
-  const auth = window.auth;
-  const db = window.db;
+const authStateChanged = (firebaseApp) => {
+  const auth = firebase.auth(firebaseApp);
+  const db = firebase.firestore(firebaseApp);
 
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -31,16 +70,12 @@ const checkUserData = () => {
   });
 };
 
-// 画面読み込み時に実行
-window.onload = () => {
-  checkUserData(); // ユーザーデータの取得
-};
 
 // 登録関数内でユーザー情報を取得してサブコレクションを作成する
-const register = () => {
+const register = (firebaseApp) => {
   // firebaseの初期化インスタンス使用
-  const auth = window.auth;
-  const db = window.db;
+  const auth = firebase.auth(firebaseApp);
+  const db = firebase.firestore(firebaseApp);
 
   // ユーザーがログインしていることを確認
   const user = auth.currentUser;
