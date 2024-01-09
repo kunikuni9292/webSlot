@@ -1,0 +1,44 @@
+body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ff9797e3;
+}
+
+.login-btn {
+  width: 80%; /* 画面幅の80%に対して幅を指定 */
+  max-width: 300px; /* 最大幅を300pxに指定 */
+  height: 50px;
+  margin-bottom: 50px;
+  background-color: white;
+  color: aqua;
+}
+
+.login-logo {
+  width: 80%; /* 画面幅の80%に対して幅を指定 */
+  max-width: 300px; /* 最大幅を300pxに指定 */
+}
+
+.login-text {
+  font-family: 'cursive', sans-serif;
+  font-size: 4vw; /* 画面幅に対して相対的なフォントサイズ指定 */
+  color: #ffffff;
+  margin-top: 10px;
+  text-align: center;
+}
+/* 画面が横向きの場合のスタイル調整 */
+@media screen and (orientation: landscape) {
+  .login-btn {
+    width: 60%;
+  }
+
+  .login-logo {
+    width: 60%;
+  }
+
+  .login-text {
+    font-size: 3vw;
+  }
+}

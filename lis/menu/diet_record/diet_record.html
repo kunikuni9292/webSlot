@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- バージョン9のSDKを追加 -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="./js/diet_record.js"></script>
+
+  <title>Firebase JS</title>
+  <link rel="stylesheet" href="./css/diet_record.css">
+</head>
+
+<body>
+    <div class="record-container">
+        <!-- 記録するボタンをボタン要素に変更 -->
+        <button class="record-button" onclick="location.href='./customer_record_input.html'">記録する</button>
+        <!-- 記録一覧ボタンをボタン要素に変更 -->
+        <button class="record-button list-button" onclick="location.href='./customer_record_list.html'">記録一覧</button>
+    </div>
+</body>
+</html>

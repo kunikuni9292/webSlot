@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- バージョン9のSDKを追加 -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="index.js"></script>
+
+  <title>Firebase JS</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="main">
+    <div>
+      <label for="email">名前</label>
+      <input type="text" name="name" placeholder="名前" id="personalName" />
+    </div>
+    <div>
+      <label for="email">性別</label>
+      <input type="text" name="sex" placeholder="性別" id="personalSex" />
+    </div>
+    <div>
+      <label for="email">電話番号</label>
+      <input type="number" name="phoneNumber" placeholder="電話番号" id="phoneNumber" />
+    </div>
+    <div>
+      <label for="email">生年月日</label>
+      <input type="text" name="dateBirth" placeholder="生年月日" id="dateBirth" />
+    </div>
+    <div>
+      <label for="email">身長</label>
+      <input type="text" name="height" placeholder="身長" id="height" />
+    </div>
+    <div>
+      <label for="email">体重</label>
+      <input type="text" name="bodyWeight" placeholder="体重" id="bodyWeight" />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="Email" id="email" />
+    </div>
+    <div>
+      <label for="password">password</label>
+      <input type="password" name="password" placeholder="password" id="password" />
+    </div>
+    <div id="data-list"></div>
+
+    <button class="" onclick="register()">登録</button>
+  </div>
+</body>
+
+</html>

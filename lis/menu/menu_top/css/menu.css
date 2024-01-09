@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.menu {
+  text-align: center;
+}
+
+.menu-button {
+  display: block;
+  width: 200px;
+  height: 40px;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #0074cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-button {
+  background-color: #cc0000;
+}
+
+.menu-button:hover {
+  background-color: #00529b;
+}
+
+.menu-image {
+    display: inline-block; /* 横並び */
+  margin: 10px auto; /* 上下に10px、左右は自動的に中央揃え */
+  max-width: 100%; /* 画像が親要素を超えないようにする */
+  height: auto;
+  width: 90px;
+  height: 60px;
+  border-radius: 10px; /* 任意の角丸半径を設定 */
+}

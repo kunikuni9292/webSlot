@@ -1,0 +1,32 @@
+/* ナビゲーションバーのスタイル */
+.navbar {
+  background-color: #ff9797e3;
+  /* バーの背景色 */
+  color: #fff;
+  /* バーのテキストカラー */
+  padding: 10px;
+  /* パディング */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* ロゴのスタイル */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* プロフィール写真のスタイル */
+.nav-profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
