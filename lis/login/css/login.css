@@ -8,33 +8,37 @@ body {
 }
 
 .login-btn {
-  width: 300px;
-height: 50px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 10%; 
-  margin-bottom: 50px; 
-  background-color: white; /* 背景色を白に設定 */
-  color: aqua; /* 文字色を水色に設定 */
+  width: 80%; /* 画面幅の80%に対して幅を指定 */
+  max-width: 300px; /* 最大幅を300pxに指定 */
+  height: 50px;
+  margin-bottom: 50px;
+  background-color: white;
+  color: aqua;
 }
 
 .login-logo {
-width: 300px;
-height: 300px;
-position: absolute;
-top: 0;
-left: 50%;
-transform: translateX(-50%);
+  width: 80%; /* 画面幅の80%に対して幅を指定 */
+  max-width: 300px; /* 最大幅を300pxに指定 */
 }
 
 .login-text {
-  /* フォントの設定 */
   font-family: 'cursive', sans-serif;
-  font-size: 70px;
+  font-size: 4vw; /* 画面幅に対して相対的なフォントサイズ指定 */
   color: #ffffff;
-  /* テキストの色を白に設定 */
   margin-top: 10px;
-  /* ロゴとボタンの間隔を設定 */
   text-align: center;
+}
+/* 画面が横向きの場合のスタイル調整 */
+@media screen and (orientation: landscape) {
+  .login-btn {
+    width: 60%;
+  }
+
+  .login-logo {
+    width: 60%;
+  }
+
+  .login-text {
+    font-size: 3vw;
+  }
 }
