@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- バージョン9のSDKを追加 -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="../addstoreid/js/addstoreid.js"></script>
+  <title>Lis こっそり通えるダイエット屋さん</title>
+  <!-- <link rel="stylesheet" href="../storeidform/css/storeidform.css"> -->
+</head>
+
+<body>
+  <div class="login-text">StoreIDを追加</div>
+
+  <!-- 店舗ID追加フォーム -->
+  <div class="main">
+    <form id="addStoreIDForm">
+      <input type="text" id="newStoreID" placeholder="新しい店舗IDを入力してください">
+      <button type="button" class="login-btn" onclick="onTapaddStoreID()">
+        <span>店舗IDを追加</span>
+      </button>
+    </form>
+    <div id="existingStoreIDs"></div> <!-- 既存の店舗IDを表示する領域 -->
+  </div>
+
+</body>
+
+</html>

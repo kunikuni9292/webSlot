@@ -29,15 +29,23 @@ exports.getFirebaseConfig = functions.https.onRequest((req, res) => {
 });
 
 // サロンオーナーにオーナーの権限を付与
-const uid = 'oe3gJY5yn8ZMgK37ssTZjXbliCB3'; // くにのユーザーのUID
+const uid = functions.config().salon.owner.uid; // くにのユーザーのUID
 const customClaims = { role: 'salon_owner' }; // カスタムクレーム
 
-admin.auth().setCustomUserClaims(uid, customClaims)
-    .then(() => {
+// setCustomUserClaimsを非同期関数に変更
+async function setCustomClaims() {
+    try {
+        await admin.auth().setCustomUserClaims(uid, customClaims);
         console.log('カスタムクレームを設定しました');
-        // デプロイする前にFirebase Admin SDKが重複して初期化されないことを確認してください
-        return admin.app().delete();
-    })
-    .catch((error) => {
+    } catch (error) {
         console.error('カスタムクレームの設定中にエラーが発生しました:', error);
-    });
+    } finally {
+        // デプロイする前にFirebase Admin SDKが重複して初期化されないことを確認
+        if (admin.apps.length) {
+            return admin.app().delete();
+        }
+    }
+}
+
+// 関数を呼び出し、非同期処理の完了を待つ
+setCustomClaims();
